@@ -1,0 +1,145 @@
+@font-face {
+  font-family: 'Akkurat';
+  font-display: auto;
+  src: url('/fonts/akkurat-regular.ttf');
+  font-weight: 100 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Akkurat';
+  font-display: auto;
+  src: url('/fonts/akkurat-bold.ttf');
+  font-weight: 600 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Px-Grotesk';
+  font-display: auto;
+  src: url('/fonts/Px-Grotesk-Regular.ttf');
+  font-weight: 100 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Px-Grotesk';
+  font-display: auto;
+  src: url('/fonts/Px-Grotesk-Bold.ttf');
+  font-weight: 600 900;
+  font-style: normal;
+}
+
+:root {
+  --black: #000;
+  --white: #fff;
+  --gray: #484848;
+  --blue: #4799FF;
+  --red: #fc3f3b;
+
+  --basefont: Akkurat, Open Sans, sans-serif;
+  --titlefont: Px-Grotesk, Akkurat, Open Sans, sans-serif;
+  --fontregular: 400;
+  --fontbold: 800;
+
+  --fontsm: .85rem;
+  --fontmd: 1.25rem;
+  --fontlg: 2rem;
+  --fontxl: 3rem;
+
+  --ease: cubic-bezier(.55,.2,.53,.94);
+
+  --baseboxshadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3);
+}
+
+::selection {
+  background: var(--blue); /* WebKit/Blink Browsers */
+  color: #fff;
+}
+::-moz-selection {
+  background: var(--blue);/* Gecko Browsers */
+  color: #fff;
+}
+
+* {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: "pnum";
+  font-feature-settings: "pnum";
+  font-variant-numeric: proportional-nums;
+  font-family: var(--basefont);
+  box-sizing: border-box;
+}
+
+html {}
+
+.hidden {
+  height: 0;
+  visibility: hidden;
+  display: none;
+  opacity: 0;
+  z-index: -5;
+  pointer-events: none;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+}
+
+main, footer {
+  position: relative;
+  max-width: 1600px;
+  margin: auto;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+a, button, input, select, textarea, label {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+textarea {
+  -webkit-appearance: none;
+  border-radius: 0;
+  position: relative;
+  width: 100%;
+  padding: 10px 0 5px 0;
+  color: var(--black);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: var(--fontmd);
+  line-height: 2.2rem;
+  text-overflow: ellipsis;
+  -webkit-appearance: none;
+}
+
+textarea {
+  min-height: 62px;
+  max-height: 150px;
+  resize: none;
+}
+
+input::placeholder, 
+textarea::placeholder {
+  font-size: var(--fontmd);
+  color: var(--black);
+  transition: opacity .25s var(--cubic);
+  opacity: 0;
+}
