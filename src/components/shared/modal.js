@@ -41,7 +41,7 @@ export default ({ children, domNode, ...props }) => {
       height: 100%;
       width: 100%;
       background: none;
-      padding: var(--baseborderpadding);
+      padding: var(--basepadding);
       z-index: 2;
       opacity: 0;
       transition: opacity 0.15s ease-in;
@@ -109,6 +109,4 @@ export default ({ children, domNode, ...props }) => {
     : null
 }
 
-const Modal = styled.div`
-  position: fixed;
-`
+const Modal = styled.div``

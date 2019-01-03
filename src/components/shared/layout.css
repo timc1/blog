@@ -50,6 +50,15 @@
   --ease: cubic-bezier(.55,.2,.53,.94);
 
   --baseboxshadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3);
+
+  --basepadding: 20px;
+  --skewedcontent: 45%;
+}
+
+@media(max-width: 767px) {
+  :root {
+    --skewedcontent: 100%; 
+  }
 }
 
 ::selection {
@@ -86,7 +95,7 @@ html {}
 
 body {
   margin: 0;
-  padding: 20px;
+  padding: var(--basepadding);
 }
 
 main, footer {

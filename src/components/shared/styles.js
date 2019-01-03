@@ -10,4 +10,12 @@ const Li = styled.li`
   list-style: none;
 `
 
-export { screensm, screenmd, screenlg, Ul, Li }
+const SectionBreak = styled.hr`
+  max-width: 40px;
+  margin: 80px 0 60px 0;
+  border: none;
+  height: 1px;
+  background: var(--black);
+`
+
+export { screensm, screenmd, screenlg, Ul, Li, SectionBreak }

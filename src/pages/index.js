@@ -4,7 +4,7 @@ import { graphql, Link } from 'gatsby'
 import SEO from '../components/shared/seo'
 
 import styled from '@emotion/styled'
-import { screenmd } from '../components/shared/styles'
+import { screenmd, SectionBreak } from '../components/shared/styles'
 
 const IndexPage = ({ data }) => {
   const posts = data.allMarkdownRemark.edges.map(edge => edge.node.frontmatter)
@@ -61,12 +61,9 @@ export const query = graphql`
 `
 
 const Section = styled.section`
-  max-width: 60%;
+  max-width: var(--skewedcontent);
   margin-left: auto;
   padding-top: 80px;
-  @media (max-width: ${screenmd}px) {
-    max-width: 100%;
-  }
 `
 
 const Details = styled.ul`
@@ -96,14 +93,6 @@ const Subtitle = styled.h2`
   font-family: var(--titlefont);
   font-weight: var(--fontregular);
   margin: 0;
-`
-
-const SectionBreak = styled.hr`
-  max-width: 40px;
-  margin: 80px 0 60px 0;
-  border: none;
-  height: 1px;
-  background: var(--black);
 `
 
 const Posts = styled.ul``
