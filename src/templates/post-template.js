@@ -5,8 +5,8 @@ import { css } from '@emotion/core'
 import { screenmd, SectionBreak } from '../components/shared/styles'
 
 export default function Template(props) {
-  const { pageContext } = props
-  const { frontmatter, html } = pageContext
+  const { pageContext, children } = props
+  const { frontmatter } = pageContext
 
   return (
     <>
@@ -38,7 +38,8 @@ export default function Template(props) {
           )}
         </PostDetails>
       )}
-      <Content dangerouslySetInnerHTML={{ __html: html }} />
+
+      <Content>{children}</Content>
     </>
   )
 }
