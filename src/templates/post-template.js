@@ -1,15 +1,13 @@
 import React from 'react'
-import { graphql } from 'gatsby'
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
 import { screenmd, SectionBreak } from '../components/shared/styles'
 
-export default function Template({
-  data, // this prop will be injected by the GraphQL query below.
-}) {
-  const { markdownRemark } = data // data.markdownRemark holds our post data
-  const { frontmatter, html } = markdownRemark
+export default function Template(props) {
+  const { pageContext, children } = props // data.markdownRemark holds our post data
+  const { frontmatter } = pageContext
+
   return (
     <>
       <Title>{frontmatter.title}</Title>
@@ -40,27 +38,10 @@ export default function Template({
           )}
         </PostDetails>
       )}
-      <Content dangerouslySetInnerHTML={{ __html: html }} />
+      <Content>{children}</Content>
     </>
   )
 }
-
-export const pageQuery = graphql`
-  query($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
-      frontmatter {
-        date(formatString: "MMMM DD, YYYY")
-        path
-        title
-        short_name
-        scope
-        background
-        project_scope
-      }
-    }
-  }
-`
 
 const maxWidth = css`
   max-width: 60%;

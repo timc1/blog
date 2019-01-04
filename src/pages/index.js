@@ -7,7 +7,7 @@ import styled from '@emotion/styled'
 import { screenmd, SectionBreak } from '../components/shared/styles'
 
 const IndexPage = ({ data }) => {
-  const posts = data.allMarkdownRemark.edges.map(edge => edge.node.frontmatter)
+  const posts = data.allMdx.edges.map(edge => edge.node.frontmatter)
 
   return (
     <>
@@ -44,15 +44,17 @@ const IndexPage = ({ data }) => {
 
 export const query = graphql`
   query PostsQuery {
-    allMarkdownRemark {
+    allMdx {
       edges {
         node {
           frontmatter {
             title
-            short_name
-            scope
             path
             date
+            short_name
+            scope
+            background
+            project_scope
           }
         }
       }
