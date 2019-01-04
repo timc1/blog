@@ -1,0 +1,13 @@
+---
+path: "/healthcare-consultancy-client-work"
+date: "2019-01-03"
+title: "Modernizing and redefining healthcare services"
+short_name: "AVRC"
+scope: "Client"
+background: "Praesent condimentum pulvinar sem, et dictum dui iaculis vel. Etiam porta ac lectus vitae vehicula. Quisque dui libero, luctus ac libero a, bibendum laoreet urna. Donec malesuada luctus metus, vitae rhoncus nisi pellentesque id. Donec efficitur ligula vitae tincidunt pellentesque. Quisque lorem dui, rutrum eu vestibulum in, varius quis arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed odio urna, ullamcorper ut iaculis eget, ultrices quis urna. Etiam dapibus in diam quis gravida"
+project_scope: "Strategy, UI/UX, Design, Development"
+---
+
+```
+hi
+```

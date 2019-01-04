@@ -55,10 +55,7 @@ export default ({ children, domNode, ...props }) => {
   // 3. Listen for changes to props.isShowing
   useEffect(
     () => {
-      const blurMain = document.getElementsByTagName('main')[0]
-      const blurFooter = document.getElementsByTagName('footer')[0]
-
-      const blurNodes = [blurMain, blurFooter]
+      const blurNodes = Array.from(document.getElementsByClassName('blur-me'))
 
       if (props.isShowing) {
         modalContent.current.style.opacity = 1

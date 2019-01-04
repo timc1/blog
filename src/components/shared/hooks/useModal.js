@@ -14,5 +14,5 @@ export default () => {
     ...props,
   })
 
-  return { isShowing, getTogglerProps, getMenuProps }
+  return { isShowing, toggle, getTogglerProps, getMenuProps }
 }

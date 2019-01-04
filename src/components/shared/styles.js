@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { Link } from 'gatsby'
 
 const screensm = 568
 const screenmd = 767
@@ -18,4 +19,20 @@ const SectionBreak = styled.hr`
   background: var(--black);
 `
 
-export { screensm, screenmd, screenlg, Ul, Li, SectionBreak }
+const UnstyledLink = styled(Link)`
+  display: block;
+  color: var(--black);
+  font-size: ${props => props.size || 'var(--fontms)'};
+  padding: 5px;
+  margin: -5px;
+  cursor: ${props => (props.newtab ? 'ne-resize' : 'pointer')};
+  outline: none;
+
+  &:hover,
+  &:active,
+  &:focus {
+    opacity: 0.5;
+  }
+`
+
+export { screensm, screenmd, screenlg, Ul, Li, SectionBreak, UnstyledLink }

@@ -25,7 +25,7 @@ const IndexPage = ({ data }) => {
             const number = index + 1 < 10 ? `0${index + 1}` : index + 1
             return (
               <Post key={post.path}>
-                <PostLink to="/">
+                <PostLink to={post.path}>
                   <Details>
                     <Detail>{number}.</Detail>
                     <Detail>{post.short_name}</Detail>

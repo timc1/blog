@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
+import { UnstyledLink } from './styles'
 
-export default () => {
+export default props => {
   const [year, setYear] = useState(null)
   useEffect(() => {
     let d = new Date()
@@ -9,10 +10,45 @@ export default () => {
     setYear(year)
   }, [])
 
-  return <Footer>c. {year}</Footer>
+  return (
+    <Footer {...props}>
+      <Items>
+        <li>
+          <UnstyledLink to="/">Email</UnstyledLink>
+        </li>
+        <li>
+          <UnstyledLink newtab="true" to="/">
+            Instagram
+          </UnstyledLink>
+        </li>
+        <li>
+          <UnstyledLink newtab="true" to="/">
+            Product Hunt
+          </UnstyledLink>
+        </li>
+        <li>
+          <UnstyledLink newtab="true" to="/">
+            LinkedIn
+          </UnstyledLink>
+        </li>
+        <li>c. {year}</li>
+      </Items>
+    </Footer>
+  )
 }
 
 const Footer = styled.footer`
   width: max-content;
-  margin-right: 0;
+  margin-right: ${props => (props.alignLeft ? 'auto' : '0')};
+  margin-left: ${props => (props.alignLeft ? '0' : 'auto')};
+  margin-top: 40px;
+`
+
+const Items = styled.ul`
+  display: grid;
+  grid-gap: 10px;
+
+  li:last-of-type {
+    margin-top: 10px;
+  }
 `

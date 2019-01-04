@@ -2,12 +2,13 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
-import { Ul, Li, SectionBreak } from './styles'
+import { Ul, Li, SectionBreak, UnstyledLink } from './styles'
 
 import plusIcon from '../../images/plus.svg'
 
 import useModal from './hooks/useModal'
 import Modal from './modal'
+import Footer from './footer'
 
 export default () => (
   <Header>
@@ -22,7 +23,7 @@ export default () => (
 )
 
 const MenuToggler = () => {
-  const { isShowing, getTogglerProps, getMenuProps } = useModal()
+  const { isShowing, toggle, getTogglerProps, getMenuProps } = useModal()
 
   return (
     <>
@@ -32,6 +33,15 @@ const MenuToggler = () => {
         })}
       >
         <ModalContentContainer>
+          <MCAbout className={isShowing ? 'animate' : null} noTransform>
+            <UnstyledLink
+              to="/"
+              onClick={e => toggle(prev => !prev)}
+              size="var(--fontmd)"
+            >
+              Tim Chang
+            </UnstyledLink>
+          </MCAbout>
           <MCAbout className={isShowing ? 'animate' : null}>
             My work bridges storytelling and collaboration through design and
             code.
@@ -52,6 +62,7 @@ const MenuToggler = () => {
           <MCAbout className={isShowing ? 'animate' : null}>
             Currently, I am based in Los Angeles.
           </MCAbout>
+          <Footer alignLeft />
         </ModalContentContainer>
       </Modal>
       <Toggler {...getTogglerProps()}>
@@ -134,26 +145,29 @@ const ModalContentContainer = styled.div`
         transition-delay: 0.35s;
       }
       .animate:nth-of-type(2) {
-        transition-delay: 0.4s;
+        transition-delay: 0.45s;
       }
       .animate:nth-of-type(3) {
-        transition-delay: 0.6s;
+        transition-delay: 0.5s;
       }
       .animate:nth-of-type(4) {
-        transition-delay: 0.75s;
+        transition-delay: 0.6s;
       }
       .animate:nth-of-type(5) {
-        transition-delay: 0.9s;
+        transition-delay: 0.7s;
+      }
+      .animate:nth-of-type(6) {
+        transition-delay: 0.8s;
       }
     `}
 `
 
 const MCAbout = styled.p`
-  font-size: var(--fontlg);
-  font-weight: var(--fontregular);
+  font-size: ${props => (props.noTransform ? 'inherit' : 'var(--fontxl)')};
+  font-weight: var(--fontlight);
   font-family: var(--titlefont);
   opacity: 0;
-  transform: translateX(25px);
+  transform: ${props => (props.noTransform ? 'none' : 'translateX(25px)')};
   transition: 0.55s var(--ease);
   transition-properties: opacity, transform;
 `

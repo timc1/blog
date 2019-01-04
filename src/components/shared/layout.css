@@ -1,3 +1,5 @@
+
+
 @font-face {
   font-family: 'Akkurat';
   font-display: auto;
@@ -17,8 +19,16 @@
 @font-face {
   font-family: 'Px-Grotesk';
   font-display: auto;
+  src: url('/fonts/Px-Grotesk-Light.ttf');
+  font-weight: 100 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Px-Grotesk';
+  font-display: auto;
   src: url('/fonts/Px-Grotesk-Regular.ttf');
-  font-weight: 100 500;
+  font-weight: 400 500;
   font-style: normal;
 }
 
@@ -39,6 +49,7 @@
 
   --basefont: Akkurat, Open Sans, sans-serif;
   --titlefont: Px-Grotesk, Akkurat, Open Sans, sans-serif;
+  --fontlight: 200;
   --fontregular: 400;
   --fontbold: 800;
 
@@ -46,6 +57,7 @@
   --fontmd: 1.25rem;
   --fontlg: 2rem;
   --fontxl: 3rem;
+  --fontxxl: 4.4rem;
 
   --ease: cubic-bezier(.55,.2,.53,.94);
 

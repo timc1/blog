@@ -1,0 +1,11 @@
+---
+path: "/web-gl-threejs-globe-javascript"
+date: "2019-01-03"
+title: "Building an interactive 3d globe with WebGL & Three.js"
+short_name: "Three.js"
+scope: "Experiment"
+background: "Nam leo nunc, commodo eu hendrerit in, sodales sit amet ligula. Pellentesque aliquet posuere nulla, vitae ornare ex tincidunt at. Quisque sit amet aliquet neque, quis molestie massa. Etiam vestibulum, quam ac posuere bibendum, est nibh iaculis metus, id tristique erat ipsum vel augue. Pellentesque mauris felis, faucibus sit amet aliquam sit amet, porta eu risus. Vivamus pretium ullamcorper eros, a pulvinar justo mattis ac. Integer tellus libero, ultricies non elementum sed, dignissim a urna."
+project_scope: "UI/UX, Design, Development"
+---
+
+hi

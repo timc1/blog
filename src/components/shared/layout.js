@@ -20,8 +20,8 @@ const Layout = ({ children }) => (
     render={data => (
       <>
         <Header />
-        <main>{children}</main>
-        <Footer />
+        <main className="blur-me">{children}</main>
+        <Footer className="blur-me" />
       </>
     )}
   />
