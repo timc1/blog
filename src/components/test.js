@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 
 const Test = () => {
   console.log('hi')
-  return <Hi>hihihihhihihii</Hi>
+  return <Hi>hihihihhihihii sup</Hi>
 }
 
 export default Test

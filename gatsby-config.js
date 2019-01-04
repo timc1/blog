@@ -9,11 +9,11 @@ module.exports = {
   plugins: [
     {
       resolve: `gatsby-mdx`,
-      //options: {
-      //  defaultLayouts: {
-      //    default: path.resolve(`./src/components/shared/layout.js`),
-      //  },
-      //},
+      options: {
+        defaultLayouts: {
+          default: path.resolve(`./src/templates/post-template.js`),
+        },
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
