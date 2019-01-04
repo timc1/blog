@@ -4,12 +4,18 @@ import { css } from '@emotion/core'
 
 import { screenmd, SectionBreak } from '../components/shared/styles'
 
+import SEO from '../components/shared/seo'
+
 export default function Template(props) {
   const { pageContext, children } = props
   const { frontmatter } = pageContext
 
   return (
     <>
+      <SEO
+        title={frontmatter.title}
+        description={frontmatter.seo_description}
+      />
       <Title>{frontmatter.title}</Title>
       <Info>
         <InfoItem>{frontmatter.short_name}</InfoItem>
@@ -22,7 +28,9 @@ export default function Template(props) {
             <div>
               <PostDetailsTitle>Background</PostDetailsTitle>
               <Scope>
-                <ScopeItem>{frontmatter.background}</ScopeItem>
+                <ScopeItem css={{ fontSize: `var(--fontmd)` }}>
+                  {frontmatter.background}
+                </ScopeItem>
               </Scope>
             </div>
           )}
@@ -58,6 +66,7 @@ const maxWidth = css`
 const Title = styled.h1`
   font-size: var(--fontxxl);
   font-family: var(--titlefont);
+  font-weight: var(--fontlight);
   margin-top: 60px;
   margin-bottom: 10px;
   ${maxWidth}

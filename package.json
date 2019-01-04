@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@emotion/babel-preset-css-prop": "^10.0.5",
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
     "@mdx-js/mdx": "^0.16.6",
@@ -37,6 +38,7 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "devDependencies": {
+    "babel-preset-gatsby": "^0.1.6",
     "prettier": "^1.15.2"
   },
   "repository": {

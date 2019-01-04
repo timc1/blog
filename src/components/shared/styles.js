@@ -22,7 +22,7 @@ const SectionBreak = styled.hr`
 const UnstyledLink = styled(Link)`
   display: block;
   color: var(--black);
-  font-size: ${props => props.size || 'var(--fontms)'};
+  font-size: var(--fontsm);
   padding: 5px;
   margin: -5px;
   cursor: ${props => (props.newtab ? 'ne-resize' : 'pointer')};

@@ -33,11 +33,16 @@ const MenuToggler = () => {
         })}
       >
         <ModalContentContainer>
-          <MCAbout className={isShowing ? 'animate' : null} noTransform>
+          <MCAbout className={isShowing ? 'animate' : null}>
             <UnstyledLink
               to="/"
               onClick={e => toggle(prev => !prev)}
-              size="var(--fontmd)"
+              css={{
+                fontSize: `var(--fontmd)`,
+                padding: `0.5625rem`,
+                fontWeight: `var(--fontlight)`,
+                fontFamily: `var(--titlefont)`,
+              }}
             >
               Tim Chang
             </UnstyledLink>
@@ -131,7 +136,7 @@ const Toggler = styled.button`
 const ModalContentContainer = styled.div`
   max-width: var(--skewedcontent);
   margin-left: auto;
-  padding: 40px 0;
+  padding: 30px 0;
 
   .animate {
     transform: translateX(0);
