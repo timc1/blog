@@ -18,8 +18,8 @@ exports.createPages = ({ graphql, actions }) => {
                     scope
                     background
                     project_scope
-                    _PARENT
                   }
+                  html
                 }
               }
             }
@@ -37,7 +37,10 @@ exports.createPages = ({ graphql, actions }) => {
             component: path.resolve(
               `${__dirname}/src/templates/post-template.js`
             ),
-            context: { id: node.id, frontmatter: node.frontmatter },
+            context: {
+              frontmatter: node.frontmatter,
+              html: node.html,
+            },
           })
         })
       })

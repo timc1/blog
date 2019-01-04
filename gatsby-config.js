@@ -7,12 +7,19 @@ module.exports = {
     author: `@timcchang`,
   },
   plugins: [
-    `gatsby-mdx`,
+    {
+      resolve: `gatsby-mdx`,
+      //options: {
+      //  defaultLayouts: {
+      //    default: path.resolve(`./src/components/shared/layout.js`),
+      //  },
+      //},
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/pages/posts`,
-        name: 'markdown-pages',
+        name: 'posts',
       },
     },
     `gatsby-plugin-react-helmet`,
