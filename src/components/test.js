@@ -1,6 +1,11 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export default () => <Test>hi</Test>
+const Test = () => {
+  console.log('hi')
+  return <Hi>hihihihhihihii</Hi>
+}
 
-const Test = styled.div
+export default Test
+
+const Hi = styled.div``
