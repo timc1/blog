@@ -4,11 +4,12 @@ import { css } from '@emotion/core'
 
 import { screenlg, maxWidth } from '../shared/styles'
 
-export default ({ pre, title, description, post }) => (
+export default ({ pre, title, description, postTitle, post }) => (
   <Container>
     <Pre>{pre}</Pre>
     <Title>{title}</Title>
     <Description>{description}</Description>
+    {postTitle && <PostTitle>{postTitle}</PostTitle>}
     {post && <Post>{post}</Post>}
   </Container>
 )
@@ -54,4 +55,29 @@ const Description = styled.p`
   }
 `
 
-const Post = styled.div``
+const PostTitle = styled(Title)`
+  grid-column: 3;
+  grid-row: 1;
+  @media (max-width: ${screenlg}px) {
+    grid-column: 2;
+    grid-row: initial;
+  }
+`
+
+const Post = styled.div`
+  grid-column: 3;
+  @media (max-width: ${screenlg}px) {
+    grid-column: 2;
+  }
+
+  ul {
+    display: grid;
+    grid-gap: 10px;
+    font-size: var(--fontmd);
+    font-weight: var(--fontlight);
+  }
+
+  li {
+    list-style: none;
+  }
+`

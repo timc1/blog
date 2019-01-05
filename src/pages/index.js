@@ -7,7 +7,10 @@ import styled from '@emotion/styled'
 import { screenmd, SectionBreak } from '../components/shared/styles'
 
 const IndexPage = ({ data }) => {
-  const posts = data.allMdx.edges.map(edge => edge.node.frontmatter)
+  const posts = data.allMdx.edges.map(edge => ({
+    frontmatter: edge.node.frontmatter,
+    fields: edge.node.fields,
+  }))
 
   return (
     <>
@@ -26,14 +29,16 @@ const IndexPage = ({ data }) => {
           {posts.map((post, index) => {
             const number = index + 1 < 10 ? `0${index + 1}` : index + 1
             return (
-              <Post key={post.path}>
-                <PostLink to={post.path}>
+              <Post key={post.fields.path}>
+                <PostLink
+                  to={`${post.fields.sourceInstanceName}/${post.fields.path}`}
+                >
                   <Details>
                     <Detail>{number}.</Detail>
-                    <Detail>{post.short_name}</Detail>
-                    <Detail>{post.scope}</Detail>
+                    <Detail>{post.frontmatter.short_name}</Detail>
+                    <Detail>{post.frontmatter.scope}</Detail>
                   </Details>
-                  <PostTitle>{post.title}</PostTitle>
+                  <PostTitle>{post.frontmatter.title}</PostTitle>
                 </PostLink>
               </Post>
             )
@@ -49,13 +54,15 @@ export const query = graphql`
     allMdx {
       edges {
         node {
+          fields {
+            path
+            sourceInstanceName
+          }
           frontmatter {
             title
-            path
             date
             short_name
             scope
-            background
             project_scope
           }
         }

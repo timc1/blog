@@ -1,53 +1,87 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { StaticQuery, graphql } from 'gatsby'
 
 import { screenmd, maxWidth, SectionBreak } from '../components/shared/styles'
 
 import SEO from '../components/shared/seo'
 
 export default function Template(props) {
-  const { pageContext, children } = props
+  const { pageContext, children, pageResources } = props
   const { frontmatter } = pageContext
+  const { path } = pageResources.page
+  console.log('path', path)
+  console.log(props)
 
   return (
-    <>
-      <SEO
-        title={frontmatter.title}
-        description={frontmatter.seo_description}
-      />
-      <Title>{frontmatter.title}</Title>
-      <Info>
-        <InfoItem>{frontmatter.short_name}</InfoItem>
-        <InfoItem>{frontmatter.scope}</InfoItem>
-      </Info>
-      <Break />
-      {(frontmatter.project_scope || frontmatter.background) && (
-        <PostDetails>
-          {frontmatter.background && (
-            <div>
-              <PostDetailsTitle>Background</PostDetailsTitle>
-              <Scope>
-                <ScopeItem css={{ fontSize: `var(--fontmd)` }}>
-                  {frontmatter.background}
-                </ScopeItem>
-              </Scope>
-            </div>
-          )}
-          {frontmatter.project_scope && (
-            <div>
-              <PostDetailsTitle>Scope</PostDetailsTitle>
-              <Scope>
-                {frontmatter.project_scope.split(',').map(item => (
-                  <ScopeItem key={item}>{item}</ScopeItem>
-                ))}
-              </Scope>
-            </div>
-          )}
-        </PostDetails>
-      )}
+    <StaticQuery
+      query={graphql`
+        query NextPostQuery {
+          allMdx {
+            edges {
+              previous {
+                frontmatter {
+                  title
+                  short_name
+                  scope
+                  project_scope
+                }
+              }
+              next {
+                frontmatter {
+                  title
+                  short_name
+                  scope
+                  project_scope
+                }
+              }
+            }
+          }
+        }
+      `}
+      render={data =>
+        console.log('data', data) || (
+          <>
+            <SEO
+              title={frontmatter.title}
+              description={frontmatter.seo_description}
+            />
+            <Title>{frontmatter.title}</Title>
+            <Info>
+              <InfoItem>{frontmatter.short_name}</InfoItem>
+              <InfoItem>{frontmatter.scope}</InfoItem>
+            </Info>
+            <Break />
+            {(frontmatter.project_scope || frontmatter.background) && (
+              <PostDetails>
+                {frontmatter.background && (
+                  <div>
+                    <PostDetailsTitle>Background</PostDetailsTitle>
+                    <Scope>
+                      <ScopeItem css={{ fontSize: `var(--fontmd)` }}>
+                        {frontmatter.background}
+                      </ScopeItem>
+                    </Scope>
+                  </div>
+                )}
+                {frontmatter.project_scope && (
+                  <div>
+                    <PostDetailsTitle>Scope</PostDetailsTitle>
+                    <Scope>
+                      {frontmatter.project_scope.split(',').map(item => (
+                        <ScopeItem key={item}>{item}</ScopeItem>
+                      ))}
+                    </Scope>
+                  </div>
+                )}
+              </PostDetails>
+            )}
 
-      <Content>{children}</Content>
-    </>
+            <Content>{children}</Content>
+          </>
+        )
+      }
+    />
   )
 }
 
@@ -111,6 +145,7 @@ const Scope = styled.ul`
 
 const ScopeItem = styled.li`
   font-weight: var(--fontlight);
+  font-size: var(--fontmd);
   list-style: none;
 `
 

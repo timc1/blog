@@ -462,6 +462,10 @@ const Overview = styled.div`
   }
 
   > span {
+    display: block;
+    height: 3px;
+    border-radius: 2px;
+    background: #eee;
     margin: 5px 0;
   }
 `
