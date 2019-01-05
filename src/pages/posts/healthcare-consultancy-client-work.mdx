@@ -10,7 +10,7 @@ seo_description: "Client work, strategy, ui/ux, design, and development for AV R
 ---
 
 import { ThreeColumnsDescription, IllustrationWrapper } from 'components/posts/index'
-import { Landing, Jobs, Forms, Consulting, Dashboard } from 'components/animations/av/index'
+import { Landing, Jobs, Forms, Consulting, Dashboard, Events, JobsApp, Blog, FormsApp } from 'components/animations/av/index'
 
 <Landing />
 
@@ -27,8 +27,6 @@ import { Landing, Jobs, Forms, Consulting, Dashboard } from 'components/animatio
   Consulting
 ]} />
 
-
-
 <ThreeColumnsDescription 
   pre="02."
   title="Control & Customization"
@@ -44,3 +42,18 @@ import { Landing, Jobs, Forms, Consulting, Dashboard } from 'components/animatio
   description="With dozens of remote consultants and at a rapidly growing rate, AV needed a home base to to easily communicate new job opportunities, upcoming events, and to keep their community up to date. Along with their social channels, they wanted a single entry point to everything regarding the company. Visitors can view and apply for various openings, sign up for upcoming events and meetups, and read about the latest in running an independent healthcare business."
   post=""
 />
+
+<IllustrationWrapper illustrations={[
+  Events, 
+  JobsApp,
+  Blog
+]} />
+
+<ThreeColumnsDescription 
+  pre="04."
+  title="DIGITAL TOOLS"
+  description="We opted to create a tool that auto generated POC and QAPI forms through a step-by-step module experience. With hundreds of pre-filled form data provided by AV, users can simply select the scenarios that match their facility, customize results, and let the system format and generate their form."
+  post=""
+/>
+
+<FormsApp/>

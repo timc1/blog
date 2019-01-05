@@ -175,12 +175,12 @@ const ModalText = styled.div`
   > span {
     border-radius: 2px;
   }
-  > span:nth-child(odd) {
+  > span:nth-of-type(odd) {
     height: 5px;
     width: 30%;
     background: rgba(34, 34, 49, 0.4);
   }
-  > span:nth-child(even) {
+  > span:nth-of-type(even) {
     height: 20px;
     width: 100%;
     background: #fff;
@@ -237,11 +237,11 @@ const Sidebar = styled.div`
       border-bottom: 1px solid #f7f7f7;
     }
 
-    > li:first-child {
+    > li:first-of-type {
       border-top: 1px solid #f7f7f7;
     }
 
-    > li:nth-child(2) {
+    > li:nth-of-type(2) {
       color: rgb(0, 122, 255);
       &::before {
         content: '';
@@ -348,7 +348,7 @@ const Profile = styled.div`
     font-size: 5px;
     opacity: 0.8;
   }
-  > span:first-child {
+  > span:first-of-type {
     height: 9px;
     width: 9px;
     border-radius: 50%;
