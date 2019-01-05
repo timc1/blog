@@ -9,8 +9,10 @@ import { screenmd, SectionBreak } from '../components/shared/styles'
 const IndexPage = ({ data }) => {
   const posts = data.allMdx.edges.map(edge => ({
     frontmatter: edge.node.frontmatter,
-    fields: edge.node.fields,
+    fields: edge.node.parent,
   }))
+
+  console.log(data, posts)
 
   return (
     <>
@@ -29,9 +31,9 @@ const IndexPage = ({ data }) => {
           {posts.map((post, index) => {
             const number = index + 1 < 10 ? `0${index + 1}` : index + 1
             return (
-              <Post key={post.fields.path}>
+              <Post key={post.fields.name}>
                 <PostLink
-                  to={`${post.fields.sourceInstanceName}/${post.fields.path}`}
+                  to={`${post.fields.sourceInstanceName}/${post.fields.name}`}
                 >
                   <Details>
                     <Detail>{number}.</Detail>
@@ -54,16 +56,18 @@ export const query = graphql`
     allMdx {
       edges {
         node {
-          fields {
-            path
-            sourceInstanceName
-          }
+          id
           frontmatter {
             title
             date
-            short_name
             scope
-            project_scope
+            short_name
+          }
+          parent {
+            ... on File {
+              name
+              sourceInstanceName
+            }
           }
         }
       }
