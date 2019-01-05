@@ -1,9 +1,20 @@
 import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 import { Link } from 'gatsby'
 
 const screensm = 568
 const screenmd = 767
 const screenlg = 1439
+
+const maxWidth = css`
+  max-width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: ${screenmd}px) {
+    max-width: 100%;
+  }
+`
 
 const Ul = styled.ul``
 
@@ -35,4 +46,13 @@ const UnstyledLink = styled(Link)`
   }
 `
 
-export { screensm, screenmd, screenlg, Ul, Li, SectionBreak, UnstyledLink }
+export {
+  screensm,
+  screenmd,
+  screenlg,
+  maxWidth,
+  Ul,
+  Li,
+  SectionBreak,
+  UnstyledLink,
+}

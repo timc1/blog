@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { keyframes } from '@emotion/core'
 
 import caretLarge from '../../../images/caret_large.svg'
-import { screensm } from '../../shared/styles'
+import { screenmd } from '../../shared/styles'
 
 import { Laptop } from './shared'
 
@@ -37,9 +37,11 @@ export default React.memo(() => (
 ))
 
 const Container = styled.div`
-  width: 800px;
+  margin: auto;
+  max-width: 800px;
+  width: 100%;
   overflow: hidden;
-  @media (max-width: ${screensm}px) {
+  @media (max-width: ${screenmd}px) {
     width: 600px;
   }
 `

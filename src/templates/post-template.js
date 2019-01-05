@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { css } from '@emotion/core'
 
-import { screenmd, SectionBreak } from '../components/shared/styles'
+import { screenmd, maxWidth, SectionBreak } from '../components/shared/styles'
 
 import SEO from '../components/shared/seo'
 
@@ -51,16 +50,6 @@ export default function Template(props) {
     </>
   )
 }
-
-const maxWidth = css`
-  max-width: 60%;
-  margin-left: auto;
-  margin-right: auto;
-
-  @media (max-width: ${screenmd}px) {
-    max-width: 100%;
-  }
-`
 
 // Styles
 const Title = styled.h1`
@@ -127,6 +116,5 @@ const ScopeItem = styled.li`
 
 const Content = styled.section`
   padding: 40px 0;
-  ${maxWidth};
   margin: auto;
 `

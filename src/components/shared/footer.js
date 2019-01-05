@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { UnstyledLink } from './styles'
+import { UnstyledLink, Ul } from './styles'
 
 export default props => {
   const [year, setYear] = useState(null)
@@ -44,10 +44,13 @@ const Footer = styled.footer`
   margin-top: 40px;
 `
 
-const Items = styled.ul`
+const Items = styled(Ul)`
   display: grid;
   grid-gap: 10px;
 
+  li {
+    list-style: none;
+  }
   li:last-of-type {
     margin-top: 10px;
   }

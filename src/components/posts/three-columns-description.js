@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
-import { screenmd } from '../shared/styles'
+import { screenlg, maxWidth } from '../shared/styles'
 
 export default ({ pre, title, description, post }) => (
   <Container>
@@ -17,10 +17,13 @@ export default ({ pre, title, description, post }) => (
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 150px auto 150px;
+  grid-template-columns: 100px auto 150px;
   grid-gap: 10px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  ${maxWidth};
 
-  @media (max-width: ${screenmd}px) {
+  @media (max-width: ${screenlg}px) {
     grid-template-columns: minmax(50px, auto) auto;
   }
 `
@@ -46,7 +49,7 @@ const Description = styled.p`
   font-size: var(--fontmd);
   font-weight: var(--fontlight);
 
-  @media (max-width: ${screenmd}px) {
+  @media (max-width: ${screenlg}px) {
     grid-column: 2;
   }
 `

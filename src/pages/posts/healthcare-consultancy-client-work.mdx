@@ -9,8 +9,8 @@ project_scope: "Strategy, UI/UX, Design, Development"
 seo_description: "Client work, strategy, ui/ux, design, and development for AV Resources Corporation."
 ---
 
-import { ThreeColumnsDescription } from 'components/posts/index'
-import { Landing } from 'components/animations/av/index'
+import { ThreeColumnsDescription, IllustrationWrapper } from 'components/posts/index'
+import { Landing, Jobs, Forms, Consulting, Dashboard } from 'components/animations/av/index'
 
 <Landing />
 
@@ -21,6 +21,14 @@ import { Landing } from 'components/animations/av/index'
   post=""
 />
 
+<IllustrationWrapper illustrations={[
+  Jobs,
+  Forms, 
+  Consulting
+]} />
+
+
+
 <ThreeColumnsDescription 
   pre="02."
   title="Control & Customization"
@@ -28,4 +36,11 @@ import { Landing } from 'components/animations/av/index'
   post=""
 />
 
+<Dashboard />
 
+<ThreeColumnsDescription 
+  pre="03."
+  title="CREATING A HEALTHCARE HOME BASE"
+  description="With dozens of remote consultants and at a rapidly growing rate, AV needed a home base to to easily communicate new job opportunities, upcoming events, and to keep their community up to date. Along with their social channels, they wanted a single entry point to everything regarding the company. Visitors can view and apply for various openings, sign up for upcoming events and meetups, and read about the latest in running an independent healthcare business."
+  post=""
+/>

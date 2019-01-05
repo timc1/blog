@@ -183,15 +183,15 @@ export const IconBack = styled.div`
 
 const LaptopPlainScreen = styled.div`
   background: #fff;
-  box-shadow: var(--lightboxshadow);
-  border-radius: var(--baseborderradius);
+  box-shadow: var(--illustrationboxshadow);
+  border-radius: var(--illustrationborderradius);
 `
 
 const LaptopPlainHeader = styled.div`
   padding: 8px;
-  background: var(--light);
-  border-top-left-radius: var(--baseborderradius);
-  border-top-right-radius: var(--baseborderradius);
+  background: var(--illustrationlightbackground);
+  border-top-left-radius: var(--illustrationborderradius);
+  border-top-right-radius: var(--illustrationborderradius);
   > div {
     max-width: 60%;
     margin: auto;

@@ -75,6 +75,8 @@
   --illustrationborderradius: 5px;
   --illustrationboxshadow: 0 1px 3px rgba(188,193,217,0.12),0 5px 12px rgba(188,193,217,0.25);
   --illustrationlightbackground: #f7fafc;
+  --illustrationavfont: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --illustrationease: cubic-bezier(0.74,-0.21,0.51,1.39);
 }
 
 @media(max-width: 767px) {
@@ -117,16 +119,20 @@ html {}
 
 body {
   margin: 0;
-  padding: var(--basepadding);
+  padding: 20px;
 }
 
 main, footer {
   position: relative;
   max-width: 1600px;
   margin: auto;
-  padding: 0;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+main {
+  padding: 20px;
+  margin: -20px;
 }
 
 a, button, input, select, textarea, label {
