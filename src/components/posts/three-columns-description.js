@@ -20,8 +20,8 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 100px auto 150px;
   grid-gap: 10px;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 80px;
+  margin-bottom: 80px;
   ${maxWidth};
 
   @media (max-width: ${screenlg}px) {

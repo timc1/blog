@@ -22,10 +22,8 @@ const IndexPage = ({ data }) => {
       />
 
       <Section>
-        <Title css={{ fontWeight: `var(--fontlight)` }}>Tim Chang</Title>
-        <Subtitle css={{ fontWeight: `var(--fontbold)` }}>
-          Product Designer &amp; Developer
-        </Subtitle>
+        <Title>Tim Chang</Title>
+        <Subtitle>Product Designer &amp; Developer</Subtitle>
         <SectionBreak />
         <Posts>
           {posts.map((post, index) => {
@@ -99,14 +97,14 @@ const Detail = styled.li`
 const Title = styled.h1`
   font-size: var(--fontmd);
   font-family: var(--titlefont);
-  font-weight: var(--fontregular);
+  font-weight: var(--fontlight);
   margin: 0 0 5px 0;
 `
 
 const Subtitle = styled.h2`
   font-size: var(--fontmd);
   font-family: var(--titlefont);
-  font-weight: var(--fontregular);
+  font-weight: var(--fontlight);
   margin: 0;
 `
 

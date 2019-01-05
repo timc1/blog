@@ -136,7 +136,7 @@ const Toggler = styled.button`
 const ModalContentContainer = styled.div`
   max-width: var(--skewedcontent);
   margin-left: auto;
-  padding: 30px 0;
+  padding-top: 30px;
 
   .animate {
     transform: translateX(0);

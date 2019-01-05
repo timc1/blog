@@ -106,8 +106,6 @@
   box-sizing: border-box;
 }
 
-html {}
-
 .hidden {
   height: 0;
   visibility: hidden;
@@ -119,20 +117,20 @@ html {}
 
 body {
   margin: 0;
-  padding: 20px;
+  padding: 0;
 }
 
 main, footer {
   position: relative;
-  max-width: 1600px;
+  max-width: 1800px;
   margin: auto;
   box-sizing: border-box;
   overflow: hidden;
 }
 
 main {
+  min-height: 800px;
   padding: 20px;
-  margin: -20px;
 }
 
 a, button, input, select, textarea, label {

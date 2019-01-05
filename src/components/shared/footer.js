@@ -39,9 +39,11 @@ export default props => {
 
 const Footer = styled.footer`
   width: max-content;
+  margin-top: 40px;
+  margin-bottom: 20px;
   margin-right: ${props => (props.alignLeft ? 'auto' : '0')};
   margin-left: ${props => (props.alignLeft ? '0' : 'auto')};
-  margin-top: 40px;
+  padding-right: 20px;
 `
 
 const Items = styled(Ul)`
