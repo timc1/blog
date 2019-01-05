@@ -12,8 +12,6 @@ const IndexPage = ({ data }) => {
     fields: edge.node.parent,
   }))
 
-  console.log(data, posts)
-
   return (
     <>
       <SEO
@@ -31,7 +29,7 @@ const IndexPage = ({ data }) => {
             return (
               <Post key={post.fields.name}>
                 <PostLink
-                  to={`${post.fields.sourceInstanceName}/${post.fields.name}`}
+                  to={`/${post.fields.sourceInstanceName}/${post.fields.name}`}
                 >
                   <Details>
                     <Detail>{number}.</Detail>
@@ -79,17 +77,38 @@ const Section = styled.section`
   padding-top: 80px;
 `
 
-const Details = styled.ul`
+export const Details = styled.ul`
   display: grid;
   grid-auto-flow: column;
   justify-content: start;
   grid-gap: 10px;
   color: var(--gray);
+
+  @media (min-width: ${screenmd + 1}px) {
+    justify-content: ${props =>
+      props.theme.direction === 'right' ? 'end' : 'start'};
+
+    margin-right: ${props =>
+      props.theme.direction === 'right' ? '1.25rem' : '0'};
+  }
+
+  @media (max-width: ${screenmd}px) {
+    margin-left: 0.25rem;
+  }
+
+  transform: ${props =>
+    props.theme.direction === 'left'
+      ? 'translateX(1.25rem)'
+      : props =>
+          props.theme.direction === 'right'
+            ? 'translateX(0)'
+            : 'translateX(.25rem)'};
 `
 
-const Detail = styled.li`
+export const Detail = styled.li`
   list-style: none;
   font-size: var(--fontsm);
+  color: var(--gray);
   text-transform: uppercase;
   margin-bottom: 10px;
 `
@@ -115,6 +134,18 @@ const Post = styled.li`
   padding-bottom: 60px;
 `
 
+export const PostTitle = styled.h1`
+  margin: 0;
+  font-size: var(--fontxl);
+  font-weight: var(--fontlight);
+  font-family: var(--titlefont);
+
+  @media (min-width: ${screenmd + 1}px) {
+    text-align: ${props =>
+      props.theme.direction === 'right' ? 'right' : 'left'};
+  }
+`
+
 const PostLink = styled(Link)`
   color: var(--black);
   outline: none;
@@ -123,19 +154,11 @@ const PostLink = styled(Link)`
     &:hover,
     &:active,
     &:focus {
-      h1,
-      ul {
+      ${PostTitle} {
         text-decoration: underline;
       }
     }
   }
-`
-
-const PostTitle = styled.h1`
-  margin: 0;
-  font-size: var(--fontxl);
-  font-weight: var(--fontlight);
-  font-family: var(--titlefont);
 `
 
 export default IndexPage

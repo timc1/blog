@@ -49,7 +49,9 @@
 :root {
   --black: #000;
   --white: #fff;
-  --gray: #484848;
+  --gray: #262C2F;
+  --lightgray: #f7fafc;
+
   --blue: #4799FF;
   --red: #fc3f3b;
 
@@ -71,6 +73,7 @@
 
   --basepadding: 20px;
   --skewedcontent: 45%;
+  --contentmaxwidth: 60%;
 
   --illustrationborderradius: 5px;
   --illustrationboxshadow: 0 1px 3px rgba(188,193,217,0.12),0 5px 12px rgba(188,193,217,0.25);
@@ -82,6 +85,7 @@
 @media(max-width: 767px) {
   :root {
     --skewedcontent: 100%; 
+    --contentmaxwidth: 100%;
   }
 }
 

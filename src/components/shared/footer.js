@@ -52,6 +52,7 @@ const Items = styled(Ul)`
 
   li {
     list-style: none;
+    font-weight: var(--fontregular);
   }
   li:last-of-type {
     margin-top: 10px;

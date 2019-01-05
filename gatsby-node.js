@@ -47,6 +47,12 @@ exports.createPages = ({ graphql, actions, getNode }) => {
                     short_name
                     scope
                   }
+                  parent {
+                    ... on File {
+                      name
+                      sourceInstanceName
+                    }
+                  }
                 }
                 next {
                   id
@@ -54,6 +60,12 @@ exports.createPages = ({ graphql, actions, getNode }) => {
                     title
                     short_name
                     scope
+                  }
+                  parent {
+                    ... on File {
+                      name
+                      sourceInstanceName
+                    }
                   }
                 }
                 node {

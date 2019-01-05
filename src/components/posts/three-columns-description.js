@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
-import { screenlg, maxWidth } from '../shared/styles'
+import { screenlg } from '../shared/styles'
 
 export default ({ pre, title, description, postTitle, post }) => (
   <Container>
@@ -22,7 +22,6 @@ const Container = styled.div`
   grid-gap: 10px;
   margin-top: 80px;
   margin-bottom: 80px;
-  ${maxWidth};
 
   @media (max-width: ${screenlg}px) {
     grid-template-columns: minmax(50px, auto) auto;

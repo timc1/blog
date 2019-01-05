@@ -7,7 +7,7 @@ const screenmd = 767
 const screenlg = 1439
 
 const maxWidth = css`
-  max-width: 60%;
+  max-width: var(--contentmaxwidth);
   margin-left: auto;
   margin-right: auto;
 
@@ -33,7 +33,8 @@ const SectionBreak = styled.hr`
 const UnstyledLink = styled(Link)`
   display: block;
   color: var(--black);
-  font-size: var(--fontsm);
+  font-size: var(--fontmd);
+  font-weight: var(--fontlight);
   padding: 5px;
   margin: -5px;
   cursor: ${props => (props.newtab ? 'ne-resize' : 'pointer')};
