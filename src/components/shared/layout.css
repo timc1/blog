@@ -49,10 +49,10 @@
 :root {
   --black: #000;
   --white: #fff;
-  --gray: #262C2F;
+  --gray: #262c2f;
   --lightgray: #f7fafc;
 
-  --blue: #4799FF;
+  --blue: #4799ff;
   --red: #fc3f3b;
 
   --basefont: Akkurat, Open Sans, sans-serif;
@@ -61,30 +61,33 @@
   --fontregular: 400;
   --fontbold: 800;
 
-  --fontsm: .85rem;
+  --fontsm: 0.85rem;
   --fontmd: 1.25rem;
   --fontlg: 2rem;
   --fontxl: 3rem;
   --fontxxl: 4.4rem;
 
-  --ease: cubic-bezier(.55,.2,.53,.94);
+  --ease: cubic-bezier(0.55, 0.2, 0.53, 0.94);
 
-  --baseboxshadow: 0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3);
+  --baseboxshadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3);
 
   --basepadding: 20px;
   --skewedcontent: 45%;
   --contentmaxwidth: 60%;
 
   --illustrationborderradius: 5px;
-  --illustrationboxshadow: 0 1px 3px rgba(188,193,217,0.12),0 5px 12px rgba(188,193,217,0.25);
+  --illustrationboxshadow: 0 1px 3px rgba(188, 193, 217, 0.12),
+    0 5px 12px rgba(188, 193, 217, 0.25);
   --illustrationlightbackground: #f7fafc;
-  --illustrationavfont: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --illustrationease: cubic-bezier(0.74,-0.21,0.51,1.39);
+  --illustrationavfont: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --illustrationease: cubic-bezier(0.74, -0.21, 0.51, 1.39);
 }
 
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   :root {
-    --skewedcontent: 100%; 
+    --skewedcontent: 100%;
     --contentmaxwidth: 100%;
   }
 }
@@ -94,7 +97,7 @@
   color: #fff;
 }
 ::-moz-selection {
-  background: var(--blue);/* Gecko Browsers */
+  background: var(--blue); /* Gecko Browsers */
   color: #fff;
 }
 
@@ -103,8 +106,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  -webkit-font-feature-settings: "pnum";
-  font-feature-settings: "pnum";
+  -webkit-font-feature-settings: 'pnum';
+  font-feature-settings: 'pnum';
   font-variant-numeric: proportional-nums;
   font-family: var(--basefont);
   box-sizing: border-box;
@@ -124,7 +127,8 @@ body {
   padding: 0;
 }
 
-main, footer {
+main,
+footer {
   position: relative;
   max-width: 1800px;
   margin: auto;
@@ -137,7 +141,12 @@ main {
   padding: 20px;
 }
 
-a, button, input, select, textarea, label {
+a,
+button,
+input,
+select,
+textarea,
+label {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -150,9 +159,9 @@ ul {
   padding: 0;
 }
 
-input[type="text"],
-input[type="button"],
-input[type="submit"],
+input[type='text'],
+input[type='button'],
+input[type='submit'],
 textarea {
   -webkit-appearance: none;
   border-radius: 0;
@@ -175,10 +184,10 @@ textarea {
   resize: none;
 }
 
-input::placeholder, 
+input::placeholder,
 textarea::placeholder {
   font-size: var(--fontmd);
   color: var(--black);
-  transition: opacity .25s var(--cubic);
+  transition: opacity 0.25s var(--cubic);
   opacity: 0;
 }
