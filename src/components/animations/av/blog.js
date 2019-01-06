@@ -134,7 +134,7 @@ const Banner = styled.div`
     align-items: center;
     font-size: 6px;
     font-weight: var(--fontbold);
-    font-family: var(--illustrationavfont);
+    font-family: var(--illustrationavfont) !important;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
@@ -165,7 +165,7 @@ const Body = styled.div`
 
 const Title = styled.h5`
   font-size: ${props => (props.theme.isOverlay ? '10px' : '18px')};
-  font-family: var(--illustrationavfont);
+  font-family: var(--illustrationavfont) !important;
   font-weight: var(--fontbold);
   text-align: ${props => (props.theme.isOverlay ? 'left' : 'center')};
   margin: 0;
@@ -230,7 +230,7 @@ const FooterColumn = styled.div`
     background: none !important;
     font-size: 10px;
     font-weight: var(--fontbold);
-    font-family: var(--illustrationavfont);
+    font-family: var(--illustrationavfont) !important;
     color: #fff;
   }
 `

@@ -7,7 +7,15 @@ seo_description:
   'Javascript experiment using three.js, WebGL to build a interactive 3d globe.'
 ---
 
-import { ThreeColumnsDescription } from 'components/posts/index'
+import { BannerImage } from 'components/posts/index'
+import globeSvg from 'images/globe-dots.svg'
+
+<BannerImage src={globeSvg} alt="globe outline" />
+
+This is a step-by-step introduction to building an interactive three.js globe.
+The goal is to create a 3d globe that rotates to a specific latitude and
+longitude. The full repo can be found here, and the live application can be
+found on tcc.im.
 
 I was inspired by
 <a href="https://stripe.com/atlas" target="_blank" rel="noopener noreferrer">Stripe</a>'s
@@ -16,18 +24,40 @@ implementation showcasing their global clients, and web developer,
 help and original idea of converting 2d points into a 3d globe, with special
 thanks to
 <a href="https://www.instagram.com/alex.scarey" title="Alex Carey's Instagram" target="_blank" rel="noopener noreferrer">Alex</a>,
-a motion designer here in LA, for helping me plot the world map.
+a motion designer for helping me plot the world map.
 
 ### What we'll cover
 
 - Quick Three.js Basics
-- Create a basic sphere with a meshed image
-- Dynamically create a globe with dots from an SVG image
+- Create an SVG outline of a Mercator globe projection with dots
+- Convert the SVG outline into a 3 dimensional globe
 - Rotate the globe to a given latitude and longitude
 - Next Steps
 
-<ThreeColumnsDescription
-  pre="01."
-  title="Quick Three.js Basics"
-  description="hihihi"
-/>
+#### Quick Three.js Basics
+
+Three.js is a library used to display animated 3d graphics in the browser. It's
+built on top of WebGL, and encapsulates a lot of the complexities of using WebGL
+directly. There are 3 main things that will help us render something onto the
+screen: a _scene_, _renderer_, and _camera_.
+
+Scenes allow you to set up what and where is to be rendered by three.js
+(documentation).
+
+Cameras, specifically the PerspectiveCamera, mimics the way the human eye sees
+and is also the most commonly used to render 3d scenes.
+
+The renderer is what "renders" our scene to the screen.
+
+Let's set up our HTML file:
+
+I wanted to keep things as minimalistic as possible, so when starting this
+project, I decided to go with a plain html, css, and javascript file. We'll
+import the three.js libraray as well as orbital-controls.js, which you can find
+my version here, or get the original here. In my version, I've added two
+methods, setPolarAngle and setAzimuthalAngle, which we will use later to set
+camera angles.
+
+```js
+var hi = 'test'
+```

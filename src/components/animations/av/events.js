@@ -313,7 +313,7 @@ const SocialMediaIcons = styled.div`
   grid-auto-columns: max-content;
   grid-gap: 15px;
   align-items: center;
-  transform: scale(0.5);
+  transform: scale(0.5) translateX(50%);
 `
 
 const Button = styled.div`

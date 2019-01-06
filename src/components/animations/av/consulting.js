@@ -107,6 +107,7 @@ const Header = styled.div`
   z-index: 1;
 
   & > h3 {
+    margin: 0;
     text-align: center;
     color: #fff;
     text-shadow: rgba(0, 0, 0, 0.1) 2px 2px;
@@ -142,9 +143,8 @@ const Animation = styled.div`
   place-items: center;
   max-width: 105px;
   width: 100%;
-  margin: 0 auto;
+  margin: 30px auto;
   padding: 0px;
-  transform: scale(0.8);
   z-index: 1;
 
   & > div {

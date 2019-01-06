@@ -90,6 +90,7 @@ const BannerText = styled.div`
   display: grid;
   grid-gap: 5px;
   > h3 {
+    margin: 0;
     font-weight: var(--fontbold);
     font-size: 15px;
     font-family: var(--illustrationavfont);

@@ -182,6 +182,7 @@ const App = styled.div`
   box-shadow: rgba(188, 193, 217, 0.12) 0px 1px 3px,
     rgba(164, 169, 175, 0.16) 0px 5px 12px;
   > h5 {
+    margin: 0 0 -5px 0;
     font-size: 8px;
     font-weight: var(--fontbold);
     font-family: var(--illustrationavfont);
@@ -202,7 +203,6 @@ const AppBody = styled.div`
   grid-template-columns: 1fr 0.1fr;
   grid-column-gap: 20px;
   grid-row-gap: 5px;
-  margin-top: 10px;
 
   > span {
     height: 3px;

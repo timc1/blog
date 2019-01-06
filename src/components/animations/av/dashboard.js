@@ -231,6 +231,8 @@ const Sidebar = styled.div`
   }
   > .menu-items {
     font-size: 8px;
+    list-style: none;
+    padding: 0;
     > li {
       position: relative;
       padding: 5px 10px;
