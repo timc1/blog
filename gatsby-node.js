@@ -22,8 +22,7 @@ const createPosts = (createPage, edges) => {
         __dirname
       ),
       context: {
-        frontmatter: node.frontmatter,
-        html: node.code.body,
+        id: node.id,
         next,
         previous,
       },
@@ -43,14 +42,13 @@ exports.createPages = ({ graphql, actions }) => {
               edges {
                 node {
                   id
-                  frontmatter {
-                    title
+                  fields {
+                    id
                     date
-                    scope
-                    short_name
+                    title
                     background
+                    scope
                     project_scope
-                    seo_description
                   }
                   parent {
                     ... on File {
@@ -80,53 +78,58 @@ exports.createPages = ({ graphql, actions }) => {
   })
 }
 
-//exports.onCreateNode = ({ node, getNode, actions }) => {
-//  const { createNodeField } = actions
-//
-//  if (node.internal.type === `Mdx`) {
-//    const parent = getNode(node.parent)
-//
-//    createNodeField({
-//      name: 'id',
-//      node,
-//      value: node.id,
-//    })
-//
-//    createNodeField({
-//      name: 'title',
-//      node,
-//      value: node.frontmatter.title,
-//    })
-//
-//    createNodeField({
-//      name: 'description',
-//      node,
-//      value: node.frontmatter.background,
-//    })
-//
-//    createNodeField({
-//      name: 'slug',
-//      node,
-//      value: node.frontmatter.slug,
-//    })
-//
-//    createNodeField({
-//      name: 'date',
-//      node,
-//      value: node.frontmatter.date || '',
-//    })
-//
-//    createNodeField({
-//      name: 'categories',
-//      node,
-//      value: node.frontmatter.categories || [],
-//    })
-//
-//    createNodeField({
-//      name: 'keywords',
-//      node,
-//      value: node.frontmatter.keywords || [],
-//    })
-//  }
-//}
-//
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  const { createNodeField } = actions
+
+  if (node.internal.type === `Mdx`) {
+    const parent = getNode(node.parent)
+
+    createNodeField({
+      name: 'id',
+      node,
+      value: node.id,
+    })
+
+    createNodeField({
+      name: 'title',
+      node,
+      value: node.frontmatter.title,
+    })
+
+    createNodeField({
+      name: 'background',
+      node,
+      value: node.frontmatter.background || '',
+    })
+
+    createNodeField({
+      name: 'date',
+      node,
+      value: node.frontmatter.date || '',
+    })
+
+    createNodeField({
+      name: 'scope',
+      node,
+      value: node.frontmatter.scope || '',
+    })
+
+    createNodeField({
+      name: 'project_scope',
+      node,
+      value: node.frontmatter.project_scope || [],
+    })
+
+    createNodeField({
+      name: 'categories',
+      node,
+      value: node.frontmatter.categories || [],
+    })
+
+    createNodeField({
+      name: 'keywords',
+      node,
+      value: node.frontmatter.keywords || [],
+    })
+  }
+}

@@ -7,12 +7,33 @@ import { screenmd, maxWidth, SectionBreak } from '../components/shared/styles'
 import SEO from '../components/shared/seo'
 
 import MDXRenderer from 'gatsby-mdx/mdx-renderer'
-import { Link } from 'gatsby'
+import { Link, graphql } from 'gatsby'
 
 import { PostTitle, Details, Detail } from '../pages/index'
 
-export default function Template({ pageContext }) {
-  const { frontmatter, html, next, previous } = pageContext
+export const pageQuery = graphql`
+  query($id: String!) {
+    mdx(fields: { id: { eq: $id } }) {
+      frontmatter {
+        title
+        date
+        scope
+        short_name
+        background
+        project_scope
+        seo_description
+      }
+      code {
+        body
+      }
+    }
+  }
+`
+
+export default function Template({ pageContext, data }) {
+  const { next, previous } = pageContext
+  const { mdx } = data
+  const { frontmatter } = mdx
 
   return (
     <>
@@ -42,7 +63,7 @@ export default function Template({ pageContext }) {
             <div>
               <PostDetailsTitle>Scope</PostDetailsTitle>
               <Scope>
-                {frontmatter.project_scope.split(',').map(item => (
+                {frontmatter.project_scope.map(item => (
                   <ScopeItem key={item}>{item}</ScopeItem>
                 ))}
               </Scope>
@@ -52,7 +73,7 @@ export default function Template({ pageContext }) {
       )}
 
       <Content>
-        <MDXRenderer>{html}</MDXRenderer>
+        <MDXRenderer>{mdx.code.body}</MDXRenderer>
       </Content>
       <Break />
       <SuggestedPost next={next} previous={previous} />
@@ -69,10 +90,10 @@ const SuggestedPost = ({ next, previous }) => (
         >
           <Details>
             <DetailTitle>Previous</DetailTitle>
-            <Detail>{previous.frontmatter.short_name}</Detail>
-            <Detail>{previous.frontmatter.scope}</Detail>
+            <Detail>{previous.fields.short_name}</Detail>
+            <Detail>{previous.fields.scope}</Detail>
           </Details>
-          <PostTitle>{previous.frontmatter.title}</PostTitle>
+          <PostTitle>{previous.fields.title}</PostTitle>
         </SPLink>
       </ThemeProvider>
     )}
@@ -80,11 +101,11 @@ const SuggestedPost = ({ next, previous }) => (
       <ThemeProvider theme={{ direction: 'right' }}>
         <SPLink to={`/${next.parent.sourceInstanceName}/${next.parent.name}`}>
           <Details>
-            <Detail>{next.frontmatter.short_name}</Detail>
-            <Detail>{next.frontmatter.scope}</Detail>
+            <Detail>{next.fields.short_name}</Detail>
+            <Detail>{next.fields.scope}</Detail>
             <DetailTitle>Up next</DetailTitle>
           </Details>
-          <PostTitle>{next.frontmatter.title}</PostTitle>
+          <PostTitle>{next.fields.title}</PostTitle>
         </SPLink>
       </ThemeProvider>
     )}
