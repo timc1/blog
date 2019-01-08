@@ -13,7 +13,6 @@ import { PostTitle, Details, Detail } from '../pages/index'
 
 export default function Template({ pageContext }) {
   const { frontmatter, html, next, previous } = pageContext
-  console.log(next, previous)
 
   return (
     <>
