@@ -6,6 +6,8 @@ import SEO from '../components/shared/seo'
 import styled from '@emotion/styled'
 import { screenmd, SectionBreak } from '../components/shared/styles'
 
+import DistortedImage from '../components/animations/distorted-image'
+
 const IndexPage = ({ data }) => {
   const posts = data.allMdx.edges.map(edge => ({
     frontmatter: edge.node.frontmatter,
@@ -18,8 +20,8 @@ const IndexPage = ({ data }) => {
         title="Essays and thoughts on web development, client work, and growth at timcchang"
         keywords={[`UI`, `UX`, `Web Design`, `Business Design`]}
       />
-
-      <Section>
+      <DistortedImage />
+      <Section className="blur-me">
         <Title>Tim Chang</Title>
         <Subtitle>Product Designer &amp; Developer</Subtitle>
         <SectionBreak />

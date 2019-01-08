@@ -70,10 +70,8 @@ export default ({ children, domNode, ...props }) => {
           node =>
             (node.style = `
           will-change: filter;
-          transition-properties: filter, opacity;
-          transition: .35s var(--ease);
+          transition: filter .35s var(--ease);
           filter: blur(10px);
-          opacity: .6;
         `)
         )
       } else {
@@ -87,10 +85,8 @@ export default ({ children, domNode, ...props }) => {
           node =>
             (node.style = `
           will-change: filter;
-          transition-properties: filter, opacity;
-          transition: .35s var(--ease);
+          transition: filter .35s var(--ease);
           filter: blur(0px);
-          opacity: 1;
         `)
         )
       }
