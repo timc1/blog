@@ -36,7 +36,7 @@ export default function Template({ pageContext, data }) {
   const { frontmatter } = mdx
 
   return (
-    <>
+    <div className="blur-me">
       <SEO
         title={frontmatter.title}
         description={frontmatter.seo_description}
@@ -77,7 +77,7 @@ export default function Template({ pageContext, data }) {
       </Content>
       <Break />
       <SuggestedPost next={next} previous={previous} />
-    </>
+    </div>
   )
 }
 

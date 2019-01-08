@@ -6,6 +6,8 @@ import SEO from '../components/shared/seo'
 import styled from '@emotion/styled'
 import { screenmd, SectionBreak } from '../components/shared/styles'
 
+import CurtainImage from '../components/animations/curtain-image'
+
 const IndexPage = ({ data }) => {
   const posts = data.allMdx.edges.map(edge => ({
     frontmatter: edge.node.frontmatter,
@@ -18,8 +20,8 @@ const IndexPage = ({ data }) => {
         title="Essays and thoughts on web development, client work, and growth at timcchang"
         keywords={[`UI`, `UX`, `Web Design`, `Business Design`]}
       />
-
-      <Section>
+      <CurtainImage />
+      <Section className="blur-me">
         <Title>Tim Chang</Title>
         <Subtitle>Product Designer &amp; Developer</Subtitle>
         <SectionBreak />
@@ -48,7 +50,7 @@ const IndexPage = ({ data }) => {
 }
 
 export const query = graphql`
-  query PostsQuery {
+  query AllPostsQuery {
     allMdx {
       edges {
         node {
@@ -75,6 +77,10 @@ const Section = styled.section`
   max-width: var(--skewedcontent);
   margin-left: auto;
   padding-top: 80px;
+  @media (max-width: ${screenmd}px) {
+    margin-top: 300px;
+    padding-top: 40px;
+  }
 `
 
 export const Details = styled.ul`
