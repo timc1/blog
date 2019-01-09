@@ -24,7 +24,7 @@ const Container = styled.div`
   margin-bottom: 80px;
 
   @media (max-width: ${screenlg}px) {
-    grid-template-columns: minmax(50px, auto) auto;
+    grid-template-columns: minmax(20px, auto) auto;
   }
 `
 
@@ -74,6 +74,7 @@ const Post = styled.div`
     grid-gap: 10px;
     font-size: var(--fontmd);
     font-weight: var(--fontlight);
+    padding: 0;
   }
 
   li {

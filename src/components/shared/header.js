@@ -174,7 +174,7 @@ const MCAbout = styled.p`
   opacity: 0;
   transform: ${props => (props.noTransform ? 'none' : 'translateX(25px)')};
   transition: 0.55s var(--ease);
-  transition-properties: opacity, transform;
+  transition-property: opacity, transform;
 `
 
 const Break = styled(SectionBreak)`

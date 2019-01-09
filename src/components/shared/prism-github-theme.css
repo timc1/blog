@@ -31,7 +31,7 @@ pre[class*='language-'] {
 
 pre[class*='language-'],
 :not(pre) > code[class*='language-'] {
-  border-radius: 5px;
+  border-radius: var(--baseborderradius);
   border: 1px solid #e1e1e8;
   box-shadow: 1px 1px 0.3em -0.1em black inset;
 }

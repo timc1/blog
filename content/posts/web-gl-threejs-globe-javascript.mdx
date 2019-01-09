@@ -7,56 +7,59 @@ seo_description:
   'Javascript experiment using three.js, WebGL to build a interactive 3d globe.'
 ---
 
-import { BannerImage } from 'components/posts/index'
+import { BannerImage, Image } from 'components/posts/index'
 import globeSvg from 'images/globe-dots.svg'
+import globeJpg from 'images/globe-dots.jpg'
+import globeSphere from 'images/globe-sphere.jpg'
+import globeGif from 'images/globe-gif.gif'
 
 <BannerImage src={globeSvg} alt="globe outline" />
 
-This is a step-by-step introduction to building an interactive three.js globe.
-The goal is to create a 3d globe that rotates to a specific latitude and
-longitude. The full repo can be found here, and the live application can be
-found on tcc.im.
+This is an introduction to using three.js. The goal is to create a 3d globe that
+rotates to a specific latitude and longitude. The full repository can be found
+[here](https://github.com/timc1/tcc.im), and the live application can be found
+on [tcc.im](https://tcc.im).
 
-I was inspired by
-<a href="https://stripe.com/atlas" target="_blank" rel="noopener noreferrer">Stripe</a>'s
-implementation showcasing their global clients, and web developer,
-<a href="https://flamov.com" target="_blank" rel="noopener noreferrer">Sam</a>'s
-help and original idea of converting 2d points into a 3d globe, with special
-thanks to
-<a href="https://www.instagram.com/alex.scarey" title="Alex Carey's Instagram" target="_blank" rel="noopener noreferrer">Alex</a>,
-a motion designer for helping me plot the world map.
+I was inspired by [Stripe](https://stripe.com/atlas)'s implementation showcasing
+their global clients, [Sam](https://flamov.com)'s help and original idea of
+converting 2d points into a 3d globe, and
+[Alex](https://www.instagram.com/alex.scarey)'s help with plotting the world
+map.
 
-### What we'll cover
+#### What we'll cover
 
-- Quick Three.js Basics
-- Create an SVG outline of a Mercator globe projection with dots
-- Convert the SVG outline into a 3 dimensional globe
-- Rotate the globe to a given latitude and longitude
+- Quick Three.js Overview
+- File setup
+- Create a projection of a globe
+- Implement orbital controls that allow us to rotate the globe
+- Add the ability to rotate the globe to a given latitude and longitude
 - Next Steps
 
-#### Quick Three.js Basics
+### Quick Three.js Overview
 
 Three.js is a library used to display animated 3d graphics in the browser. It's
 built on top of WebGL, and encapsulates a lot of the complexities of using WebGL
-directly. There are 3 main things that will help us render something onto the
-screen: a _scene_, _renderer_, and _camera_.
+directly.
 
-Scenes allow you to set up what and where is to be rendered by three.js
-(documentation).
+There are 3 main things that we'll use that will help us render something onto
+the screen: a _scene_, _renderer_, and _camera_.
 
-Cameras, specifically the PerspectiveCamera, mimics the way the human eye sees
-and is also the most commonly used to render 3d scenes.
+1. _Scene_ allows us to set up what and where is to be rendered by three.js.
+2. _Camera_, specifically the PerspectiveCamera, mimics the way the human eye
+   sees and is also the most commonly used to render 3d scenes.
+3. _Renderer_ is what "renders" our scene to the screen.
 
-The renderer is what "renders" our scene to the screen.
+### File setup
 
-Let's set up our HTML file:
+We'll keep things as minimal as possible, so we'll start with a plain html, css,
+and javascript file. We'll import the three.js libraray as well as
+orbital-controls.js, which you can find my version [here](https://tcc.im), or
+get the original
+[here](https://github.com/mrdoob/three.js/blob/master/examples/js/controls/OrbitControls.js).
+In my version, I've added two methods, setPolarAngle and setAzimuthalAngle,
+which we will use later to set camera angles.
 
-I wanted to keep things as minimalistic as possible, so when starting this
-project, I decided to go with a plain html, css, and javascript file. We'll
-import the three.js libraray as well as orbital-controls.js, which you can find
-my version here, or get the original here. In my version, I've added two
-methods, setPolarAngle and setAzimuthalAngle, which we will use later to set
-camera angles.
+animations.js will hold our main app.
 
 ```html
 <html>
@@ -68,13 +71,413 @@ camera angles.
 
     <script src="js/external/three.js"></script>
     <script src="js/external/orbital-controls.js"></script>
-    <script src="js/home/animations.js" async></script>
+    <script src="js/animations.js"></script>
   </body>
 </html>
 ```
 
-```js
-const test = 'hi'
+In our animations.js file we'll add a few variables accessible throughout the
+app inside an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE).
+We'll also add a setup function to initiate everything:
 
-const why = 'hiii'
+```js
+;(function init() {
+  // Globals
+  // =======
+  // Cache DOM selector
+  const container = document.getElementsByClassName('globe')[0]
+  const canvas = container.getElementsByTagName('canvas')[0]
+  // Canvas width and height
+  const width = 1000
+  const height = 800
+  const globeRadius = 200
+  const globeSegments = 64
+  const globeWidth = 4098 / 2
+  const globeHeight = 1968 / 2
+
+  // A group to hold everything
+  const groups = {
+    globe: null,
+    globePoints: null,
+  }
+
+  /**
+   * Three.js variables and properties we need to keep track of.
+   *
+   * @property {Array} data the points that make up our globe
+   * @property {Object} scene three.js scene
+   * @property {Object} renderer three.js renderer
+   * @property {Object} camera three.js camera
+   * @property {Object} globe the object that contains the elements that make up the globe
+   */
+  let data, scene, renderer, globe
+  const camera = {
+    object: null,
+    orbitControls: null,
+    angles: {
+      current: {
+        azimuthal: null,
+        polar: null,
+      },
+      target: {
+        azimuthal: null,
+        polar: null,
+      },
+    },
+    transition: {
+      current: 0,
+      target: 30,
+    },
+  }
+
+  // A state object to hold visual state.
+  const state = {
+    users: [
+      {
+        id: 0,
+        name: 'John Yang',
+        geo: {
+          lat: 31.2304,
+          lng: 121.4737,
+          name: 'Shanghai, CN',
+        },
+        date: '01.23.2018',
+      },
+      {
+        id: 1,
+        name: 'Emma S.',
+        geo: {
+          lat: 55.6761,
+          lng: 12.5683,
+          name: 'Denmark, CPH',
+        },
+        date: '09.20.2018',
+      },
+      {
+        id: 2,
+        name: 'Spencer S.',
+        geo: {
+          lat: 34.0522,
+          lng: -118.2437,
+          name: 'Los Angeles, CA',
+        },
+        date: '12.25.2018',
+      },
+    ],
+    currentUserIndex: null,
+    previousUserIndex: null,
+    isGlobeAnimating: false,
+    // Property to save our setInterval id to auto rotate the globe every n seconds
+    autoRotateGlobeTimer: null,
+  }
+
+  // Functions
+  // =======
+  function setup() {
+    // Setup our Scene, Camera, and Renderer
+    scene = new THREE.Scene()
+    camera.object = new THREE.PerspectiveCamera(45, width / height, 1, 4000)
+    camera.object.position.z = -400
+
+    renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: true,
+      opacity: 1,
+    })
+    renderer.setSize(width, height)
+
+    // We'll implement these later on
+    setupGlobe()
+    setupOrbitControls()
+    setupAutoRotate()
+    render()
+  }
+
+  // Init
+  setup()
+})()
+```
+
+### Create a projection of a globe
+
+We want to create a projection of the earth programatically using dots to
+represent the land. One way this can be done is to overlay a mercator projection
+image with dots using Sketch/Photoshop.
+
+<Image src={globeJpg} alt="Mercator globe projection" />
+
+We then use [this](https://github.com/timc1/svg-to-coordinates) script to
+convert each dot into its respective (x,y) coordinates. See the resulting JSON
+[here](https://s3-us-west-1.amazonaws.com/tcc.assets/points.json).
+
+Using these points, we can construct our globe:
+
+```js
+function setupGlobe() {
+  const canvasSize = 128
+  const textureCanvas = document.createElement('canvas')
+  textureCanvas.width = canvasSize
+  textureCanvas.height = canvasSize
+
+  const canvasContext = textureCanvas.getContext('2d')
+  canvasContext.rect(0, 0, canvasSize, canvasSize)
+  const texture = new THREE.Texture(textureCanvas)
+
+  const geometry = new THREE.SphereGeometry(
+    globeRadius,
+    globeSegments,
+    globeSegments
+  )
+  const material = new THREE.MeshBasicMaterial({
+    map: texture,
+    transparent: true,
+    opacity: 0.5,
+  })
+  globe = new THREE.Mesh(geometry, material)
+
+  groups.globe = globe
+  groups.globe.name = 'Globe'
+
+  scene.add(groups.globe)
+
+  addPoints()
+}
+
+function addPoints() {
+  const mergedGeometry = new THREE.Geometry()
+  // The geometry that will contain all of our points.
+  const pingGeometry = new THREE.SphereGeometry(0.5, 5, 5)
+  // The material that our ping will be created from.
+  const material = new THREE.MeshBasicMaterial({
+    color: '#626177',
+  })
+
+  for (let point of data.points) {
+    // Transform our latitude and longitude values to points on the sphere.
+    const pos = convertFlatCoordsToSphereCoords(point.x, point.y)
+
+    if (pos.x && pos.y && pos.z) {
+      // Position ping item.
+      pingGeometry.translate(pos.x, pos.y, pos.z)
+      // Merge ping item onto our mergedGeometry object.
+      mergedGeometry.merge(pingGeometry)
+      // Reset ping item position.
+      pingGeometry.translate(-pos.x, -pos.y, -pos.z)
+    }
+  }
+
+  // We end up with 1 mesh to add to the scene rather than our (n) number of points.
+  const total = new THREE.Mesh(mergedGeometry, material)
+  groups.globePoints = total
+  groups.globePoints.name = 'Globe Points'
+  scene.add(groups.globePoints)
+}
+```
+
+You should see this:
+
+<Image src={globeSphere} alt="Globe" />
+
+### Implement orbital controls
+
+We want to implement a way for us to rotate it to a specific point. Rotating the
+globe is really just moving the camera around the scene, rather than literally
+rotating the entire scene.
+
+```js
+function setupOrbitControls() {
+  camera.orbitControls = new THREE.OrbitControls(camera.object, canvas)
+  camera.orbitControls.enableKeys = false
+  camera.orbitControls.enablePan = false
+  camera.orbitControls.enableZoom = false
+  camera.orbitControls.enableDamping = false
+  camera.orbitControls.enableRotate = false
+  camera.object.position.z = -550
+  camera.orbitControls.update()
+}
+```
+
+```js
+function setupAutoRotate() {
+  state.autoRotateGlobeTimer = setInterval(() => {
+    focusUser()
+  }, 10000)
+}
+
+function focusUser() {
+  if (state.users.length > 0) {
+    if (state.currentUserIndex === null) {
+      // If there is no current user (when our page first loads), we'll pick one randomly.
+      state.currentUserIndex = getRandomNumberBetween(0, state.users.length - 1)
+    } else {
+      // If we already have an index (page has already been loaded/user already clicked next), we'll continue the sequence.
+      state.previousUserIndex = state.currentUserIndex
+      state.currentUserIndex = (state.currentUserIndex + 1) % state.users.length
+    }
+
+    focusGlobe()
+  }
+}
+
+function focusGlobe() {
+  // 1. We'll get the current user's lat/lng
+  // 2. Set camera.angles.current
+  // 3. Calculate and set camera.angles.target
+  // 4. animate method will handle animating
+  const { geo } = state.users[state.currentUserIndex]
+  camera.angles.current.azimuthal = camera.orbitControls.getAzimuthalAngle()
+  camera.angles.current.polar = camera.orbitControls.getPolarAngle()
+  const { x, y } = convertLatLngToFlatCoords(geo.lat, geo.lng)
+  const { azimuthal, polar } = returnCameraAngles(x, y)
+  camera.angles.target.azimuthal = azimuthal
+  camera.angles.target.polar = polar
+  // Updating state here will make sure our animate method will rotate our globe to the next point.
+  // It will also make sure we update & cache our popup DOM element so we can use it in our animateGlobeToNextLocation.
+  state.isGlobeAnimating = true
+}
+```
+
+Now that we have all the logic down to rotate to a user's specific latitude and
+longtidue, we'll need to call render, which will use requestAnimationFrame and
+recursively render our scene to the screen .
+
+```js
+function render() {
+  renderer.render(scene, camera.object)
+  requestAnimationFrame(render)
+  animate()
+}
+
+function animate() {
+  if (state.isGlobeAnimating) {
+    // Here we update azimuthal and polar angles.
+    // Our focusGlobe() method will trigger state.isGlobeAnimating
+    // and update the current and target azimuthal/polar angles of
+    // our camera. Then, animateGlobeToNextLocation() will
+    // animate globe from the current azimuthal/polar angles to the target.
+    // It will then set state.isGlobeAnimating to false when the angles are equal.
+    animateGlobeToNextLocation()
+
+    camera.orbitControls.update()
+  }
+}
+
+function animateGlobeToNextLocation() {
+  const { current, target } = camera.transition
+  if (current <= target) {
+    const progress = easeInOutCubic(current / target)
+    const {
+      current: { azimuthal: currentAzimuthal, polar: currentPolar },
+      target: { azimuthal: targetAzimuthal, polar: targetPolar },
+    } = camera.angles
+    var azimuthalDifference = (currentAzimuthal - targetAzimuthal) * progress
+    azimuthalDifference = currentAzimuthal - azimuthalDifference
+    camera.orbitControls.setAzimuthalAngle(azimuthalDifference)
+    var polarDifference = (currentPolar - targetPolar) * progress
+    polarDifference = currentPolar - polarDifference
+    camera.orbitControls.setPolarAngle(polarDifference)
+    camera.transition.current++
+  } else {
+    state.isGlobeAnimating = false
+    camera.transition.current = 0
+  }
+}
+```
+
+And there we go! An dynamically rendered globe that rotates to a specific
+latitude and longitude!
+
+<Image src={globeGif} alt="Animated globe gif" />
+
+### Next steps
+
+Now that we have a working globe that rotates to a given latitude and longitude,
+we can implement the controls that triggers the rotation. Similar to the
+controls what are on tcc.im, we can add event listeners to trigger the next
+user, allow visitors to submit their location and updating the globe to reflect
+that, and add an endless number of creative ideas to visualize people around the
+world. I would probably use React or another library that manages state better
+for anything more complex, since doing this with vanilla javascript definitely
+added a bit more complexity that could've been avoided.
+
+This took me a long time to figure out, and there are many optimizations that
+can be made.
+
+If you have gotten this far and stuck on any part of your three.js project, feel
+free to reach out to me! Sam (Flamov)'s help along with his open sourced code
+guided me through much of the complexities.
+
+#### Helper functions
+
+```js
+function convertLatLngToSphereCoords(latitude, longitude) {
+  const phi = (latitude * Math.PI) / 180
+  const theta = ((longitude - 180) * Math.PI) / 180
+  const x = -(globeRadius + -1) * Math.cos(phi) * Math.cos(theta)
+  const y = (globeRadius + -1) * Math.sin(phi)
+  const z = (globeRadius + -1) * Math.cos(phi) * Math.sin(theta)
+  return new THREE.Vector3(x, y, z)
+}
+
+function convertFlatCoordsToSphereCoords(x, y) {
+  // Calculate the relative 3d coordinates using Mercator projection relative to the radius of the globe.
+  // Convert latitude and longitude on the 90/180 degree axis.
+  let latitude = ((x - globeWidth) / globeWidth) * -180
+  let longitude = ((y - globeHeight) / globeHeight) * -90
+  latitude = (latitude * Math.PI) / 180 //(latitude / 180) * Math.PI
+  longitude = (longitude * Math.PI) / 180 //(longitude / 180) * Math.PI // Calculate the projected starting point
+  const radius = Math.cos(longitude) * globeRadius
+  const targetX = Math.cos(latitude) * radius
+  const targetY = Math.sin(longitude) * globeRadius
+  const targetZ = Math.sin(latitude) * radius
+  return {
+    x: targetX,
+    y: targetY,
+    z: targetZ,
+  }
+}
+
+function convertLatLngToFlatCoords(latitude, longitude) {
+  // Reference: https://stackoverflow.com/questions/7019101/convert-pixel-location-to-latitude-longitude-vise-versa
+  const x = Math.round((longitude + 180) * (globeWidth / 360)) * 2
+  const y = Math.round((-1 * latitude + 90) * (globeHeight / 180)) * 2
+  return { x, y }
+}
+
+// Returns a 2d position based off of the canvas width and height to position popups on the globe.
+function getProjectedPosition(
+  width,
+  height,
+  position,
+  contentWidth,
+  contentHeight
+) {
+  position = position.clone()
+  var projected = position.project(camera.object)
+  return {
+    x: projected.x * width + width - contentWidth / 2,
+    y: -(projected.y * height) + height - contentHeight - 10, // -10 for a small offset
+  }
+}
+
+// Returns an object of the azimuthal and polar angles of a given a points x,y coord on the globe
+function returnCameraAngles(x, y) {
+  let targetAzimuthalAngle = ((x - globeWidth) / globeWidth) * Math.PI
+  targetAzimuthalAngle = targetAzimuthalAngle + Math.PI / 2
+  targetAzimuthalAngle += 0.3 // Add a small horizontal offset
+  let targetPolarAngle = (y / (globeHeight * 2)) * Math.PI
+  targetPolarAngle += 0.1 // Add a small vertical offset
+  return {
+    azimuthal: targetAzimuthalAngle,
+    polar: targetPolarAngle,
+  }
+}
+
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
+}
+
+function getRandomNumberBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
 ```

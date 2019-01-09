@@ -247,6 +247,7 @@ const Content = styled.section`
   }
   a {
     color: var(--red);
+    font-weight: var(--fontregular);
 
     @media (min-width: ${screenmd + 1}px) {
       outline: none;
@@ -256,5 +257,8 @@ const Content = styled.section`
         opacity: 0.5;
       }
     }
+  }
+  em {
+    font-weight: var(--fontregular);
   }
 `
