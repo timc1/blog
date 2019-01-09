@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import styled from '@emotion/styled'
 import { screenmd } from '../shared/styles'
+import { debounce } from '../../utils'
 
 import usePixiWarp from '../shared/hooks/usePixiWarp'
 
@@ -16,8 +17,42 @@ export default () => {
     image: timchang,
   })
 
+  const imageContainerRef = useRef()
+  const debounceRef = useRef()
+  const resizeRef = useRef(e =>
+    debounce(
+      debounceRef,
+      () => {
+        try {
+          if (
+            e.target.innerWidth <= 767 &&
+            !imageContainerRef.current.classList.contains('blur-me')
+          ) {
+            imageContainerRef.current.classList.add('blur-me')
+          } else if (
+            e.target.innerWidth >= 768 &&
+            imageContainerRef.current.classList.contains('blur-me')
+          ) {
+            imageContainerRef.current.classList.remove('blur-me')
+          }
+        } catch (err) {
+          if (process.env.NODE_ENV !== 'production') {
+            console.log('err', err)
+          }
+        }
+      },
+      500
+    )
+  )
+
+  useEffect(() => {
+    window.addEventListener('resize', resizeRef.current)
+
+    return () => window.removeEventListener('resize', resizeRef.current)
+  }, [])
+
   return (
-    <ImageContainer aria-hidden="true">
+    <ImageContainer ref={imageContainerRef} aria-hidden="true">
       <div
         css={{
           height: '100%',
@@ -37,10 +72,6 @@ const ImageContainer = styled.div`
   bottom: 0;
   max-width: 1500px;
   width: calc(100% - var(--skewedcontent) - 3%);
-  z-index: -1;
-  pointer-events: none;
-  user-select: none;
-  touch-action: none;
 
   @media (max-width: ${screenmd}px) {
     position: relative;

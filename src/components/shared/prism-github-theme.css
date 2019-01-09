@@ -1,132 +1,141 @@
-/**
- * GHColors theme by Avi Aryan (http://aviaryan.in)
- * Inspired by Github syntax coloring
- */
-
-code[class*='language-'],
-pre[class*='language-'] {
-  color: #393a34;
-  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
-    monospace !important;
-  direction: ltr;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  font-size: 12px;
-  line-height: 1.2em;
-
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-
 .token {
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
     monospace !important;
 }
 
-pre[class*='language-']::-moz-selection,
-pre[class*='language-'] ::-moz-selection,
-code[class*='language-']::-moz-selection,
-code[class*='language-'] ::-moz-selection {
-  background: #b3d4fc;
-}
-
-pre[class*='language-']::selection,
-pre[class*='language-'] ::selection,
-code[class*='language-']::selection,
-code[class*='language-'] ::selection {
-  background: #b3d4fc;
-}
-
-/* Code blocks */
+/**
+ * solarized
+ *
+ * @author xiaozi<245565986@qq.com>
+ */
+code[class*='language-'],
 pre[class*='language-'] {
-  padding: 1em;
-  margin: 0.5em 0;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+  white-space: pre;
+  word-break: break-all;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
+    monospace !important;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #839496;
+  text-shadow: 0;
+  background: #002b36;
   overflow: auto;
-  border: 1px solid #e1e4e8;
-  border-radius: 2px;
-  background-color: #fff;
 }
 
-:not(pre) > code[class*='language-'],
-pre[class*='language-'] {
-}
-
-/* Inline code */
+pre[class*='language-'],
 :not(pre) > code[class*='language-'] {
-  padding: 0.2em;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  background: #f8f8f8;
-  border: 1px solid #dddddd;
+  border-radius: 5px;
+  border: 1px solid #e1e1e8;
+  box-shadow: 1px 1px 0.3em -0.1em black inset;
 }
 
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-  color: #999988;
-  font-style: italic;
+pre[class*='language-'] {
+  padding: 12px;
 }
 
-.token.namespace {
+:not(pre) > code[class*='language-'] {
+  padding: 2px 6px;
+}
+
+code[class*='language-'] .namespace,
+pre[class*='language-'] .namespace {
   opacity: 0.7;
 }
-
-.token.string,
-.token.attr-value {
-  color: #032f62;
+code[class*='language-'] .token.comment,
+code[class*='language-'] .token.prolog,
+code[class*='language-'] .token.doctype,
+code[class*='language-'] .token.cdata,
+pre[class*='language-'] .token.comment,
+pre[class*='language-'] .token.prolog,
+pre[class*='language-'] .token.doctype,
+pre[class*='language-'] .token.cdata {
+  color: #586e75;
 }
-.token.punctuation,
-.token.operator {
-  color: #393a34; /* no highlight */
+code[class*='language-'] .token.null,
+code[class*='language-'] .token.operator,
+code[class*='language-'] .token.boolean,
+code[class*='language-'] .token.number,
+pre[class*='language-'] .token.null,
+pre[class*='language-'] .token.operator,
+pre[class*='language-'] .token.boolean,
+pre[class*='language-'] .token.number {
+  color: #b58900;
 }
-
-.token.entity,
-.token.url,
-.token.symbol,
-.token.number,
-.token.boolean,
-.token.variable,
-.token.constant,
-.token.property,
-.token.regex,
-.token.inserted {
-  color: #36acaa;
+code[class*='language-'] .token.attr-name,
+code[class*='language-'] .token.string,
+pre[class*='language-'] .token.attr-name,
+pre[class*='language-'] .token.string {
+  color: #2aa198;
 }
-
-.token.atrule,
-.token.keyword,
-.token.attr-name,
-.language-autohotkey .token.selector {
-  color: #d73a49;
+code[class*='language-'] .token.entity,
+code[class*='language-'] .token.url,
+.language-css code[class*='language-'] .token.string,
+.style code[class*='language-'] .token.string,
+pre[class*='language-'] .token.entity,
+pre[class*='language-'] .token.url,
+.language-css pre[class*='language-'] .token.string,
+.style pre[class*='language-'] .token.string {
+  color: #2aa198;
 }
-
-.token.function,
-.token.deleted,
-.language-autohotkey .token.tag {
-  color: #9a050f;
+code[class*='language-'] .token.selector,
+pre[class*='language-'] .token.selector {
+  color: #839496;
 }
-
-.token.tag,
-.token.selector,
-.language-autohotkey .token.keyword {
-  color: #d73a49;
+code[class*='language-'] .token.atrule,
+code[class*='language-'] .token.attr-value,
+code[class*='language-'] .token.keyword,
+code[class*='language-'] .token.control,
+code[class*='language-'] .token.directive,
+code[class*='language-'] .token.important,
+code[class*='language-'] .token.unit,
+pre[class*='language-'] .token.atrule,
+pre[class*='language-'] .token.attr-value,
+pre[class*='language-'] .token.keyword,
+pre[class*='language-'] .token.control,
+pre[class*='language-'] .token.directive,
+pre[class*='language-'] .token.important,
+pre[class*='language-'] .token.unit {
+  color: #77B2E9;
 }
-
-.token.important,
-.token.function,
-.token.bold {
+code[class*='language-'] .token.regex,
+code[class*='language-'] .token.statement,
+pre[class*='language-'] .token.regex,
+pre[class*='language-'] .token.statement {
+  color: #2aa198;
+}
+code[class*='language-'] .token.placeholder,
+code[class*='language-'] .token.variable,
+pre[class*='language-'] .token.placeholder,
+pre[class*='language-'] .token.variable {
+  color: #268bd2;
+}
+code[class*='language-'] .token.property,
+code[class*='language-'] .token.tag,
+pre[class*='language-'] .token.property,
+pre[class*='language-'] .token.tag {
+}
+code[class*='language-'] .token.important,
+code[class*='language-'] .token.statement,
+pre[class*='language-'] .token.important,
+pre[class*='language-'] .token.statement {
   font-weight: bold;
 }
-
-.token.italic {
-  font-style: italic;
+code[class*='language-'] .token.punctuation,
+pre[class*='language-'] .token.punctuation {
+  color: #93a1a1;
+}
+code[class*='language-'] .token.entity,
+pre[class*='language-'] .token.entity {
+  cursor: help;
+}
+code[class*='language-'] .token.debug,
+pre[class*='language-'] .token.debug {
+  color: red;
 }

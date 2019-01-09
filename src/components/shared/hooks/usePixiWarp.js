@@ -9,6 +9,7 @@ export default ({ pixiRef, displacementImage, image }) => {
 
   useEffect(() => {
     // PIXI Variables
+    PIXI.utils.skipHello()
     const renderer = new PIXI.autoDetectRenderer(1620, 1620, {
       transparent: true,
     })
@@ -54,27 +55,22 @@ export default ({ pixiRef, displacementImage, image }) => {
       slidesContainer.addChild(img)
 
       if (!isMobile()) {
-        eventListener.current = ({ clientX, clientY }) => {
-          const third = window.innerHeight / 3
-          const low = third
-          const high = third * 2
-
-          console.log('low', low, clientY)
-          console.log('high', high)
-
-          if (clientY > low && clientY < high) {
+        eventListener.current = e => {
+          if (e.toElement === renderer.view) {
+            const { clientX, clientY } = e
+            TweenMax.to(displacementFilter.scale, 1, {
+              x: '+=' + Math.sin(clientX) * 350 + '',
+              y: '+=' + Math.cos(clientY) * 150 + '',
+            })
+          } else {
             TweenMax.to(displacementFilter.scale, 1, {
               x: 20,
               y: 20,
             })
-          } else {
-            TweenMax.to(displacementFilter.scale, 1, {
-              x: '+=' + Math.sin(1000) * 200 + '',
-              y: '0',
-            })
           }
         }
-        window.addEventListener('mouseover', eventListener.current)
+        renderer.view.addEventListener('mouseover', eventListener.current)
+        renderer.view.addEventListener('mouseout', eventListener.current)
       }
     }
 
@@ -94,7 +90,8 @@ export default ({ pixiRef, displacementImage, image }) => {
     })
 
     return () => {
-      document.removeEventListener('mouseover', eventListener.current)
+      renderer.view.removeEventListener('mouseover', eventListener.current)
+      renderer.view.removeEventListener('mouseout', eventListener.current)
       pixiRef.current.innerHTML = ''
     }
   }, [])
