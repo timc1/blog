@@ -228,7 +228,6 @@ const ScopeItem = styled.li`
 `
 
 const Content = styled.section`
-  padding-bottom: 40px;
   max-width: var(--contentmaxwidth);
   margin: auto;
   font-size: var(--fontmd);

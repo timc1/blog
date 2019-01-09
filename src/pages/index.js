@@ -139,7 +139,7 @@ const Post = styled.li`
 export const PostTitle = styled.h1`
   margin: 0;
   font-size: var(--fontxl);
-  font-weight: var(--fontlight);
+  font-weight: var(--fontregular);
   font-family: var(--titlefont);
 
   @media (min-width: ${screenmd + 1}px) {
