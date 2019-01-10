@@ -4,6 +4,7 @@ import { graphql, Link } from 'gatsby'
 import SEO from '../components/shared/seo'
 
 import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core'
 import { screenmd, SectionBreak } from '../components/shared/styles'
 
 import DistortedImage from '../components/animations/distorted-image'
@@ -22,14 +23,16 @@ const IndexPage = ({ data }) => {
       />
       <DistortedImage />
       <Section className="blur-me">
-        <Title>Tim Chang</Title>
-        <Subtitle>Product Designer &amp; Developer</Subtitle>
-        <SectionBreak />
+        <Title className="title">Tim Chang</Title>
+        <Subtitle className="subtitle">
+          Product Designer &amp; Developer
+        </Subtitle>
+        <SectionBreak className="break" />
         <Posts>
           {posts.map((post, index) => {
             const number = index + 1 < 10 ? `0${index + 1}` : index + 1
             return (
-              <Post key={post.fields.name}>
+              <Post key={post.fields.name} className="post">
                 <PostLink
                   to={`/${post.fields.sourceInstanceName}/${post.fields.name}`}
                 >
@@ -73,10 +76,67 @@ export const query = graphql`
   }
 `
 
+const title = keyframes`
+  to {
+    opacity: 1; 
+  }
+`
+
+const post = keyframes`
+  to {
+    opacity: 1; 
+    transform: translateY(0);
+  }
+`
+
+const animateBreak = keyframes`
+  to {
+    transform: scaleX(1)
+  }
+`
+
 const Section = styled.section`
   max-width: var(--skewedcontent);
   margin-left: auto;
   padding-top: 80px;
+
+  .title,
+  .subtitle {
+    opacity: 0;
+    transition-property: opacity;
+    animation: ${title} 0.3s var(--ease);
+    animation-delay: 1s;
+  }
+
+  .break {
+    transform: scaleX(0);
+    transform-origin: 0;
+    animation: ${animateBreak} 0.3s var(--ease);
+    animation-delay: 2.2s;
+  }
+
+  .post {
+    opacity: 0;
+    transform: translateY(10px);
+    transition-property: opacity, transform;
+    animation: ${post} 0.4s var(--ease);
+  }
+  .post:first-of-type {
+    animation-delay: 1.4s;
+  }
+  .post:nth-of-type(2) {
+    animation-delay: 1.6s;
+  }
+  .post:nth-of-type(3) {
+    animation-delay: 1.8s;
+  }
+
+  .title,
+  .subtitle,
+  .break,
+  .post {
+    animation-fill-mode: forwards;
+  }
 `
 
 export const Details = styled.ul`
@@ -139,7 +199,7 @@ const Post = styled.li`
 export const PostTitle = styled.h1`
   margin: 0;
   font-size: var(--fontxl);
-  font-weight: var(--fontregular);
+  font-weight: var(--fontlight);
   font-family: var(--titlefont);
 
   @media (min-width: ${screenmd + 1}px) {

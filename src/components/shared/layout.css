@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Akkurat';
-  font-display: swap;
+  font-display: auto;
   src: url('/fonts/akkurat-light.ttf');
   font-weight: 100 300;
   font-style: normal;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Akkurat';
-  font-display: swap;
+  font-display: auto;
   src: url('/fonts/akkurat-regular.ttf');
   font-weight: 400 500;
   font-style: normal;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: 'Akkurat';
-  font-display: swap;
+  font-display: auto;
   src: url('/fonts/akkurat-bold.ttf');
   font-weight: 600 900;
   font-style: normal;
@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: 'Px-Grotesk';
-  font-display: swap;
+  font-display: auto;
   src: url('/fonts/Px-Grotesk-Light.ttf');
   font-weight: 100 300;
   font-style: normal;
@@ -32,7 +32,7 @@
 
 @font-face {
   font-family: 'Px-Grotesk';
-  font-display: swap;
+  font-display: auto;
   src: url('/fonts/Px-Grotesk-Regular.ttf');
   font-weight: 400 500;
   font-style: normal;
@@ -40,7 +40,7 @@
 
 @font-face {
   font-family: 'Px-Grotesk';
-  font-display: swap;
+  font-display: auto;
   src: url('/fonts/Px-Grotesk-Bold.ttf');
   font-weight: 600 900;
   font-style: normal;
@@ -68,6 +68,7 @@
   --fontxxl: 4.4rem;
 
   --ease: cubic-bezier(0.55, 0.2, 0.53, 0.94);
+  --cubic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   --baseboxshadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
     0 8px 16px -8px rgba(0, 0, 0, 0.3);

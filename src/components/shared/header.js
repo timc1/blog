@@ -171,6 +171,7 @@ const MCAbout = styled.p`
   font-size: ${props => (props.noTransform ? 'inherit' : 'var(--fontxl)')};
   font-weight: var(--fontlight);
   font-family: var(--titlefont);
+  text-shadow: 0px 0px 1px rgba(255, 255, 255, 0.8);
   opacity: 0;
   transform: ${props => (props.noTransform ? 'none' : 'translateX(25px)')};
   transition: 0.55s var(--ease);

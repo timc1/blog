@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core'
 import { screenmd } from '../shared/styles'
 import { debounce } from '../../utils'
 
@@ -53,14 +54,7 @@ export default () => {
 
   return (
     <ImageContainer ref={imageContainerRef} aria-hidden="true">
-      <div
-        css={{
-          height: '100%',
-          width: '100%',
-          overflow: 'hidden',
-        }}
-        ref={pixiContent}
-      />
+      <AnimatedRevealContainer ref={pixiContent} />
     </ImageContainer>
   )
 }
@@ -77,5 +71,34 @@ const ImageContainer = styled.div`
     position: relative;
     height: 450px;
     width: 100%;
+  }
+`
+
+const scaleIn = keyframes`
+  to {
+    transform: scaleX(0); 
+  }
+`
+
+const AnimatedRevealContainer = styled.div`
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: #fff;
+    transform: scaleX(1);
+    transform-origin: 100% 0;
+    animation: ${scaleIn} 0.5s var(--cubic);
+    animation-fill-mode: forwards;
+    animation-delay: 0.4s;
   }
 `
