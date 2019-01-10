@@ -195,3 +195,7 @@ textarea::placeholder {
   transition: opacity 0.25s var(--cubic);
   opacity: 0;
 }
+
+.blur-me {
+  will-change: filter;
+}

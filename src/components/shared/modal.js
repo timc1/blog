@@ -69,7 +69,6 @@ export default ({ children, domNode, ...props }) => {
         blurNodes.forEach(
           node =>
             (node.style = `
-          will-change: filter;
           transition: filter .35s var(--ease);
           filter: blur(10px);
         `)
@@ -84,7 +83,6 @@ export default ({ children, domNode, ...props }) => {
         blurNodes.forEach(
           node =>
             (node.style = `
-          will-change: filter;
           transition: filter .35s var(--ease);
           filter: blur(0px);
         `)
