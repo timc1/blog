@@ -5,15 +5,15 @@ short_name: 'Three.js'
 scope: 'Experiment'
 seo_description:
   'Javascript experiment using three.js, WebGL to build a interactive 3d globe.'
+banner_image: '/static/globe-dots-87230e6b786d409622d35cc32e9512aa.png'
+banner_image_alt: 'Mercator projection of the earth'
 ---
 
-import { BannerImage, Image } from 'components/posts/index'
+import Image from 'components/posts/image.js'
 import globeSvg from 'images/globe-dots.svg'
 import globeJpg from 'images/globe-dots.jpg'
 import globeSphere from 'images/globe-sphere.jpg'
 import globeGif from 'images/globe-gif.gif'
-
-<BannerImage src={globeSvg} alt="globe outline" />
 
 This is an introduction to using three.js. The goal is to create a 3d globe that
 rotates to a specific latitude and longitude. The full repository can be found

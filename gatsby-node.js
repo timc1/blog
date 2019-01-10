@@ -49,6 +49,7 @@ exports.createPages = ({ graphql, actions }) => {
                     background
                     scope
                     project_scope
+                    banner_image
                   }
                   parent {
                     ... on File {
@@ -130,6 +131,18 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'keywords',
       node,
       value: node.frontmatter.keywords || [],
+    })
+
+    createNodeField({
+      name: 'banner_image',
+      node,
+      value: node.frontmatter.banner_image || '',
+    })
+
+    createNodeField({
+      name: 'banner_image_alt',
+      node,
+      value: node.frontmatter.banner_image_alt || '',
     })
   }
 }

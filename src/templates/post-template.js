@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
 
 import { screenmd, maxWidth, SectionBreak } from '../components/shared/styles'
@@ -10,6 +11,8 @@ import MDXRenderer from 'gatsby-mdx/mdx-renderer'
 import { Link, graphql } from 'gatsby'
 
 import { PostTitle, Details, Detail } from '../pages/index'
+
+import useScrollAnimation from '../components/shared/hooks/useScrollAnimation'
 
 export const pageQuery = graphql`
   query($id: String!) {
@@ -22,6 +25,8 @@ export const pageQuery = graphql`
         background
         project_scope
         seo_description
+        banner_image
+        banner_image_alt
       }
       code {
         body
@@ -35,12 +40,20 @@ export default function Template({ pageContext, data }) {
   const { mdx } = data
   const { frontmatter } = mdx
 
+  useScrollAnimation()
+
   return (
     <div className="blur-me">
       <SEO
         title={frontmatter.title}
         description={frontmatter.seo_description}
       />
+      {frontmatter.banner_image && (
+        <BannerImage
+          src={frontmatter.banner_image}
+          alt={frontmatter.banner_image_alt}
+        />
+      )}
       <Title>{frontmatter.title}</Title>
       <Info>
         <InfoItem>{frontmatter.short_name}</InfoItem>
@@ -138,16 +151,26 @@ const DetailTitle = styled(Detail)`
 `
 
 const SPLink = styled(Link)`
+  position: relative;
   color: var(--black);
   background: ${props =>
-    props.theme.direction === 'right' ? 'var(--lightgray)' : 'none'};
+    props.theme.direction === 'right' ? 'var(--lightgray)' : 'var(--white)'};
   padding: ${props => (props.theme.direction === 'right' ? '20px' : '20px 0')};
   outline: none;
 
   @media (min-width: ${screenmd + 1}px) {
-    &:hover,
-    &:active,
+    padding: ${props =>
+      props.theme.direction === 'right' ? '40px' : '40px 0'};
     &:focus {
+      ${PostTitle} {
+        text-decoration: underline;
+      }
+    }
+    &:hover,
+    &:active {
+      ${PostTitle} {
+        text-decoration: none;
+      }
       ${DetailTitle} {
         &::before {
           transform: translateX(
@@ -156,10 +179,51 @@ const SPLink = styled(Link)`
           );
         }
       }
-      ${PostTitle} {
-        text-decoration: underline;
-      }
     }
+  }
+`
+
+const bannerImage = keyframes`
+  to {
+    opacity: .4; 
+  }
+`
+
+const BannerImage = ({ src, alt }) => (
+  <div
+    role="img"
+    aria-label={alt}
+    css={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      height: '375px',
+      width: '100%',
+      marginTop: '-60px',
+      background: `url(${src}) no-repeat top`,
+      backgroundSize: 'cover',
+      opacity: 0,
+      zIndex: -1,
+      pointerEvents: 'none',
+      userSelect: 'none',
+      animation: `${bannerImage} .4s var(--ease)`,
+      animationFillMode: 'forwards',
+      animationDelay: '.8s',
+    }}
+  />
+)
+
+const fadein = keyframes`
+  to {
+    opacity: 1;
+    transform: translateY(0); 
+  }
+`
+
+const scalein = keyframes`
+  to {
+    transform: scaleX(1) 
   }
 `
 
@@ -170,6 +234,13 @@ const Title = styled.h1`
   margin-top: 60px;
   margin-bottom: 10px;
   ${maxWidth}
+  opacity: 0;
+  transform: translateY(10px);
+  transform-origin: 100% 0;
+
+  animation: ${fadein} 0.6s var(--cubic);
+  animation-fill-mode: forwards;
+  animation-delay: 0.2s;
 `
 
 const Info = styled.ul`
@@ -182,12 +253,25 @@ const Info = styled.ul`
     content: '·';
     padding-left: 10px;
   }
+  opacity: 0;
+  transform: translateY(5px);
+  transform-origin: 100% 0;
+  animation: ${fadein} 0.6s var(--cubic);
+  animation-fill-mode: forwards;
+  animation-delay: 0.8s;
 `
 
 const Break = styled(SectionBreak)`
   margin-left: 20%;
+  transform: scaleX(0);
+  transform-origin: 0;
+  animation: ${scalein} 0.4s var(--cubic);
+  animation-fill-mode: forwards;
+  animation-delay: 1.4s;
+
   @media (max-width: ${screenmd}px) {
     margin-left: initial;
+    animation-delay: 1s;
   }
 `
 
@@ -207,6 +291,13 @@ const PostDetails = styled.section`
   @media (max-width: ${screenmd}px) {
     grid-template-columns: 1fr;
   }
+
+  transform: translateY(10px);
+  opacity: 0;
+  transition-property: transform, opacity;
+  animation: ${fadein} 0.6s var(--ease);
+  animation-fill-mode: forwards;
+  animation-delay: 0.2s;
 `
 
 const PostDetailsTitle = styled.h2`
@@ -232,6 +323,12 @@ const Content = styled.section`
   margin: auto;
   font-size: var(--fontmd);
   font-weight: var(--fontlight);
+  color: var(--black);
+  opacity: 0;
+  transform: translateY(40px);
+  transform-origin: 100% 0;
+  animation: ${fadein} 1s var(--cubic);
+  animation-fill-mode: forwards;
 
   h1,
   h2,

@@ -10,12 +10,37 @@ const handleKeyDown = (e, toggle) => {
   }
 }
 
+//const modifyDiv = (id, type, currentScrollPosition) => {
+//  const el = document.getElementById(id)
+//
+//  switch (type) {
+//    case 'freeze':
+//      currentScrollPosition.current = window.scrollY
+//      el.style = `
+//        position: fixed;
+//        top: ${currentScrollPosition.current * -1}px;
+//        width: 100%;
+//        overflow: hidden;
+//      `
+//      break
+//    case 'unfreeze':
+//      el.style = ``
+//      window.scrollTo({
+//        top: `${currentScrollPosition.current}`,
+//      })
+//      break
+//    default:
+//      break
+//  }
+//}
+
 export default ({ children, domNode, ...props }) => {
   const root = document.getElementById('___gatsby')
   const modalContent = useRef(document.createElement('div'))
   const modalRoot = useRef(document.getElementById(domNode))
 
   const eventListener = useRef(e => handleKeyDown(e, props.toggle))
+  //const currentScrollPostion = useRef()
 
   // 1. Setup DOM node
   useEffect(() => {
@@ -58,6 +83,7 @@ export default ({ children, domNode, ...props }) => {
       const blurNodes = Array.from(document.getElementsByClassName('blur-me'))
 
       if (props.isShowing) {
+        //modifyDiv('___gatsby', 'freeze', currentScrollPostion)
         modalContent.current.style.opacity = 1
         modalContent.current.style.pointerEvents = 'initial'
 
@@ -74,6 +100,7 @@ export default ({ children, domNode, ...props }) => {
         `)
         )
       } else {
+        //modifyDiv('___gatsby', 'unfreeze', currentScrollPostion)
         modalContent.current.style.opacity = 0
         modalContent.current.style.pointerEvents = 'none'
 

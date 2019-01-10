@@ -47,7 +47,7 @@
 }
 
 :root {
-  --black: #000;
+  --black: #121519;
   --white: #fff;
   --gray: #262c2f;
   --lightgray: #f7fafc;
@@ -68,7 +68,7 @@
   --fontxxl: 4.4rem;
 
   --ease: cubic-bezier(0.55, 0.2, 0.53, 0.94);
-  --cubic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --cubic: cubic-bezier(0.68, 0.09, 0.42, 0.71);
 
   --baseboxshadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
     0 8px 16px -8px rgba(0, 0, 0, 0.3);

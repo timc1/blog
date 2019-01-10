@@ -8,7 +8,7 @@ import './prism-github-theme.css'
 export default ({ children }) => (
   <>
     <Header />
-    <main>{children}</main>
+    <main id="___main">{children}</main>
     <Footer className="blur-me" />
   </>
 )

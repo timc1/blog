@@ -58,4 +58,12 @@ const debounce = (debouncedRef = {}, fn = () => {}, delayMs = 1000) => {
   })()
 }
 
-export { isMobile, debounce }
+const isElementInView = el => {
+  const { top, bottom } = el.getBoundingClientRect()
+  if (top < window.innerHeight - 100 && bottom > 100) {
+    return true
+  }
+  return false
+}
+
+export { isMobile, debounce, isElementInView }

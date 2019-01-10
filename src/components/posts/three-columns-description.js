@@ -30,6 +30,7 @@ const Container = styled.div`
 
 const headerStyles = css`
   font-size: var(--fontsm);
+  color: var(--black);
   text-transform: uppercase;
 `
 
@@ -48,6 +49,7 @@ const Description = styled.p`
   margin: 0;
   font-size: var(--fontmd);
   font-weight: var(--fontlight);
+  color: var(--black);
 
   @media (max-width: ${screenlg}px) {
     grid-column: 2;
@@ -79,5 +81,6 @@ const Post = styled.div`
 
   li {
     list-style: none;
+    color: var(--black);
   }
 `

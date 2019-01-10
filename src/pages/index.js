@@ -78,7 +78,7 @@ export const query = graphql`
 
 const title = keyframes`
   to {
-    opacity: 1; 
+    transform: scaleX(0);
   }
 `
 
@@ -102,17 +102,29 @@ const Section = styled.section`
 
   .title,
   .subtitle {
-    opacity: 0;
+    position: relative;
     transition-property: opacity;
-    animation: ${title} 0.3s var(--ease);
-    animation-delay: 1s;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--white);
+      transform: scaleX(1);
+      transform-origin: 100% 0;
+      animation: ${title} 0.8s var(--ease);
+      animation-delay: 1s;
+      animation-fill-mode: forwards;
+    }
   }
 
   .break {
     transform: scaleX(0);
     transform-origin: 0;
     animation: ${animateBreak} 0.3s var(--ease);
-    animation-delay: 2.2s;
+    animation-delay: 2.1s;
   }
 
   .post {
@@ -131,8 +143,6 @@ const Section = styled.section`
     animation-delay: 1.8s;
   }
 
-  .title,
-  .subtitle,
   .break,
   .post {
     animation-fill-mode: forwards;
@@ -179,6 +189,7 @@ const Title = styled.h1`
   font-size: var(--fontmd);
   font-family: var(--titlefont);
   font-weight: var(--fontlight);
+  color: var(--black);
   margin: 0 0 5px 0;
 `
 
@@ -186,6 +197,7 @@ const Subtitle = styled.h2`
   font-size: var(--fontmd);
   font-family: var(--titlefont);
   font-weight: var(--fontlight);
+  color: var(--black);
   margin: 0;
 `
 
@@ -201,6 +213,7 @@ export const PostTitle = styled.h1`
   font-size: var(--fontxl);
   font-weight: var(--fontlight);
   font-family: var(--titlefont);
+  color: var(--black);
 
   @media (min-width: ${screenmd + 1}px) {
     text-align: ${props =>
@@ -213,11 +226,15 @@ const PostLink = styled(Link)`
   outline: none;
 
   @media (min-width: ${screenmd + 1}px) {
-    &:hover,
-    &:active,
     &:focus {
       ${PostTitle} {
         text-decoration: underline;
+      }
+    }
+    &:hover,
+    &:active {
+      ${PostTitle} {
+        text-decoration: none;
       }
     }
   }
