@@ -20,6 +20,8 @@ export default ({ pixiRef, displacementImage, image }) => {
       displacementSprite
     )
 
+    console.log('displacementFilter', displacementFilter)
+
     const initPixi = () => {
       // Add canvas to the HTML
       pixiRef.current.appendChild(renderer.view)
@@ -39,8 +41,8 @@ export default ({ pixiRef, displacementImage, image }) => {
       // Set the filter to stage and set some default values for the animation
       stage.filters = [displacementFilter]
 
-      displacementSprite.scale.x = 2
-      displacementSprite.scale.y = 2
+      displacementSprite.scale.x = 1
+      displacementSprite.scale.y = 1
 
       // PIXI tries to fit the filter bounding box to the renderer so we optionally bypass
       displacementFilter.autoFit = false
@@ -54,24 +56,24 @@ export default ({ pixiRef, displacementImage, image }) => {
 
       slidesContainer.addChild(img)
 
-      if (!isMobile()) {
-        eventListener.current = e => {
-          if (e.toElement === renderer.view) {
-            const { clientX, clientY } = e
-            TweenMax.to(displacementFilter.scale, 1, {
-              x: '+=' + Math.sin(clientX) * 350 + '',
-              y: '+=' + Math.cos(clientY) * 150 + '',
-            })
-          } else {
-            TweenMax.to(displacementFilter.scale, 1, {
-              x: 20,
-              y: 20,
-            })
-          }
-        }
-        renderer.view.addEventListener('mouseover', eventListener.current)
-        renderer.view.addEventListener('mouseout', eventListener.current)
-      }
+      //      if (!isMobile()) {
+      //        eventListener.current = e => {
+      //          if (e.toElement === renderer.view) {
+      //            const { clientX, clientY } = e
+      //            TweenMax.to(displacementFilter.scale, 1, {
+      //              x: '+=' + Math.sin(clientX) * 100 + '',
+      //              //y: '+=' + Math.cos(clientY) * 50 + '',
+      //            })
+      //          } else {
+      //            TweenMax.to(displacementFilter.scale, 1, {
+      //              x: 20,
+      //              y: 20,
+      //            })
+      //          }
+      //        }
+      //        renderer.view.addEventListener('mouseover', eventListener.current)
+      //        renderer.view.addEventListener('mouseout', eventListener.current)
+      //}
     }
 
     // Init
@@ -83,8 +85,8 @@ export default ({ pixiRef, displacementImage, image }) => {
     ticker.autoStart = true
 
     ticker.add(function(delta) {
-      displacementSprite.x += 4 * delta
-      displacementSprite.y += 3
+      displacementSprite.x += delta
+      //displacementSprite.y
 
       renderer.render(stage)
     })

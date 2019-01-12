@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export default ({ illustrations }) => (
+const IllustrationWrapper = ({ illustrations }) => (
   <Container>
     <div className="animate-illustration">
       {illustrations.map((Illustration, index) => (
@@ -12,6 +12,8 @@ export default ({ illustrations }) => (
     </div>
   </Container>
 )
+
+export default IllustrationWrapper
 
 // Styles
 const Container = styled.div`

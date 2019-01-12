@@ -6,10 +6,10 @@ import { debounce } from '../../utils'
 
 import usePixiWarp from '../shared/hooks/usePixiWarp'
 
-import timchang from '../../images/tim_chang.jpg'
-import displacementImage from '../../images/displacement_image.jpg'
+import timchang from '../../images/test-headshot.png'
+import displacementImage from '../../images/displacement_image2.png'
 
-export default () => {
+const DistortedImage = () => {
   const pixiContent = useRef()
 
   usePixiWarp({
@@ -38,6 +38,7 @@ export default () => {
           }
         } catch (err) {
           if (process.env.NODE_ENV !== 'production') {
+            //eslint-disable-next-line
             console.log('err', err)
           }
         }
@@ -58,6 +59,8 @@ export default () => {
     </ImageContainer>
   )
 }
+
+export default DistortedImage
 
 const ImageContainer = styled.div`
   position: fixed;

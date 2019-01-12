@@ -4,7 +4,13 @@ import { css } from '@emotion/core'
 
 import { screenlg } from '../shared/styles'
 
-export default ({ pre, title, description, postTitle, post }) => (
+const ThreeColumnsDescription = ({
+  pre,
+  title,
+  description,
+  postTitle,
+  post,
+}) => (
   <Container>
     <Pre>{pre}</Pre>
     <Title>{title}</Title>
@@ -13,6 +19,8 @@ export default ({ pre, title, description, postTitle, post }) => (
     {post && <Post>{post}</Post>}
   </Container>
 )
+
+export default ThreeColumnsDescription
 
 // Styles
 
