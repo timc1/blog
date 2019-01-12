@@ -19,7 +19,7 @@ const IndexPage = ({ data }) => {
     <>
       <SEO
         title="Essays and thoughts on web development, client work, and growth at timcchang"
-        keywords={[`UI`, `UX`, `Web Design`, `Business Design`]}
+        keywords={['UI', 'UX', 'Web Design', 'Business Design']}
       />
       <DistortedImage />
       <Section className="blur-me">
