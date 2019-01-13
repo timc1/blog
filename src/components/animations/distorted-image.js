@@ -20,18 +20,18 @@ const DistortedImage = () => {
 
   const imageContainerRef = useRef()
   const debounceRef = useRef()
-  const resizeRef = useRef(e =>
+  const resizeRef = useRef(() =>
     debounce(
       debounceRef,
       () => {
         try {
           if (
-            e.target.innerWidth <= 767 &&
+            window.innerWidth <= 767 &&
             !imageContainerRef.current.classList.contains('blur-me')
           ) {
             imageContainerRef.current.classList.add('blur-me')
           } else if (
-            e.target.innerWidth >= 768 &&
+            window.innerWidth >= 768 &&
             imageContainerRef.current.classList.contains('blur-me')
           ) {
             imageContainerRef.current.classList.remove('blur-me')
@@ -49,6 +49,7 @@ const DistortedImage = () => {
 
   useEffect(() => {
     window.addEventListener('resize', resizeRef.current)
+    resizeRef.current()
 
     return () => window.removeEventListener('resize', resizeRef.current)
   }, [])
@@ -89,7 +90,7 @@ const AnimatedRevealContainer = styled.div`
   width: 100%;
   overflow: hidden;
   opacity: 0;
-  animation: ${fadeIn} 0.5s var(--cubic);
+  animation: ${fadeIn} 0.8s var(--cubic);
   animation-fill-mode: forwards;
   animation-delay: 0.4s;
 `
