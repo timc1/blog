@@ -231,16 +231,19 @@ const Title = styled.h1`
   font-size: var(--fontxxl);
   font-family: var(--titlefont);
   font-weight: var(--fontlight);
-  margin-top: 60px;
+  margin-top: 120px;
   margin-bottom: 10px;
   ${maxWidth}
   opacity: 0;
   transform: translateY(10px);
   transform-origin: 100% 0;
-
   animation: ${fadein} 0.6s var(--cubic);
   animation-fill-mode: forwards;
   animation-delay: 0.2s;
+
+  @media (max-width: ${screenmd}px) {
+    margin-top: 60px;
+  }
 `
 
 const Info = styled.ul`

@@ -7,14 +7,14 @@ import { debounce } from '../../utils'
 import usePixiWarp from '../shared/hooks/usePixiWarp'
 
 import timchang from '../../images/test-headshot.png'
-import displacementImage from '../../images/displacement_image2.png'
+import baseDisplacement from '../../images/displacement_image.jpg'
 
 const DistortedImage = () => {
   const pixiContent = useRef()
 
   usePixiWarp({
     pixiRef: pixiContent,
-    displacementImage,
+    baseDisplacement,
     image: timchang,
   })
 
@@ -77,9 +77,9 @@ const ImageContainer = styled.div`
   }
 `
 
-const scaleIn = keyframes`
+const fadeIn = keyframes`
   to {
-    transform: scaleX(0); 
+    opacity: 1; 
   }
 `
 
@@ -88,20 +88,8 @@ const AnimatedRevealContainer = styled.div`
   height: 100%;
   width: 100%;
   overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-    background: #fff;
-    transform: scaleX(1);
-    transform-origin: 100% 0;
-    animation: ${scaleIn} 0.5s var(--cubic);
-    animation-fill-mode: forwards;
-    animation-delay: 0.4s;
-  }
+  opacity: 0;
+  animation: ${fadeIn} 0.5s var(--cubic);
+  animation-fill-mode: forwards;
+  animation-delay: 0.4s;
 `

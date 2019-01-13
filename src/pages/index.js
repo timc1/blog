@@ -114,7 +114,7 @@ const Section = styled.section`
       background: var(--white);
       transform: scaleX(1);
       transform-origin: 100% 0;
-      animation: ${title} 0.8s var(--ease);
+      animation: ${title} 0.6s var(--ease);
       animation-delay: 1s;
       animation-fill-mode: forwards;
     }

@@ -2,9 +2,7 @@ import { useRef, useEffect } from 'react'
 import * as PIXI from 'pixi.js'
 import { TweenMax } from 'gsap/TweenMax'
 
-import { isMobile } from '../../../utils'
-
-export default ({ pixiRef, displacementImage, image }) => {
+export default ({ pixiRef, baseDisplacement, image }) => {
   const eventListener = useRef()
 
   useEffect(() => {
@@ -15,12 +13,8 @@ export default ({ pixiRef, displacementImage, image }) => {
     })
     const stage = new PIXI.Container()
     const slidesContainer = new PIXI.Container()
-    const displacementSprite = new PIXI.Sprite.fromImage(displacementImage)
-    const displacementFilter = new PIXI.filters.DisplacementFilter(
-      displacementSprite
-    )
-
-    console.log('displacementFilter', displacementFilter)
+    const baseSprite = new PIXI.Sprite.fromImage(baseDisplacement)
+    const baseFilter = new PIXI.filters.DisplacementFilter(baseSprite)
 
     const initPixi = () => {
       // Add canvas to the HTML
@@ -36,18 +30,21 @@ export default ({ pixiRef, displacementImage, image }) => {
       renderer.view.style.webkitTransform = 'scale(1.2)'
       renderer.view.style.transform = 'scale(1.2)'
 
-      displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT
+      baseSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT
 
       // Set the filter to stage and set some default values for the animation
-      stage.filters = [displacementFilter]
+      stage.filters = [baseFilter]
 
-      displacementSprite.scale.x = 1
-      displacementSprite.scale.y = 1
+      baseSprite.scale.x = 1
+      baseSprite.scale.y = 1
 
       // PIXI tries to fit the filter bounding box to the renderer so we optionally bypass
-      displacementFilter.autoFit = false
+      baseFilter.autoFit = false
 
-      stage.addChild(displacementSprite)
+      // Initial distortion
+      baseFilter.scale.x = 846
+
+      stage.addChild(baseSprite)
     }
 
     const loadPixiSprite = () => {
@@ -56,38 +53,21 @@ export default ({ pixiRef, displacementImage, image }) => {
 
       slidesContainer.addChild(img)
 
-      //      if (!isMobile()) {
-      //        eventListener.current = e => {
-      //          if (e.toElement === renderer.view) {
-      //            const { clientX, clientY } = e
-      //            TweenMax.to(displacementFilter.scale, 1, {
-      //              x: '+=' + Math.sin(clientX) * 100 + '',
-      //              //y: '+=' + Math.cos(clientY) * 50 + '',
-      //            })
-      //          } else {
-      //            TweenMax.to(displacementFilter.scale, 1, {
-      //              x: 20,
-      //              y: 20,
-      //            })
-      //          }
-      //        }
-      //        renderer.view.addEventListener('mouseover', eventListener.current)
-      //        renderer.view.addEventListener('mouseout', eventListener.current)
-      //}
+      TweenMax.to(baseFilter.scale, 1, {
+        x: 0,
+        y: 0,
+      })
     }
 
     // Init
     initPixi()
     loadPixiSprite()
     // Render to screen
-    var ticker = new PIXI.ticker.Ticker()
+    const ticker = new PIXI.ticker.Ticker()
 
     ticker.autoStart = true
 
-    ticker.add(function(delta) {
-      displacementSprite.x += delta
-      //displacementSprite.y
-
+    ticker.add(() => {
       renderer.render(stage)
     })
 
@@ -95,6 +75,7 @@ export default ({ pixiRef, displacementImage, image }) => {
       renderer.view.removeEventListener('mouseover', eventListener.current)
       renderer.view.removeEventListener('mouseout', eventListener.current)
       pixiRef.current.innerHTML = ''
+      ticker.destroy()
     }
   }, [])
 }
