@@ -6,11 +6,13 @@ import { debounce } from '../../utils'
 
 import usePixiWarp from '../shared/hooks/usePixiWarp'
 
+// @ts-ignore
 import timchang from '../../images/test-headshot.png'
+// @ts-ignore
 import baseDisplacement from '../../images/displacement_image.jpg'
 
 const DistortedImage = () => {
-  const pixiContent = useRef()
+  const pixiContent = useRef(null)
 
   usePixiWarp({
     pixiRef: pixiContent,
@@ -18,23 +20,25 @@ const DistortedImage = () => {
     image: timchang,
   })
 
-  const imageContainerRef = useRef()
-  const debounceRef = useRef()
+  const imageContainerRef = useRef<HTMLDivElement>(null)
+  const debounceRef = useRef(null)
   const resizeRef = useRef(() =>
     debounce(
       debounceRef,
       () => {
         try {
-          if (
-            window.innerWidth <= 767 &&
-            !imageContainerRef.current.classList.contains('blur-me')
-          ) {
-            imageContainerRef.current.classList.add('blur-me')
-          } else if (
-            window.innerWidth >= 768 &&
-            imageContainerRef.current.classList.contains('blur-me')
-          ) {
-            imageContainerRef.current.classList.remove('blur-me')
+          if (imageContainerRef.current) {
+            if (
+              window.innerWidth <= 767 &&
+              !imageContainerRef.current.classList.contains('blur-me')
+            ) {
+              imageContainerRef.current.classList.add('blur-me')
+            } else if (
+              window.innerWidth >= 768 &&
+              imageContainerRef.current.classList.contains('blur-me')
+            ) {
+              imageContainerRef.current.classList.remove('blur-me')
+            }
           }
         } catch (err) {
           if (process.env.NODE_ENV !== 'production') {

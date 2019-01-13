@@ -9,7 +9,34 @@ import { screenmd, SectionBreak } from '../components/shared/styles'
 
 import DistortedImage from '../components/animations/distorted-image'
 
-const IndexPage = ({ data }) => {
+type FrontmatterProps = {
+  data: {
+    allMdx: {
+      edges: {
+        node: {
+          frontmatter: {
+            title: string
+            date: string
+            scope: string
+            short_name: string
+          }
+          parent: {
+            name: string
+            sourceInstanceName: string
+          }
+        }
+      }[]
+    }
+  }
+}
+
+type ThemeProps = {
+  theme?: {
+    direction: 'left' | 'right'
+  }
+}
+
+const IndexPage = ({ data }: FrontmatterProps) => {
   const posts = data.allMdx.edges.map(edge => ({
     frontmatter: edge.node.frontmatter,
     fields: edge.node.parent,
@@ -20,6 +47,7 @@ const IndexPage = ({ data }) => {
       <SEO
         title="Essays and thoughts on web development, client work, and growth at timcchang"
         keywords={['UI', 'UX', 'Web Design', 'Business Design']}
+        description=""
       />
       <DistortedImage />
       <Section className="blur-me">
@@ -57,7 +85,6 @@ export const query = graphql`
     allMdx {
       edges {
         node {
-          id
           frontmatter {
             title
             date
@@ -149,7 +176,7 @@ const Section = styled.section`
   }
 `
 
-export const Details = styled.ul`
+export const Details = styled.ul<ThemeProps>`
   display: grid;
   grid-auto-flow: column;
   justify-content: start;
@@ -208,7 +235,7 @@ const Post = styled.li`
   padding-bottom: 60px;
 `
 
-export const PostTitle = styled.h1`
+export const PostTitle = styled.h1<ThemeProps>`
   margin: 0;
   font-size: var(--fontxl);
   font-weight: var(--fontlight);
@@ -227,13 +254,13 @@ const PostLink = styled(Link)`
 
   @media (min-width: ${screenmd + 1}px) {
     &:focus {
-      ${PostTitle} {
+      h1 {
         text-decoration: underline;
       }
     }
     &:hover,
     &:active {
-      ${PostTitle} {
+      h1 {
         text-decoration: none;
       }
     }

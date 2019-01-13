@@ -30,7 +30,7 @@ const SectionBreak = styled.hr`
   background: var(--black);
 `
 
-const UnstyledLink = styled(Link)`
+const UnstyledLink = styled(Link)<{ newtab?: 'ne-resize' | 'pointer' }>`
   display: block;
   color: var(--black);
   font-size: var(--fontmd);

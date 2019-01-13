@@ -8,6 +8,9 @@
         },
       },
     ],
-    ["@emotion/babel-preset-css-prop"],
+    ["@emotion/babel-preset-css-prop"]
   ],
+   plugins: [
+    '@babel/plugin-proposal-optional-chaining'
+  ]
 }
