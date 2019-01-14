@@ -1,9 +1,19 @@
 import { useRef, useEffect } from 'react'
+// @ts-ignore
 import * as PIXI from 'pixi.js'
+// @ts-ignore
 import { TweenMax } from 'gsap/TweenMax'
 
-export default ({ pixiRef, baseDisplacement, image }) => {
-  const eventListener = useRef()
+const usePixiWarp = ({
+  pixiRef,
+  baseDisplacement,
+  image,
+}: {
+  pixiRef: React.RefObject<any>
+  baseDisplacement: string
+  image: string
+}) => {
+  const eventListener = useRef(null)
 
   useEffect(() => {
     // PIXI Variables
@@ -79,3 +89,5 @@ export default ({ pixiRef, baseDisplacement, image }) => {
     }
   }, [])
 }
+
+export default usePixiWarp

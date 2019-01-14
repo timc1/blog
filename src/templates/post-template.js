@@ -189,30 +189,29 @@ const bannerImage = keyframes`
   }
 `
 
-const BannerImage = ({ src, alt }) => (
-  <div
-    role="img"
-    aria-label={alt}
-    css={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      height: '375px',
-      width: '100%',
-      marginTop: '-60px',
-      background: `url(${src}) no-repeat top`,
-      backgroundSize: 'cover',
-      opacity: 0,
-      zIndex: -1,
-      pointerEvents: 'none',
-      userSelect: 'none',
-      animation: `${bannerImage} .4s var(--ease)`,
-      animationFillMode: 'forwards',
-      animationDelay: '.8s',
-    }}
-  />
-)
+const BannerImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 375px;
+  width: 100%;
+  margin-top: -120px;
+  background: url(${props => props.src || ''}) no-repeat top;
+  background-size: cover;
+  opacity: 0;
+  zindex: -1;
+  pointer-events: none;
+  user-select: none;
+  animation: ${bannerImage} 0.4s var(--ease);
+  animation-fill-mode: forwards;
+  animation-delay: 0.8s;
+
+  @media (max-width: ${screenmd}px) {
+    margin-top: -60px;
+    height: 300px;
+  }
+`
 
 const fadein = keyframes`
   to {

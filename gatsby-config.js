@@ -5,6 +5,13 @@ module.exports = {
     title: `Essays and thoughts on web development, client work, and growth at timcchang`,
     description: `Home to my independent work and experiments. It features essays on web design, development, client work, and growth. Currently, I am a product designer & developer based in Los Angeles building tools to empower others to create.`,
     author: `@timcchang`,
+    keywords: [
+      `product design`,
+      `web development`,
+      `javascript`,
+      `html`,
+      `css`,
+    ],
   },
   plugins: [
     {

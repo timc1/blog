@@ -18,6 +18,9 @@ const SEO = ({ description, lang, meta = [], keywords, title }: SEOProps) => {
         const metaTitle = title || data.site.siteMetadata.title
         const metaDescription =
           description || data.site.siteMetadata.description
+
+        const metaKeywords = keywords || data.site.siteMetadata.keywords
+
         return (
           <Helmet
             htmlAttributes={{
@@ -60,10 +63,10 @@ const SEO = ({ description, lang, meta = [], keywords, title }: SEOProps) => {
               },
             ]
               .concat(
-                keywords.length > 0
+                metaKeywords.length > 0
                   ? {
                       name: `keywords`,
-                      content: keywords.join(`, `),
+                      content: metaKeywords.join(`, `),
                     }
                   : []
               )
@@ -84,6 +87,7 @@ const detailsQuery = graphql`
         title
         description
         author
+        keywords
       }
     }
   }

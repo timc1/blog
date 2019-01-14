@@ -21,10 +21,8 @@ const DistortedImage = () => {
   })
 
   const imageContainerRef = useRef<HTMLDivElement>(null)
-  const debounceRef = useRef(null)
-  const resizeRef = useRef(() =>
+  const resizeRef = useRef(
     debounce(
-      debounceRef,
       () => {
         try {
           if (imageContainerRef.current) {
@@ -47,7 +45,8 @@ const DistortedImage = () => {
           }
         }
       },
-      500
+      500,
+      false
     )
   )
 
