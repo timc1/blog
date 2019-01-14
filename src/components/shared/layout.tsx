@@ -5,10 +5,12 @@ import Footer from './footer'
 import './layout.css'
 import './prism-github-theme.css'
 
-export default ({ children }) => (
+const Layout: React.FunctionComponent = ({ children }) => (
   <>
     <Header />
     <main id="___main">{children}</main>
     <Footer className="blur-me" />
   </>
 )
+
+export default Layout

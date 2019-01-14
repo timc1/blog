@@ -3,7 +3,7 @@ import { isElementInView } from '../../../utils'
 
 export default () => {
   const scrollRef = useRef(() => {
-    const unanimatedElements = Array.from(
+    const unanimatedElements: Array<HTMLElement> = Array.from(
       document.querySelectorAll('.animate-illustration:not(.animated)')
     )
 

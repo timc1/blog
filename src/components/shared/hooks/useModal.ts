@@ -4,11 +4,11 @@ export default () => {
   const [isShowing, toggle] = useState(false)
 
   const getTogglerProps = () => ({
-    onClick: e => toggle(prevState => !prevState),
+    onClick: () => toggle(prevState => !prevState),
     isShowing,
   })
 
-  const getMenuProps = props => ({
+  const getMenuProps = (props: any) => ({
     isShowing,
     toggle,
     ...props,

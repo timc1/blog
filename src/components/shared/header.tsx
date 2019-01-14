@@ -4,14 +4,15 @@ import { css } from '@emotion/core'
 
 import { Ul, Li, SectionBreak, UnstyledLink } from './styles'
 
+// @ts-ignore
 import plusIcon from '../../images/plus.svg'
 
 import useModal from './hooks/useModal'
 import Modal from './modal'
 import Footer from './footer'
 
-export default () => (
-  <Header>
+const Header = () => (
+  <HeaderContainer>
     <Nav>
       <Ul>
         <Li>
@@ -19,8 +20,10 @@ export default () => (
         </Li>
       </Ul>
     </Nav>
-  </Header>
+  </HeaderContainer>
 )
+
+export default Header
 
 const MenuToggler = () => {
   const { isShowing, toggle, getTogglerProps, getMenuProps } = useModal()
@@ -33,10 +36,10 @@ const MenuToggler = () => {
         })}
       >
         <ModalContentContainer>
-          <MCAbout className={isShowing ? 'animate' : null}>
+          <MCAbout className={isShowing ? 'animate' : undefined}>
             <UnstyledLink
               to="/"
-              onClick={e => toggle(prev => !prev)}
+              onClick={() => toggle(prev => !prev)}
               css={{
                 fontSize: `var(--fontmd)`,
                 padding: `0.5625rem`,
@@ -47,24 +50,24 @@ const MenuToggler = () => {
               Tim Chang
             </UnstyledLink>
           </MCAbout>
-          <MCAbout className={isShowing ? 'animate' : null}>
+          <MCAbout className={isShowing ? 'animate' : undefined}>
             My work bridges storytelling and collaboration through design and
             code.
           </MCAbout>
-          <MCAbout className={isShowing ? 'animate' : null}>
+          <MCAbout className={isShowing ? 'animate' : undefined}>
             From software tools for freelancers, marketplaces and commerce, to
             developing a compelling brand,
           </MCAbout>
-          <MCAbout className={isShowing ? 'animate' : null}>
-            I'm here to help.
+          <MCAbout className={isShowing ? 'animate' : undefined}>
+            {`I'm here to help.`}
           </MCAbout>
           <Break isAnimated={true} animate={isShowing ? true : false} />
-          <MCAbout className={isShowing ? 'animate' : null}>
-            Previously I've worked with verlocal, omnyfy, and handpick in San
+          <MCAbout className={isShowing ? 'animate' : undefined}>
+            {`Previously I've worked with verlocal, omnyfy, and handpick in San
             Francisco and Shanghai, with side ventures told here on this blog
-            and Product Hunt.
+            and Product Hunt.`}
           </MCAbout>
-          <MCAbout className={isShowing ? 'animate' : null}>
+          <MCAbout className={isShowing ? 'animate' : undefined}>
             Currently, I am based in Los Angeles.
           </MCAbout>
           <Footer alignLeft />
@@ -78,7 +81,7 @@ const MenuToggler = () => {
 }
 
 // Styles
-const Header = styled.header``
+const HeaderContainer = styled.header``
 
 const Nav = styled.nav``
 

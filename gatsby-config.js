@@ -1,5 +1,3 @@
-const path = require('path')
-
 module.exports = {
   siteMetadata: {
     title: `Essays and thoughts on web development, client work, and growth at timcchang`,
@@ -48,7 +46,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-layout`,
       options: {
-        component: require.resolve(`${__dirname}/src/components/shared/layout`),
+        component: require.resolve(
+          `${__dirname}/src/components/shared/layout.tsx`
+        ),
       },
     },
     `gatsby-plugin-emotion`,
