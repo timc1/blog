@@ -7,6 +7,7 @@ import { screenmd, maxWidth, SectionBreak } from '../components/shared/styles'
 
 import SEO from '../components/shared/seo'
 
+// @ts-ignore
 import MDXRenderer from 'gatsby-mdx/mdx-renderer'
 import { Link, graphql } from 'gatsby'
 
@@ -14,29 +15,13 @@ import { PostTitle, Details, Detail } from '../pages/index'
 
 import useScrollAnimation from '../components/shared/hooks/useScrollAnimation'
 
-export const pageQuery = graphql`
-  query($id: String!) {
-    mdx(fields: { id: { eq: $id } }) {
-      frontmatter {
-        title
-        date
-        scope
-        short_name
-        background
-        project_scope
-        seo_description
-        banner_image
-        banner_image_alt
-      }
-      code {
-        body
-      }
-    }
-  }
-`
-
-export default function Template({ pageContext, data }) {
+//type TemplateProps = {
+//  pageContext: any
+//  data: any
+//}
+const Template = ({ pageContext, data }) => {
   const { next, previous } = pageContext
+
   const { mdx } = data
   const { frontmatter } = mdx
 
@@ -47,6 +32,7 @@ export default function Template({ pageContext, data }) {
       <SEO
         title={frontmatter.title}
         description={frontmatter.seo_description}
+        keywords={frontmatter.categories}
       />
       {frontmatter.banner_image && (
         <BannerImage
@@ -360,3 +346,26 @@ const Content = styled.section`
     font-weight: var(--fontregular);
   }
 `
+
+export const pageQuery = graphql`
+  query($id: String!) {
+    mdx(fields: { id: { eq: $id } }) {
+      frontmatter {
+        title
+        date
+        scope
+        short_name
+        background
+        project_scope
+        seo_description
+        banner_image
+        banner_image_alt
+      }
+      code {
+        body
+      }
+    }
+  }
+`
+
+export default Template

@@ -17,7 +17,7 @@ const createPosts = (createPage, edges) => {
     createPage({
       path: `${node.parent.sourceInstanceName}/${node.parent.name}`,
       component: componentWithMDXScope(
-        path.resolve(`${__dirname}/src/templates/post-template.js`),
+        path.resolve(`${__dirname}/src/templates/post-template.tsx`),
         node.code.scope,
         __dirname
       ),
@@ -31,8 +31,6 @@ const createPosts = (createPage, edges) => {
 }
 
 exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions
-
   return new Promise((resolve, reject) => {
     resolve(
       graphql(
@@ -46,10 +44,12 @@ exports.createPages = ({ graphql, actions }) => {
                     id
                     date
                     title
+                    short_name
                     background
                     scope
                     project_scope
                     banner_image
+                    banner_image_alt
                   }
                   parent {
                     ... on File {
@@ -59,7 +59,6 @@ exports.createPages = ({ graphql, actions }) => {
                   }
                   code {
                     scope
-                    body
                   }
                 }
               }
@@ -79,12 +78,10 @@ exports.createPages = ({ graphql, actions }) => {
   })
 }
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
+exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `Mdx`) {
-    const parent = getNode(node.parent)
-
     createNodeField({
       name: 'id',
       node,
@@ -95,6 +92,12 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'title',
       node,
       value: node.frontmatter.title,
+    })
+
+    createNodeField({
+      name: 'short_name',
+      node,
+      value: node.frontmatter.short_name,
     })
 
     createNodeField({
@@ -119,18 +122,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       name: 'project_scope',
       node,
       value: node.frontmatter.project_scope || [],
-    })
-
-    createNodeField({
-      name: 'categories',
-      node,
-      value: node.frontmatter.categories || [],
-    })
-
-    createNodeField({
-      name: 'keywords',
-      node,
-      value: node.frontmatter.keywords || [],
     })
 
     createNodeField({

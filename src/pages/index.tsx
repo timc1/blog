@@ -58,14 +58,14 @@ const IndexPage = ({ data }: FrontmatterProps) => {
         <SectionBreak className="break" />
         <Posts>
           {posts.map((post, index) => {
-            const number = index + 1 < 10 ? `0${index + 1}` : index + 1
+            const num = index + 1 < 10 ? `0${index + 1}` : index + 1
             return (
               <Post key={post.fields.name} className="post">
                 <PostLink
                   to={`/${post.fields.sourceInstanceName}/${post.fields.name}`}
                 >
                   <Details>
-                    <Detail>{number}.</Detail>
+                    <Detail>{num}.</Detail>
                     <Detail>{post.frontmatter.short_name}</Detail>
                     <Detail>{post.frontmatter.scope}</Detail>
                   </Details>
