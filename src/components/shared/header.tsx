@@ -60,13 +60,48 @@ const MenuToggler = () => {
             developing a compelling brand,
           </MCAbout>
           <MCAbout className={isShowing ? 'animate' : undefined}>
-            {`I'm here to help.`}
+            I'm here to help.
           </MCAbout>
           <Break animate={isShowing ? true : false} />
           <MCAbout className={isShowing ? 'animate' : undefined}>
-            {`Previously I've worked with verlocal, omnyfy, and handpick in San
-            Francisco and Shanghai, with side ventures told here on this blog
-            and Product Hunt.`}
+            Previously I've worked with{' '}
+            <a
+              className="link"
+              href="https://verlocal.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              verlocal
+            </a>
+            ,{' '}
+            <a
+              className="link"
+              href="https://omnyfy.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              omnyfy
+            </a>
+            , and{' '}
+            <a
+              className="link"
+              href="https://handpick.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              handpick
+            </a>{' '}
+            in San Francisco and Shanghai, with side ventures told here on this
+            blog and{' '}
+            <a
+              className="link"
+              href="https://producthunt.com/@timothy_chang"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Product Hunt
+            </a>
+            .
           </MCAbout>
           <MCAbout className={isShowing ? 'animate' : undefined}>
             Currently, I am based in Los Angeles.
@@ -114,19 +149,19 @@ const Toggler = styled.button`
       right: 0;
       bottom: 0;
       transition: 0.15s var(--ease);
-      transition-property: opacity, transform, background;
+      transition-property: opacity, transform;
     }
     &::before {
       border-radius: 50%;
-      background: ${(props: { isShowing: boolean }) =>
-        props.isShowing ? 'var(--red)' : 'var(--black)'};
+      background: var(--black);
       box-shadow: var(--baseboxshadow);
     }
     &::after {
       background: var(--white);
       -webkit-mask: url(${plusIcon}) center bottom / contain no-repeat;
       margin: 9px;
-      transform: ${props => (props.isShowing ? 'rotate(45deg)' : 'rotate(0)')};
+      transform: ${(props: { isShowing: boolean }) =>
+        props.isShowing ? 'rotate(45deg)' : 'rotate(0)'};
     }
   }
 
@@ -143,7 +178,6 @@ const Toggler = styled.button`
 const ModalContentContainer = styled.div`
   max-width: var(--skewedcontent);
   margin-left: auto;
-  padding-top: 30px;
 
   .animate {
     transform: translateX(0);
@@ -179,11 +213,17 @@ const MCAbout = styled.p`
     props.noTransform ? 'inherit' : 'var(--fontxl)'};
   font-weight: var(--fontlight);
   font-family: var(--titlefont);
-  text-shadow: 0px 0px 1px rgba(255, 255, 255, 0.8);
   opacity: 0;
   transform: ${props => (props.noTransform ? 'none' : 'translateX(25px)')};
   transition: 0.55s var(--ease);
   transition-property: opacity, transform;
+  color: var(--black);
+  text-shadow: 0px 0px 1px rgba(255, 255, 255, 1);
+
+  > .link {
+    color: var(--red);
+    cursor: ne-resize;
+  }
 `
 
 const Break = styled(SectionBreak)`
@@ -192,4 +232,5 @@ const Break = styled(SectionBreak)`
   transform-origin: 0;
   transition: transform 0.25s var(--ease);
   transition-delay: ${props => (props.animate ? '1.4s' : '0s')};
+  background: var(--black);
 `

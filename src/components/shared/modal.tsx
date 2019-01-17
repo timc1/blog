@@ -77,7 +77,7 @@ export default ({
       height: 100%;
       width: 100%;
       background: none;
-      padding: var(--basepadding);
+      padding: calc(var(--basepadding) * 2);
       z-index: 2;
       opacity: 0;
       transition: opacity 0.15s ease-in;
@@ -108,7 +108,7 @@ export default ({
         blurNodes.forEach(
           (node: any) =>
             (node.style = `
-          transition: filter .35s var(--ease);
+          transition: filter .4s ease-out;
           filter: blur(10px);
         `)
         )
@@ -123,7 +123,7 @@ export default ({
         blurNodes.forEach(
           (node: any) =>
             (node.style = `
-          transition: filter .35s var(--ease);
+          transition: filter .4s var(--ease);
           filter: blur(0px);
         `)
         )

@@ -49,6 +49,23 @@ const UnstyledLink = styled(Link)<{
   }
 `
 
+const UnstyledALink = styled.a`
+  display: block;
+  color: var(--black);
+  font-size: var(--fontmd);
+  font-weight: var(--fontlight);
+  padding: 5px;
+  margin: -5px;
+  cursor: ${(props: { newTab?: boolean }) => (props.newTab ? '' : 'pointer')};
+  outline: none;
+
+  &:hover,
+  &:active,
+  &:focus {
+    opacity: 0.5;
+  }
+`
+
 export {
   screensm,
   screenmd,
@@ -58,4 +75,5 @@ export {
   Li,
   SectionBreak,
   UnstyledLink,
+  UnstyledALink,
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { UnstyledLink, Ul } from './styles'
+import { UnstyledALink, Ul } from './styles'
 
 type FooterProps = {
   className?: string
@@ -20,22 +20,39 @@ const Footer = (props: FooterProps) => {
     <FooterStyle {...props}>
       <Items>
         <li>
-          <UnstyledLink to="/">Email</UnstyledLink>
+          <UnstyledALink href="mailto:timchang.tcc@gmail.com?subject=hi!">
+            Email
+          </UnstyledALink>
         </li>
         <li>
-          <UnstyledLink newtab="ne-resize" to="/">
+          <UnstyledALink
+            newTab={true}
+            href="https://instagram.com/timm.c"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Instagram
-          </UnstyledLink>
+          </UnstyledALink>
         </li>
         <li>
-          <UnstyledLink newtab="ne-resize" to="/">
+          <UnstyledALink
+            newTab={true}
+            href="https://www.producthunt.com/@timothy_chang"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Product Hunt
-          </UnstyledLink>
+          </UnstyledALink>
         </li>
         <li>
-          <UnstyledLink newtab="ne-resize" to="/">
+          <UnstyledALink
+            newTab={true}
+            href="https://www.linkedin.com/in/timcchang/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             LinkedIn
-          </UnstyledLink>
+          </UnstyledALink>
         </li>
         <li>c. {year}</li>
       </Items>

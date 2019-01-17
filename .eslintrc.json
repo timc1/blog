@@ -1,4 +1,5 @@
 {
+  "extends": ["eslint:recommended", "react-app", "prettier"],
   "env": {
     "browser": true,
     "node": true,
@@ -13,10 +14,7 @@
       "jsx": true
     }
   },
-  "plugins": ["react"],
   "rules": {
-    "react/prop-types": 0
-  },
-
-  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"]
+    "react/jsx-no-target-blank": "error"
+  }
 }
