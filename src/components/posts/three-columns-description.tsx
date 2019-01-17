@@ -10,6 +10,12 @@ const ThreeColumnsDescription = ({
   description,
   postTitle,
   post,
+}: {
+  pre: string,
+  title: string,
+  description: string,
+  postTitle: string,
+  post?: React.ReactNode
 }) => (
   <Container>
     <Pre>{pre}</Pre>

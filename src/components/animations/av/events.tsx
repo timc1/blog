@@ -5,8 +5,11 @@ import { ThemeProvider } from 'emotion-theming'
 
 import { Laptop, IconFacebook, IconTwitter, IconLinkedIn } from './shared'
 
+// @ts-ignore
 import dummyImage1 from '../../../images/dummy_image_1.jpg'
+// @ts-ignore
 import dummyImage2 from '../../../images/dummy_image_2.jpg'
+// @ts-ignore
 import dummyImage3 from '../../../images/dummy_image_3.jpg'
 
 const events = [
@@ -34,7 +37,7 @@ const singlePageTheme = {
   isSinglePage: true,
 }
 
-export default React.memo(() => (
+const Events = React.memo(() => (
   <Laptop text="https://avresources.co/events" noheader>
     <Layout className="all-events-page">
       <Banner>
@@ -70,7 +73,23 @@ export default React.memo(() => (
   </Laptop>
 ))
 
-const Event = ({ event: { name, month, day, url }, singlePage }) => (
+Events.displayName = 'Events'
+export default Events
+
+type EventProps = {
+  event: {
+    name: string
+    month: string
+    day: string
+    url: string
+  }
+  singlePage?: boolean
+}
+
+const Event = ({
+  event: { name, month, day, url },
+  singlePage,
+}: EventProps) => (
   <EventContainer>
     <EventContent>
       <Date>
@@ -203,7 +222,8 @@ const EventContent = styled.div`
 
 const EventImage = styled.div`
   padding-top: ${props => (props.theme.isSinglePage ? '33%' : '66%')};
-  background: ${props => (props.url ? `url(${props.url})` : '#eee')};
+  background: ${(props: { url: string }) =>
+    props.url ? `url(${props.url})` : '#eee'};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

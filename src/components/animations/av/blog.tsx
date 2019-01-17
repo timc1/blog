@@ -4,68 +4,72 @@ import { keyframes } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
 
 import { Laptop, IconFacebook, IconTwitter, IconLinkedIn } from './shared'
+
+// @ts-ignore
 import dummyImage4 from '../../../images/dummy_image_4.jpg'
 
 const theme = {
   isOverlay: true,
 }
 
-export default React.memo(function() {
-  return (
-    <Laptop text="https://avresources.co/blog" noheader>
-      <Layout className="blog-layout">
-        <Banner>
-          <span className="vertical-lr">View All Entries</span>
-          <BannerImage url={dummyImage4} />
-          <span className="vertical-rl">Home</span>
-        </Banner>
-        <Body>
+const Blog = React.memo(() => (
+  <Laptop text="https://avresources.co/blog" noheader>
+    <Layout className="blog-layout">
+      <Banner>
+        <span className="vertical-lr">View All Entries</span>
+        <BannerImage url={dummyImage4} />
+        <span className="vertical-rl">Home</span>
+      </Banner>
+      <Body>
+        <Title>A Framework Built To Last</Title>
+        <Author>Written by Emily S.</Author>
+        <Social>
+          <IconFacebook />
+          <IconTwitter />
+          <IconLinkedIn />
+        </Social>
+        <TextContent>
+          {Array.from(Array(20)).map((i, index) => (
+            <span key={index} />
+          ))}
+        </TextContent>
+      </Body>
+
+      <Footer>
+        <FooterContent>
+          <FooterColumn>
+            <span className="logo">AVRC</span>
+          </FooterColumn>
+          {Array.from(Array(3)).map((i, index) => (
+            <FooterColumn key={index}>
+              <span />
+              <span />
+              <span />
+              <span />
+            </FooterColumn>
+          ))}
+        </FooterContent>
+      </Footer>
+    </Layout>
+    <ThemeProvider theme={theme}>
+      <ScrollOverlay className="blog-scroll-overlay">
+        <div>
           <Title>A Framework Built To Last</Title>
           <Author>Written by Emily S.</Author>
-          <Social>
-            <IconFacebook />
-            <IconTwitter />
-            <IconLinkedIn />
-          </Social>
-          <TextContent>
-            {Array.from(Array(20)).map((i, index) => (
-              <span key={index} />
-            ))}
-          </TextContent>
-        </Body>
+        </div>
+        <Social>
+          <IconFacebook />
+          <IconTwitter />
+          <IconLinkedIn />
+        </Social>
+      </ScrollOverlay>
+    </ThemeProvider>
+  </Laptop>
+))
 
-        <Footer>
-          <FooterContent>
-            <FooterColumn>
-              <span className="logo">AVRC</span>
-            </FooterColumn>
-            {Array.from(Array(3)).map((i, index) => (
-              <FooterColumn key={index}>
-                <span />
-                <span />
-                <span />
-                <span />
-              </FooterColumn>
-            ))}
-          </FooterContent>
-        </Footer>
-      </Layout>
-      <ThemeProvider theme={theme}>
-        <ScrollOverlay className="blog-scroll-overlay">
-          <div>
-            <Title>A Framework Built To Last</Title>
-            <Author>Written by Emily S.</Author>
-          </div>
-          <Social>
-            <IconFacebook />
-            <IconTwitter />
-            <IconLinkedIn />
-          </Social>
-        </ScrollOverlay>
-      </ThemeProvider>
-    </Laptop>
-  )
-})
+Blog.displayName = 'Blog'
+
+export default Blog
 
 const scrollUpDown = keyframes`
   35% {
@@ -151,7 +155,8 @@ const Banner = styled.div`
 const BannerImage = styled.div`
   height: 100%;
   width: 100%;
-  background: ${props => (props.url ? `url(${props.url})` : '#eee')};
+  background: ${(props: { url: string }) =>
+    props.url ? `url(${props.url})` : '#eee'};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

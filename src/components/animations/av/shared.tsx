@@ -1,7 +1,15 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export const Laptop = ({ dark, children, text, noheader, small }) => (
+export const Laptop = ({
+  children,
+  text,
+  noheader,
+}: {
+  children: React.ReactNode
+  text?: string
+  noheader?: boolean
+}) => (
   <LaptopScreen aria-hidden="true">
     <BrowserNavigation text={text || 'https://avresources.co'} />
     {noheader ? null : (
@@ -17,7 +25,7 @@ export const Laptop = ({ dark, children, text, noheader, small }) => (
   </LaptopScreen>
 )
 
-export const LaptopPlain = ({ children }) => (
+export const LaptopPlain = ({ children }: { children: React.ReactNode }) => (
   <LaptopPlainScreen aria-hidden="true">
     <LaptopPlainHeader>
       <div />
@@ -201,7 +209,7 @@ const LaptopPlainHeader = styled.div`
   }
 `
 
-const BrowserNavigation = ({ text }) => (
+const BrowserNavigation = ({ text }: { text: string }) => (
   <LaptopBrowserNavigationContainer>
     <LaptopBrowserActionTogglers>
       <span />

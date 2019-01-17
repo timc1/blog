@@ -1,7 +1,11 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-const IllustrationWrapper = ({ illustrations }) => (
+const IllustrationWrapper = ({
+  illustrations,
+}: {
+  illustrations: Array<React.FunctionComponent>
+}) => (
   <Container>
     <div className="animate-illustration">
       {illustrations.map((Illustration, index) => (
@@ -13,6 +17,7 @@ const IllustrationWrapper = ({ illustrations }) => (
   </Container>
 )
 
+IllustrationWrapper.defaultName = 'IllustrationWrapper'
 export default IllustrationWrapper
 
 // Styles

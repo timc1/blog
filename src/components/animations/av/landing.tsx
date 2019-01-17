@@ -2,12 +2,13 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/core'
 
+// @ts-ignore
 import caretLarge from '../../../images/caret_large.svg'
 import { screenmd } from '../../shared/styles'
 
 import { Laptop } from './shared'
 
-export default React.memo(() => (
+const Landing = React.memo(() => (
   <Container>
     <Laptop>
       <Banner>
@@ -35,6 +36,9 @@ export default React.memo(() => (
     </Laptop>
   </Container>
 ))
+
+Landing.displayName = 'Landing'
+export default Landing
 
 const Container = styled.div`
   margin: auto;

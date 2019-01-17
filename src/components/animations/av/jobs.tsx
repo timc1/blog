@@ -4,7 +4,7 @@ import { keyframes } from '@emotion/core'
 
 import { Laptop } from './shared'
 
-export default React.memo(() => (
+const Jobs = React.memo(() => (
   <Laptop text="https://avresources.co/services/jobs" noheader>
     <Banner>
       <BannerText>
@@ -59,6 +59,9 @@ export default React.memo(() => (
     </Services>
   </Laptop>
 ))
+
+Jobs.displayName = 'Jobs'
+export default Jobs
 
 // Styles
 const Banner = styled.div`

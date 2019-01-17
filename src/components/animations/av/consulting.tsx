@@ -2,10 +2,12 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/core'
 
-import caret from '../../../images/caret.svg'
 import { Laptop } from './shared'
 
-export default React.memo(() => (
+// @ts-ignore
+import caret from '../../../images/caret.svg'
+
+const Consulting = React.memo(() => (
   <Laptop text="https://avresources.co/services/consulting" noheader>
     <Banner>
       <BannerGrid>
@@ -38,6 +40,9 @@ export default React.memo(() => (
     </Services>
   </Laptop>
 ))
+
+Consulting.displayName = 'Consulting'
+export default Consulting
 
 const Banner = styled.div`
   position: relative;

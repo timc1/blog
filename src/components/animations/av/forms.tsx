@@ -4,7 +4,7 @@ import { keyframes } from '@emotion/core'
 
 import { Laptop } from './shared'
 
-export default React.memo(() => (
+const Forms = React.memo(() => (
   <Laptop text="https://avresources.co/services/forms" noheader>
     <Banner>
       <BannerText>
@@ -61,6 +61,9 @@ export default React.memo(() => (
     </About>
   </Laptop>
 ))
+
+Forms.displayName = 'Forms'
+export default Forms
 
 // Styles
 const Banner = styled.div`

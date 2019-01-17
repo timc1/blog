@@ -32,7 +32,7 @@ const apps = [
   },
 ]
 
-export default React.memo(function() {
+const JobsApp = React.memo(function() {
   return (
     <Laptop text="https://avresources.co/jobs" noheader>
       <Layout>
@@ -68,6 +68,9 @@ export default React.memo(function() {
     </Laptop>
   )
 })
+
+JobsApp.displayName = 'JobsApp'
+export default JobsApp
 
 const Layout = styled.div`
   display: grid;

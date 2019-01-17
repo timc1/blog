@@ -2,9 +2,14 @@ import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 
 import { LaptopPlain, IconExit, IconBack } from './shared'
+
+// @ts-ignore
 import pocPdf from '../../../images/poc_pdf.jpg'
+// @ts-ignore
 import singleCaret from '../../../images/singlecaret.svg'
+// @ts-ignore
 import gear from '../../../images/gear.svg'
+// @ts-ignore
 import check from '../../../images/check.svg'
 
 const tags = [
@@ -32,9 +37,9 @@ const questions = [
   },
 ]
 
-export default () => {
-  const animation = useRef()
-  const animationContainer = useRef()
+const FormsApp = () => {
+  const animation = useRef<null | any>(null)
+  const animationContainer = useRef<null | any>(null)
   const animationStep = useRef(0)
 
   useEffect(() => {
@@ -121,7 +126,10 @@ export default () => {
   )
 }
 
-const SingleTag = ({ name }) => (
+FormsApp.displayName = 'FormsApp'
+export default FormsApp
+
+const SingleTag = ({ name }: { name: string }) => (
   <Tag>
     <TagTitle>{name}</TagTitle>
     <TagCustomize>
@@ -133,7 +141,7 @@ const SingleTag = ({ name }) => (
   </Tag>
 )
 
-const SingleQuestion = ({ text }) => (
+const SingleQuestion = ({ text }: { text: string }) => (
   <QuestionContainer>
     <div className="question">{text}</div>
     <div className="answer">
@@ -147,7 +155,7 @@ const SingleQuestion = ({ text }) => (
   </QuestionContainer>
 )
 
-const PaymentFtag = ({ short }) => (
+const PaymentFtag = ({ short }: { short: string }) => (
   <FtagContainer>
     <div className="ftag">{short}</div>
     <div className="price">$5</div>

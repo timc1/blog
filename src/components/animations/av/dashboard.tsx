@@ -2,13 +2,21 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/core'
 
+// @ts-ignore
 import image1 from '../../../images/dummy_image_1.jpg'
+// @ts-ignore
 import image2 from '../../../images/dummy_image_2.jpg'
+// @ts-ignore
 import image3 from '../../../images/dummy_image_3.jpg'
+// @ts-ignore
 import image4 from '../../../images/dummy_image_4.jpg'
+// @ts-ignore
 import image5 from '../../../images/dummy_image_5.jpg'
+// @ts-ignore
 import image6 from '../../../images/dummy_image_6.jpg'
+// @ts-ignore
 import image7 from '../../../images/dummy_image_7.jpg'
+// @ts-ignore
 import image8 from '../../../images/dummy_image_8.jpg'
 
 import { IconExit, LaptopPlain } from './shared'
@@ -25,7 +33,7 @@ const posts = [
   { url: image8 },
 ]
 
-export default React.memo(function() {
+const Dashboard = React.memo(function() {
   return (
     <DashboardContainer>
       <div>
@@ -80,7 +88,10 @@ export default React.memo(function() {
   )
 })
 
-const Post = ({ url }) => (
+Dashboard.displayName = 'Dashboard'
+export default Dashboard
+
+const Post = ({ url }: { url: string }) => (
   <PostContainer>
     <PostImage url={url} />
     <PostText>
@@ -92,7 +103,7 @@ const Post = ({ url }) => (
   </PostContainer>
 )
 
-const DashboardContainer = ({ children }) => (
+const DashboardContainer = ({ children }: { children: React.ReactNode }) => (
   <Container>
     <LaptopPlain>{children}</LaptopPlain>
   </Container>
@@ -160,7 +171,8 @@ const ModalHeader = styled.div`
 const ModalImage = styled.div`
   height: 100px;
   width: 100%;
-  background: ${props => (props.url ? `url(${props.url})` : '#eee')};
+  background: ${(props: { url: string }) =>
+    props.url ? `url(${props.url})` : '#eee'};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -374,7 +386,8 @@ const PostContainer = styled.div`
 
 const PostImage = styled.div`
   padding-top: 66%;
-  background: ${props => (props.url ? `url(${props.url})` : '#eee')};
+  background: ${(props: { url: string }) =>
+    props.url ? `url(${props.url})` : '#eee'};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
