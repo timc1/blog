@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 
 import { isMobile } from '../../utils'
 
-const handleKeyDown = (e, toggle) => {
+const handleKeyDown = (e: KeyboardEvent, toggle: () => void) => {
   if (e.key.toUpperCase() === 'ESCAPE') {
     toggle()
   }
@@ -34,12 +34,23 @@ const handleKeyDown = (e, toggle) => {
 //  }
 //}
 
-export default ({ children, domNode, ...props }) => {
+export default ({
+  children,
+  domNode,
+  ...props
+}: {
+  children: React.ReactNode
+  domNode: string
+  toggle: () => void
+  isShowing: boolean
+}) => {
   const root = document.getElementById('___gatsby')
-  const modalContent = useRef(document.createElement('div'))
-  const modalRoot = useRef(document.getElementById(domNode))
+  const modalContent = useRef<any>(document.createElement('div'))
+  const modalRoot = useRef<any>(document.getElementById(domNode))
 
-  const eventListener = useRef(e => handleKeyDown(e, props.toggle))
+  const eventListener = useRef((e: KeyboardEvent) =>
+    handleKeyDown(e, props.toggle)
+  )
   //const currentScrollPostion = useRef()
 
   // 1. Setup DOM node
@@ -74,7 +85,9 @@ export default ({ children, domNode, ...props }) => {
       -webkit-overflow-scrolling: touch;
       pointer-events: none;
     `
-    modalNode.appendChild(modalContent.current)
+    if (modalNode) {
+      modalNode.appendChild(modalContent.current)
+    }
   }, [])
 
   // 3. Listen for changes to props.isShowing
@@ -84,7 +97,7 @@ export default ({ children, domNode, ...props }) => {
 
       if (props.isShowing) {
         //modifyDiv('___gatsby', 'freeze', currentScrollPostion)
-        modalContent.current.style.opacity = 1
+        modalContent.current.style.opacity = '1'
         modalContent.current.style.pointerEvents = 'initial'
 
         if (!isMobile()) {
@@ -93,7 +106,7 @@ export default ({ children, domNode, ...props }) => {
 
         // Blur!
         blurNodes.forEach(
-          node =>
+          (node: any) =>
             (node.style = `
           transition: filter .35s var(--ease);
           filter: blur(10px);
@@ -108,7 +121,7 @@ export default ({ children, domNode, ...props }) => {
 
         // Unblur!
         blurNodes.forEach(
-          node =>
+          (node: any) =>
             (node.style = `
           transition: filter .35s var(--ease);
           filter: blur(0px);

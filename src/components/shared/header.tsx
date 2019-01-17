@@ -40,6 +40,7 @@ const MenuToggler = () => {
             <UnstyledLink
               to="/"
               onClick={() => toggle(prev => !prev)}
+              // @ts-ignore
               css={{
                 fontSize: `var(--fontmd)`,
                 padding: `0.5625rem`,
@@ -61,7 +62,7 @@ const MenuToggler = () => {
           <MCAbout className={isShowing ? 'animate' : undefined}>
             {`I'm here to help.`}
           </MCAbout>
-          <Break isAnimated={true} animate={isShowing ? true : false} />
+          <Break animate={isShowing ? true : false} />
           <MCAbout className={isShowing ? 'animate' : undefined}>
             {`Previously I've worked with verlocal, omnyfy, and handpick in San
             Francisco and Shanghai, with side ventures told here on this blog
@@ -117,7 +118,8 @@ const Toggler = styled.button`
     }
     &::before {
       border-radius: 50%;
-      background: ${props => (props.isShowing ? 'var(--red)' : 'var(--black)')};
+      background: ${(props: { isShowing: boolean }) =>
+        props.isShowing ? 'var(--red)' : 'var(--black)'};
       box-shadow: var(--baseboxshadow);
     }
     &::after {
@@ -148,7 +150,7 @@ const ModalContentContainer = styled.div`
     opacity: 1;
   }
 
-  ${props =>
+  ${(props: { isShowing?: boolean }) =>
     !props.isShowing &&
     css`
       .animate:first-of-type {
@@ -173,7 +175,8 @@ const ModalContentContainer = styled.div`
 `
 
 const MCAbout = styled.p`
-  font-size: ${props => (props.noTransform ? 'inherit' : 'var(--fontxl)')};
+  font-size: ${(props: { noTransform?: 'inherit' | 'var(--fontxl)' }) =>
+    props.noTransform ? 'inherit' : 'var(--fontxl)'};
   font-weight: var(--fontlight);
   font-family: var(--titlefont);
   text-shadow: 0px 0px 1px rgba(255, 255, 255, 0.8);
@@ -184,7 +187,8 @@ const MCAbout = styled.p`
 `
 
 const Break = styled(SectionBreak)`
-  transform: ${props => (props.animate ? 'scaleX(1)' : 'scaleX(0)')};
+  transform: ${(props: { animate: boolean }) =>
+    props.animate ? 'scaleX(1)' : 'scaleX(0)'};
   transform-origin: 0;
   transition: transform 0.25s var(--ease);
   transition-delay: ${props => (props.animate ? '1.4s' : '0s')};

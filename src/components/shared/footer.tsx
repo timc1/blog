@@ -2,46 +2,56 @@ import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import { UnstyledLink, Ul } from './styles'
 
-export default props => {
-  const [year, setYear] = useState(null)
+type FooterProps = {
+  className?: string
+  alignLeft?: boolean
+}
+
+const Footer = (props: FooterProps) => {
+  const [year, setYear] = useState<number | null>(null)
+
   useEffect(() => {
     let d = new Date()
-    let year = d.getFullYear()
-    setYear(year)
+    let yr = d.getFullYear()
+    setYear(yr)
   }, [])
 
   return (
-    <Footer {...props}>
+    <FooterStyle {...props}>
       <Items>
         <li>
           <UnstyledLink to="/">Email</UnstyledLink>
         </li>
         <li>
-          <UnstyledLink newtab="true" to="/">
+          <UnstyledLink newtab="ne-resize" to="/">
             Instagram
           </UnstyledLink>
         </li>
         <li>
-          <UnstyledLink newtab="true" to="/">
+          <UnstyledLink newtab="ne-resize" to="/">
             Product Hunt
           </UnstyledLink>
         </li>
         <li>
-          <UnstyledLink newtab="true" to="/">
+          <UnstyledLink newtab="ne-resize" to="/">
             LinkedIn
           </UnstyledLink>
         </li>
         <li>c. {year}</li>
       </Items>
-    </Footer>
+    </FooterStyle>
   )
 }
 
-const Footer = styled.footer`
+Footer.displayName = 'Footer'
+export default Footer
+
+const FooterStyle = styled.footer`
   width: max-content;
   margin-top: 40px;
   margin-bottom: 20px;
-  margin-right: ${props => (props.alignLeft ? 'auto' : '0')};
+  margin-right: ${(props: { alignLeft?: boolean }) =>
+    props.alignLeft ? 'auto' : '0'};
   margin-left: ${props => (props.alignLeft ? '0' : 'auto')};
   padding-right: 20px;
 `
