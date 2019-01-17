@@ -15,7 +15,7 @@ const createPosts = (createPage, edges) => {
     const next = i === edges.length - 1 ? null : edges[i + 1].node
 
     createPage({
-      path: `${node.parent.sourceInstanceName}/${node.parent.name}`,
+      path: `/${node.parent.name}`, //`${node.parent.sourceInstanceName}/${node.parent.name}`,
       component: componentWithMDXScope(
         path.resolve(`${__dirname}/src/templates/post-template.tsx`),
         node.code.scope,

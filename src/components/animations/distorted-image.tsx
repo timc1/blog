@@ -7,7 +7,7 @@ import { debounce } from '../../utils'
 import usePixiWarp from '../shared/hooks/usePixiWarp'
 
 // @ts-ignore
-import timchang from '../../images/test-headshot.png'
+import timchang from '../../images/tim_chang.jpg'
 // @ts-ignore
 import baseDisplacement from '../../images/displacement_image.jpg'
 

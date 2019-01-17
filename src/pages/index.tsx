@@ -61,9 +61,7 @@ const IndexPage = ({ data }: FrontmatterProps) => {
             const num = index + 1 < 10 ? `0${index + 1}` : index + 1
             return (
               <Post key={post.fields.name} className="post">
-                <PostLink
-                  to={`/${post.fields.sourceInstanceName}/${post.fields.name}`}
-                >
+                <PostLink to={`/${post.fields.name}`}>
                   <Details>
                     <Detail>{num}.</Detail>
                     <Detail>{post.frontmatter.short_name}</Detail>

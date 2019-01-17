@@ -4,6 +4,12 @@ import * as PIXI from 'pixi.js'
 // @ts-ignore
 import { TweenMax } from 'gsap/TweenMax'
 
+declare global {
+  interface Window {
+    Power4: any
+  }
+}
+
 const usePixiWarp = ({
   pixiRef,
   baseDisplacement,
@@ -52,7 +58,7 @@ const usePixiWarp = ({
       baseFilter.autoFit = false
 
       // Initial distortion
-      baseFilter.scale.x = 846
+      baseFilter.scale.x = 3000
 
       stage.addChild(baseSprite)
     }
@@ -63,7 +69,8 @@ const usePixiWarp = ({
 
       slidesContainer.addChild(img)
 
-      TweenMax.to(baseFilter.scale, 1, {
+      TweenMax.to(baseFilter.scale, 2, {
+        ease: window.Power4.easeOut,
         x: 0,
         y: 0,
       })

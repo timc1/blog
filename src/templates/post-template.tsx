@@ -84,9 +84,7 @@ const SuggestedPost = ({ next, previous }) => (
   <SuggestedContainer>
     {previous && (
       <ThemeProvider theme={{ direction: 'left' }}>
-        <SPLink
-          to={`/${previous.parent.sourceInstanceName}/${previous.parent.name}`}
-        >
+        <SPLink to={`/${previous.parent.name}`}>
           <Details>
             <DetailTitle>Previous</DetailTitle>
             <Detail>{previous.fields.short_name}</Detail>
@@ -98,7 +96,7 @@ const SuggestedPost = ({ next, previous }) => (
     )}
     {next && (
       <ThemeProvider theme={{ direction: 'right' }}>
-        <SPLink to={`/${next.parent.sourceInstanceName}/${next.parent.name}`}>
+        <SPLink to={`/${next.parent.name}`}>
           <Details>
             <Detail>{next.fields.short_name}</Detail>
             <Detail>{next.fields.scope}</Detail>
