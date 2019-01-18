@@ -2,15 +2,12 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
-// @ts-ignore
-import socialImage from '../../images/social_image.jpg'
-
 type SEOProps = {
   description?: string
   lang?: string
   meta?: []
   keywords?: string[]
-  title: string
+  title?: string
 }
 
 const SEO = ({ description, lang, meta = [], keywords, title }: SEOProps) => {
@@ -23,6 +20,10 @@ const SEO = ({ description, lang, meta = [], keywords, title }: SEOProps) => {
           description || data.site.siteMetadata.description
 
         const metaKeywords = keywords || data.site.siteMetadata.keywords
+        const baseUrl =
+          process.env.NODE_ENV !== 'production'
+            ? 'http://localhost:8000'
+            : 'https://timcchang.com'
 
         return (
           <Helmet
@@ -49,12 +50,16 @@ const SEO = ({ description, lang, meta = [], keywords, title }: SEOProps) => {
                 content: metaDescription,
               },
               {
+                property: `og:url`,
+                content: baseUrl,
+              },
+              {
                 property: `og:type`,
                 content: `website`,
               },
               {
                 property: `og:image`,
-                content: socialImage,
+                content: `${baseUrl}/static/social_image.jpg`,
               },
               {
                 name: `twitter:card`,
@@ -71,6 +76,10 @@ const SEO = ({ description, lang, meta = [], keywords, title }: SEOProps) => {
               {
                 name: `twitter:description`,
                 content: metaDescription,
+              },
+              {
+                name: `google-site-verification`,
+                content: `joDHdTdb56PSG3inAa0NTavlVPlKpbJSIZM0OfTfImI`,
               },
             ]
               .concat(

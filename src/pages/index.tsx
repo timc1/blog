@@ -45,7 +45,6 @@ const IndexPage = ({ data }: FrontmatterProps) => {
   return (
     <>
       <SEO
-        title="Essays and thoughts on web development, client work, and growth at timcchang"
         keywords={['UI', 'UX', 'Web Design', 'Business Design']}
         description=""
       />
