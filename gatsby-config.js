@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Essays and thoughts on web development, client work, and growth at timcchang`,
-    description: `Home to my independent work and experiments. It features essays on web design, development, client work, and growth. Currently, I am a product designer & developer based in Los Angeles building tools to empower others to create.`,
+    description: `Home to my independent work and experiments. It features essays on web design, development, client work, and growth. Currently, I am a product designer & developer based in Los Angeles building tools for the creative community`,
     author: `@timcchang`,
     keywords: [
       `product design`,
@@ -61,10 +61,10 @@ module.exports = {
         name: `gatsby-starter-default`,
         short_name: `starter`,
         start_url: `/`,
-        background_color: `rgba(15,13,32,0.99)`,
+        background_color: `#fc3f3b`,
         theme_color: `#ffffff`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
   ],

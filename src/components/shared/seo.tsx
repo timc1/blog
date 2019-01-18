@@ -2,6 +2,9 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
+// @ts-ignore
+import socialImage from '../../images/social_image.jpg'
+
 type SEOProps = {
   description?: string
   lang?: string
@@ -30,6 +33,10 @@ const SEO = ({ description, lang, meta = [], keywords, title }: SEOProps) => {
             titleTemplate={`%s`}
             meta={[
               {
+                name: `title`,
+                content: metaTitle,
+              },
+              {
                 name: `description`,
                 content: metaDescription,
               },
@@ -44,6 +51,10 @@ const SEO = ({ description, lang, meta = [], keywords, title }: SEOProps) => {
               {
                 property: `og:type`,
                 content: `website`,
+              },
+              {
+                property: `og:image`,
+                content: socialImage,
               },
               {
                 name: `twitter:card`,

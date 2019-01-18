@@ -1,12 +1,25 @@
 const path = require('path')
 const componentWithMDXScope = require('gatsby-mdx/component-with-mdx-scope')
 
-exports.onCreateWebpackConfig = ({ actions }) => {
+exports.onCreateWebpackConfig = ({ stage, actions, loaders }) => {
   actions.setWebpackConfig({
     resolve: {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     },
   })
+
+  if (stage === 'build-html') {
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /pixi.js/,
+            use: loaders.null(),
+          },
+        ],
+      },
+    })
+  }
 }
 
 const createPosts = (createPage, edges) => {
@@ -67,7 +80,6 @@ exports.createPages = ({ graphql, actions }) => {
         `
       ).then(({ errors, data }) => {
         if (errors) {
-          console.log(errors)
           reject(errors)
         }
         const { edges } = data.allMdx

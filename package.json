@@ -48,8 +48,9 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
-    "start": "npm run develop",
+    "start": "gatsby develop",
+    "deploy": "yarn build --prefix-paths && s3-deploy './public/**' --cwd './public/' --bucket timcchang.com  --deleteRemoved --gzip",
+    "clear": "aws-cloudfront-invalidate E1637DSVT3IWD2",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },

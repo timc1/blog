@@ -25,7 +25,7 @@ const DistortedImage = () => {
     debounce(
       () => {
         try {
-          if (imageContainerRef.current) {
+          if (imageContainerRef.current && 'window' in window) {
             if (
               window.innerWidth <= 767 &&
               !imageContainerRef.current.classList.contains('blur-me')

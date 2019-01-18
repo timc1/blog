@@ -1,0 +1,52 @@
+{
+    "ResourceRecordSets": [
+        {
+            "AliasTarget": {
+                "HostedZoneId": "Z3AQBSTGFYJSTF", 
+                "EvaluateTargetHealth": false, 
+                "DNSName": "s3-website-us-east-1.amazonaws.com."
+            }, 
+            "Type": "A", 
+            "Name": "timcchang.com."
+        }, 
+        {
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1108.awsdns-10.org."
+                }, 
+                {
+                    "Value": "ns-782.awsdns-33.net."
+                }, 
+                {
+                    "Value": "ns-1728.awsdns-24.co.uk."
+                }, 
+                {
+                    "Value": "ns-393.awsdns-49.com."
+                }
+            ], 
+            "Type": "NS", 
+            "Name": "timcchang.com.", 
+            "TTL": 172800
+        }, 
+        {
+            "ResourceRecords": [
+                {
+                    "Value": "ns-782.awsdns-33.net. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+                }
+            ], 
+            "Type": "SOA", 
+            "Name": "timcchang.com.", 
+            "TTL": 900
+        }, 
+        {
+            "ResourceRecords": [
+                {
+                    "Value": "_d814c635fc6f4b8df62d55c5ca38dd13.tljzshvwok.acm-validations.aws."
+                }
+            ], 
+            "Type": "CNAME", 
+            "Name": "_b29138a772851e82519c5ecad0013dd3.timcchang.com.", 
+            "TTL": 300
+        }
+    ]
+}
