@@ -15,11 +15,12 @@ import { PostTitle, Details, Detail } from '../pages/index'
 
 import useScrollAnimation from '../components/shared/hooks/useScrollAnimation'
 
-//type TemplateProps = {
-//  pageContext: any
-//  data: any
-//}
-const Template = ({ pageContext, data }) => {
+type TemplateProps = {
+  pageContext: any
+  data: any
+}
+
+const Template = ({ pageContext, data }: TemplateProps) => {
   const { next, previous } = pageContext
 
   const { mdx } = data
@@ -305,16 +306,17 @@ const ScopeItem = styled.li`
 `
 
 const Content = styled.section`
+  position: relative;
   max-width: var(--contentmaxwidth);
   margin: auto;
   font-size: var(--fontmd);
   font-weight: var(--fontlight);
   color: var(--black);
-  opacity: 0;
-  transform: translateY(40px);
-  transform-origin: 100% 0;
-  animation: ${fadein} 1s var(--cubic);
-  animation-fill-mode: forwards;
+  //opacity: 0;
+  //transform: translateY(40px);
+  //transform-origin: 100% 0;
+  //animation: ${fadein} 1s var(--cubic);
+  //animation-fill-mode: forwards;
 
   h1,
   h2,

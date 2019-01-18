@@ -190,7 +190,7 @@ export const Details = styled.ul<ThemeProps>`
   }
 
   @media (max-width: ${screenmd}px) {
-    margin-left: 0.25rem;
+    margin-left: -0.15rem;
   }
 
   transform: ${props =>
@@ -215,7 +215,7 @@ const Title = styled.h1`
   font-family: var(--titlefont);
   font-weight: var(--fontlight);
   color: var(--black);
-  margin: 0 0 5px 0;
+  margin: 0 0.25rem 5px 0;
 `
 
 const Subtitle = styled.h2`
@@ -223,7 +223,7 @@ const Subtitle = styled.h2`
   font-family: var(--titlefont);
   font-weight: var(--fontlight);
   color: var(--black);
-  margin: 0;
+  margin: 0 0.25rem 0 0;
 `
 
 const Posts = styled.ul``

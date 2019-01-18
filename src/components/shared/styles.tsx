@@ -27,7 +27,7 @@ const Li = styled.li`
 
 const SectionBreak = styled.hr`
   max-width: 40px;
-  margin: 80px 0 60px 0;
+  margin: 80px 0 60px 0.25rem;
   border: none;
   height: 1px;
   background: var(--black);
@@ -41,8 +41,8 @@ const UnstyledLink = styled(Link)<{
   color: var(--black);
   font-size: var(--fontmd);
   font-weight: var(--fontlight);
-  padding: 5px;
-  margin: -5px;
+  padding: 0.3125rem;
+  margin: -0.4375rem;
   cursor: ${props => (props.newtab ? 'ne-resize' : 'pointer')};
   outline: none;
 
@@ -59,8 +59,8 @@ const UnstyledALink = styled(OutboundLink)`
   color: var(--black);
   font-size: var(--fontmd);
   font-weight: var(--fontlight);
-  padding: 5px;
-  margin: -5px;
+  padding: 0.3125rem;
+  margin: -0.3125rem;
   cursor: ${(props: { newTab?: boolean }) =>
     props.newTab ? 'ne-resize' : 'pointer'};
   outline: none;

@@ -12,7 +12,7 @@ const links = [
   { name: 'Email', link: 'mailto:timchang.tcc@gmail.com?subject=hi!' },
   { name: 'Instagram', link: 'https://instagram.com/timm.c' },
   { name: 'Product Hunt', link: 'https://www.producthunt.com/@timothy_chang' },
-  { name: 'Linkedin', link: 'https://www.linkedin.com/in/timcchang/' },
+  { name: 'Linkedin', link: 'https://www.linkedin.com/in/timcchang' },
 ]
 
 const Footer = (props: FooterProps) => {
@@ -67,5 +67,9 @@ const Items = styled(Ul)`
   }
   li:last-of-type {
     margin-top: 10px;
+  }
+
+  a {
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
   }
 `

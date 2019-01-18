@@ -20,6 +20,13 @@ export default ({
     [isShowing]
   )
 
+  useEffect(
+    () => {
+      toggle(prevState => false)
+    },
+    [window.location.pathname]
+  )
+
   const getTogglerProps = () => ({
     onClick: () => toggle(prevState => !prevState),
     isShowing,
