@@ -15,12 +15,12 @@ import { PostTitle, Details, Detail } from '../pages/index'
 
 import useScrollAnimation from '../components/shared/hooks/useScrollAnimation'
 
-type TemplateProps = {
-  pageContext: any
-  data: any
-}
+//type TemplateProps = {
+//  pageContext: any
+//  data: any
+//}
 
-const Template = ({ pageContext, data }: TemplateProps) => {
+const Template = ({ pageContext, data }) => {
   const { next, previous } = pageContext
 
   const { mdx } = data

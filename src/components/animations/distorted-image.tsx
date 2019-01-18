@@ -73,6 +73,7 @@ const ImageContainer = styled.div`
   bottom: 0;
   max-width: 1500px;
   width: calc(100% - var(--skewedcontent) - 3%);
+  z-index: -1;
 
   @media (max-width: ${screenmd}px) {
     position: relative;
