@@ -5,8 +5,11 @@ import { css } from '@emotion/core'
 import { Ul, Li, SectionBreak, UnstyledLink } from './styles'
 
 // @ts-ignore
+import { OutboundLink } from 'gatsby-plugin-google-analytics'
+// @ts-ignore
 import plusIcon from '../../images/plus.svg'
 
+import { useRef } from 'react'
 import useModal from './hooks/useModal'
 import Modal from './modal'
 import Footer from './footer'
@@ -26,7 +29,18 @@ const Header = () => (
 export default Header
 
 const MenuToggler = () => {
-  const { isShowing, toggle, getTogglerProps, getMenuProps } = useModal()
+  const initialFocusRef = useRef(null)
+  const modalClosedFocusRef = useRef(null)
+  const {
+    isShowing,
+    toggle,
+    getTogglerProps,
+    getMenuProps,
+    getMenuItemProps,
+  } = useModal({
+    initialFocusRef,
+    modalClosedFocusRef,
+  })
 
   return (
     <>
@@ -38,8 +52,10 @@ const MenuToggler = () => {
         <ModalContentContainer>
           <MCAbout className={isShowing ? 'animate' : undefined}>
             <UnstyledLink
+              ref={initialFocusRef}
               to="/"
               onClick={() => toggle(prev => !prev)}
+              {...getMenuItemProps(null)}
               // @ts-ignore
               css={{
                 fontSize: `var(--fontmd)`,
@@ -65,51 +81,55 @@ const MenuToggler = () => {
           <Break animate={isShowing ? true : false} />
           <MCAbout className={isShowing ? 'animate' : undefined}>
             Previously I've worked with{' '}
-            <a
+            <OutboundLink
               className="link"
               href="https://verlocal.com"
               target="_blank"
               rel="noopener noreferrer"
+              {...getMenuItemProps(null)}
             >
               verlocal
-            </a>
+            </OutboundLink>
             ,{' '}
-            <a
+            <OutboundLink
               className="link"
               href="https://omnyfy.com"
               target="_blank"
               rel="noopener noreferrer"
+              {...getMenuItemProps(null)}
             >
               omnyfy
-            </a>
+            </OutboundLink>
             , and{' '}
-            <a
+            <OutboundLink
               className="link"
               href="https://handpick.com"
               target="_blank"
               rel="noopener noreferrer"
+              {...getMenuItemProps(null)}
             >
               handpick
-            </a>{' '}
+            </OutboundLink>{' '}
             in San Francisco and Shanghai, with side ventures told here on this
             blog and{' '}
-            <a
+            <OutboundLink
               className="link"
               href="https://producthunt.com/@timothy_chang"
               target="_blank"
               rel="noopener noreferrer"
+              {...getMenuItemProps(null)}
             >
               Product Hunt
-            </a>
+            </OutboundLink>
             .
           </MCAbout>
           <MCAbout className={isShowing ? 'animate' : undefined}>
             Currently, I am based in Los Angeles.
           </MCAbout>
-          <Footer alignLeft />
+          <Footer alignLeft isShowing={isShowing} />
         </ModalContentContainer>
       </Modal>
-      <Toggler {...getTogglerProps()}>
+      <Toggler {...getTogglerProps()} ref={modalClosedFocusRef}>
         <h2>Menu</h2>
       </Toggler>
     </>

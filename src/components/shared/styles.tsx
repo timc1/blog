@@ -1,6 +1,9 @@
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
-import { Link } from 'gatsby'
+
+// @ts-ignore
+import { OutboundLink } from 'gatsby-plugin-google-analytics'
+import { Link } from '@reach/router'
 
 const screensm = 568
 const screenmd = 767
@@ -33,6 +36,7 @@ const SectionBreak = styled.hr`
 const UnstyledLink = styled(Link)<{
   newtab?: 'ne-resize' | 'pointer'
 }>`
+  position: relative;
   display: block;
   color: var(--black);
   font-size: var(--fontmd);
@@ -45,25 +49,21 @@ const UnstyledLink = styled(Link)<{
   &:hover,
   &:active,
   &:focus {
-    opacity: 0.5;
+    opacity: 0.8;
   }
 `
 
-const UnstyledALink = styled.a`
+const UnstyledALink = styled(OutboundLink)`
+  position: relative;
   display: block;
   color: var(--black);
   font-size: var(--fontmd);
   font-weight: var(--fontlight);
   padding: 5px;
   margin: -5px;
-  cursor: ${(props: { newTab?: boolean }) => (props.newTab ? '' : 'pointer')};
+  cursor: ${(props: { newTab?: boolean }) =>
+    props.newTab ? 'ne-resize' : 'pointer'};
   outline: none;
-
-  &:hover,
-  &:active,
-  &:focus {
-    opacity: 0.5;
-  }
 `
 
 export {

@@ -5,7 +5,15 @@ import { UnstyledALink, Ul } from './styles'
 type FooterProps = {
   className?: string
   alignLeft?: boolean
+  isShowing?: boolean
 }
+
+const links = [
+  { name: 'Email', link: 'mailto:timchang.tcc@gmail.com?subject=hi!' },
+  { name: 'Instagram', link: 'https://instagram.com/timm.c' },
+  { name: 'Product Hunt', link: 'https://www.producthunt.com/@timothy_chang' },
+  { name: 'Linkedin', link: 'https://www.linkedin.com/in/timcchang/' },
+]
 
 const Footer = (props: FooterProps) => {
   const [year, setYear] = useState<number | null>(null)
@@ -19,41 +27,17 @@ const Footer = (props: FooterProps) => {
   return (
     <FooterStyle {...props}>
       <Items>
-        <li>
-          <UnstyledALink href="mailto:timchang.tcc@gmail.com?subject=hi!">
-            Email
-          </UnstyledALink>
-        </li>
-        <li>
-          <UnstyledALink
-            newTab={true}
-            href="https://instagram.com/timm.c"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Instagram
-          </UnstyledALink>
-        </li>
-        <li>
-          <UnstyledALink
-            newTab={true}
-            href="https://www.producthunt.com/@timothy_chang"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Product Hunt
-          </UnstyledALink>
-        </li>
-        <li>
-          <UnstyledALink
-            newTab={true}
-            href="https://www.linkedin.com/in/timcchang/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </UnstyledALink>
-        </li>
+        {links.map(link => (
+          <li key={link.name}>
+            <UnstyledALink
+              href={link.link}
+              tabIndex={props.isShowing ? 0 : -1}
+              className="nice-link-dude"
+            >
+              {link.name}
+            </UnstyledALink>
+          </li>
+        ))}
         <li>c. {year}</li>
       </Items>
     </FooterStyle>

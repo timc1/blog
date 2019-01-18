@@ -9,7 +9,7 @@ const Layout: React.FunctionComponent = ({ children }) => (
   <>
     <Header />
     <main id="___main">{children}</main>
-    <Footer className="blur-me" />
+    <Footer className="blur-me" isShowing={true} />
   </>
 )
 

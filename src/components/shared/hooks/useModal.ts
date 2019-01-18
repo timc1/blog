@@ -1,7 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default () => {
+export default ({
+  initialFocusRef,
+  modalClosedFocusRef,
+}: {
+  initialFocusRef: any
+  modalClosedFocusRef: any
+}) => {
   const [isShowing, toggle] = useState(false)
+
+  useEffect(
+    () => {
+      if (isShowing && initialFocusRef) {
+        initialFocusRef.current.focus()
+      } else if (modalClosedFocusRef) {
+        modalClosedFocusRef.current.focus()
+      }
+    },
+    [isShowing]
+  )
 
   const getTogglerProps = () => ({
     onClick: () => toggle(prevState => !prevState),
@@ -14,5 +31,10 @@ export default () => {
     ...props,
   })
 
-  return { isShowing, toggle, getTogglerProps, getMenuProps }
+  const getMenuItemProps = (props: any) => ({
+    tabIndex: isShowing ? 0 : -1,
+    ...props,
+  })
+
+  return { isShowing, toggle, getTogglerProps, getMenuProps, getMenuItemProps }
 }

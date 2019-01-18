@@ -10,30 +10,6 @@ const handleKeyDown = (e: KeyboardEvent, toggle: () => void) => {
   }
 }
 
-//const modifyDiv = (id, type, currentScrollPosition) => {
-//  const el = document.getElementById(id)
-//
-//  switch (type) {
-//    case 'freeze':
-//      currentScrollPosition.current = window.scrollY
-//      el.style = `
-//        position: fixed;
-//        top: ${currentScrollPosition.current * -1}px;
-//        width: 100%;
-//        overflow: hidden;
-//      `
-//      break
-//    case 'unfreeze':
-//      el.style = ``
-//      window.scrollTo({
-//        top: `${currentScrollPosition.current}`,
-//      })
-//      break
-//    default:
-//      break
-//  }
-//}
-
 export default ({
   children,
   domNode,

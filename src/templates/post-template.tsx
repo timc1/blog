@@ -19,7 +19,7 @@ import useScrollAnimation from '../components/shared/hooks/useScrollAnimation'
 //  pageContext: any
 //  data: any
 //}
-const Template = ({ pageContext, data }: { pageContext: any; data: any }) => {
+const Template = ({ pageContext, data }) => {
   const { next, previous } = pageContext
 
   const { mdx } = data
