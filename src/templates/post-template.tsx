@@ -221,7 +221,7 @@ const Title = styled.h1`
   opacity: 0;
   transform: translateY(10px);
   transform-origin: 100% 0;
-  animation: ${fadein} 0.6s var(--cubic);
+  animation: ${fadein} 0.6s var(--ease);
   animation-fill-mode: forwards;
   animation-delay: 0.2s;
 
@@ -243,7 +243,7 @@ const Info = styled.ul`
   opacity: 0;
   transform: translateY(5px);
   transform-origin: 100% 0;
-  animation: ${fadein} 0.6s var(--cubic);
+  animation: ${fadein} 0.6s var(--ease);
   animation-fill-mode: forwards;
   animation-delay: 0.8s;
 `
@@ -252,7 +252,7 @@ const Break = styled(SectionBreak)`
   margin-left: 20%;
   transform: scaleX(0);
   transform-origin: 0;
-  animation: ${scalein} 0.4s var(--cubic);
+  animation: ${scalein} 0.4s var(--ease);
   animation-fill-mode: forwards;
   animation-delay: 1.4s;
 
@@ -311,7 +311,7 @@ const Content = styled.section`
   margin: auto;
   font-size: var(--fontmd);
   font-weight: var(--fontlight);
-  color: var(--black);
+  color: var(--darkgray);
   //opacity: 0;
   //transform: translateY(40px);
   //transform-origin: 100% 0;
@@ -324,10 +324,18 @@ const Content = styled.section`
   h4,
   h5 {
     font-family: var(--titlefont);
+    color: var(--black);
   }
   ul {
     padding-left: 1.25rem;
     margin: initial;
+  }
+  hr {
+    background-color: var(--lightgray);
+    border: 0;
+    height: .25em;
+    margin: 24px 0;
+    padding: 0;
   }
   a {
     color: var(--red);

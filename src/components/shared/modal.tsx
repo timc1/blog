@@ -100,7 +100,7 @@ export default ({
           blurNodes.forEach(
             (node: any) =>
               (node.style = `
-          transition: filter .4s var(--ease);
+          transition: filter .4s ease-out;
           filter: blur(0px);
         `)
           )

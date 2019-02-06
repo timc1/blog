@@ -19,7 +19,6 @@
     "emotion-theming": "^10.0.5",
     "eslint-plugin-flowtype": "2.x",
     "eslint-plugin-import": "2.x",
-    "eslint-plugin-jsx-a11y": "6.x",
     "gatsby": "^2.0.90",
     "gatsby-image": "^2.0.20",
     "gatsby-mdx": "^0.1.4",
@@ -38,7 +37,6 @@
     "gsap": "^2.0.2",
     "pixi.js": "^4.8.5",
     "prismjs": "^1.15.0",
-    "prop-types": "^15.6.2",
     "react": "^16.8.0-alpha.0",
     "react-dom": "^16.8.0-alpha.0",
     "react-helmet": "^5.2.0",
@@ -58,13 +56,14 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@typescript-eslint/parser": "^1.2.0",
     "babel-preset-gatsby": "^0.1.6",
     "eslint": "5.x",
     "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "7.x",
-    "prettier": "^1.15.2",
-    "typescript-eslint-parser": "^21.0.2"
+    "prettier": "^1.15.2"
   },
   "repository": {
     "type": "git",

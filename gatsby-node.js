@@ -49,7 +49,7 @@ exports.createPages = ({ graphql, actions }) => {
       graphql(
         `
           {
-            allMdx {
+            allMdx(sort: { fields: [fields___date], order: DESC }) {
               edges {
                 node {
                   id

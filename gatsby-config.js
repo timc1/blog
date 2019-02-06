@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Tim Chang - Digital Product Design & Development in Los Angeles`,
+    title: `Tim Chang — Digital Product Design & Development in Los Angeles`,
     description: `Home to my independent work and experiments. It features essays on web design, development, client work, and growth. Currently, I am a product designer & developer specializing in frontend/UI web development (React, HTML/CSS, Javascript)`,
     author: `@timcchang`,
     keywords: [
