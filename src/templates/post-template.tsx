@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { keyframes } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
 
-import { screenmd, maxWidth, SectionBreak } from '../components/shared/styles'
+import { screenmd, maxWidth } from '../components/shared/styles'
 
 import SEO from '../components/shared/seo'
 
@@ -46,7 +46,6 @@ const Template = ({ pageContext, data }) => {
         <InfoItem>{frontmatter.short_name}</InfoItem>
         <InfoItem>{frontmatter.scope}</InfoItem>
       </Info>
-      <Break />
       {(frontmatter.project_scope || frontmatter.background) && (
         <PostDetails>
           {frontmatter.background && (
@@ -75,7 +74,6 @@ const Template = ({ pageContext, data }) => {
       <Content>
         <MDXRenderer>{mdx.code.body}</MDXRenderer>
       </Content>
-      <Break />
       <SuggestedPost next={next} previous={previous} />
     </div>
   )
@@ -116,7 +114,8 @@ const SuggestedContainer = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, auto));
   grid-gap: 1.25rem;
-  ${maxWidth};
+  max-width: 1200px;
+  margin: 100px auto 0 auto;
 `
 
 const DetailTitle = styled(Detail)`
@@ -236,6 +235,7 @@ const Info = styled.ul`
   grid-gap: 10px;
   grid-auto-columns: max-content;
   ${maxWidth}
+  padding-bottom: 40px;
   > li:not(:last-of-type)::after {
     content: '·';
     padding-left: 10px;
@@ -248,20 +248,6 @@ const Info = styled.ul`
   animation-delay: 0.8s;
 `
 
-const Break = styled(SectionBreak)`
-  margin-left: 20%;
-  transform: scaleX(0);
-  transform-origin: 0;
-  animation: ${scalein} 0.4s var(--ease);
-  animation-fill-mode: forwards;
-  animation-delay: 1.4s;
-
-  @media (max-width: ${screenmd}px) {
-    margin-left: initial;
-    animation-delay: 1s;
-  }
-`
-
 const InfoItem = styled.li`
   list-style: none;
   color: var(--gray);
@@ -272,6 +258,7 @@ const PostDetails = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, auto));
   grid-gap: 40px;
+  padding-top: 40px;
   padding-bottom: 40px;
   ${maxWidth};
 
