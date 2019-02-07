@@ -1,12 +1,12 @@
 ---
 date: '2019-02-04'
-title: 'Animations With React'
+title: 'Tracking User Scrolling With React Hooks'
 short_name: 'React'
 scope: 'Experiment'
 seo_description: 'Web Animations, React Animations, User Interface Design,'
 ---
 
-React makes animations really fun 🤗
+React makes building UIs really fun 🤗
 
 I've been experimenting with the new
 [Hooks](https://reactjs.org/docs/hooks-reference.html) feature for some now
@@ -28,7 +28,8 @@ navigation like above.
 2. Turn the
    [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
    API into a reusable hook
-3. Use our new hook to trigger animations
+3. Use our hook to trigger state updates
+4. Animating our scroll bar
 
 Cool, let's get started.
 
@@ -102,6 +103,8 @@ const Heading = styled.h1`
 
 You should see this:
 
+# Show 1 here
+
 Next, in a separate file, nav.js, let's add a fixed navigation to the left-hand
 side of the page:
 
@@ -119,7 +122,7 @@ export default function Nav({ sections }) {
             <Item key={section.id}>
               <NavLink to="#">{section.header}</NavLink>
             </Item>
-            <li className="scaler" aria-hidden="" />
+            <li className="scaler" aria-hidden="true" />
           </>
         ))}
       </Items>
@@ -200,6 +203,8 @@ alternating dark and light backgrounds. What it will do is inverse the color of
 our text based on the background color.
 
 We should have this now:
+
+# Show 2 here
 
 ### Turn the IntersectionObserver API into a reusable hook
 
@@ -310,6 +315,8 @@ given from the IntersectionObserver API.
 
 Okay, let's integrate this hook into our demo.
 
+### Use our new hook to trigger animations
+
 The way I thought about how to implement this was:
 
 1. Set our sticky nav as the `root` of the IntersectionObserver (observer)
@@ -397,7 +404,7 @@ export default React.forwardRef(function Nav({ sections }, ref) {
             <Item key={section.id}>
               <NavLink to="#">{section.header}</NavLink>
             </Item>
-            <li className="scaler" aria-hidden="" />
+            <li className="scaler" aria-hidden="true" />
           </>
         ))}
       </Items>
@@ -430,3 +437,135 @@ useIntersectionObserver({
 If you look at your console, it should print out hi 5 times, meaning the
 IntersectionObserver API is stracking our 5 dom elements and things are going
 well! 😁
+
+Now every time an element is in view or has left, our hook will trigger our
+callback. Let's write the logic for our callback. Let's replace that console.log
+from our demo.js file and replace it:
+
+```js
+// ...
+
+useIntersectionObserver({
+  refs: [homeRef, aboutRef, productsRef, pricingRef, jobsRef],
+  callback: ({ isIntersecting, target }) => {
+    console.log('isIntersecting', isIntersecting, target)
+    const sectionData = target.getAttribute('data-section-id')
+    if (isIntersecting) {
+      //dispatchScrollingNav({
+      //  type: sectionData
+      //});
+
+      previousSection = currentSection
+      currentSection = sectionData
+    } else {
+      if (currentSection === sectionData && previousSection) {
+        currentSection = previousSection
+
+        //dispatchScrollingNav({
+        //  type: previous
+        //});
+      }
+    }
+
+    console.log('current', currentSection, 'previous', previousSection)
+  },
+  options: {
+    root: navRef.current,
+  },
+})
+
+// ...
+```
+
+### Animate a progress bar on scroll
+
+Let's animate our `<li className="scaler" />` now. This will scale
+proportionally to the amount of content we have left to scroll on the screen.
+
+In our demo.js file, we'll pass `refs` to mark the **beginningContent** and the
+**endContent** to set a boundary to allow our `<Nav />` to calculate the scaling
+amount.
+
+```js
+// ...
+<Nav
+  sections={sections}
+  ref={navRef}
+  beginningContent={homeRef}
+  endContent={jobsRef}
+/>
+// ...
+```
+
+and in our nav.js file we'll pass the two new props down:
+
+```js
+export default React.forwardRef(function Nav({ sections, beginningContent, endContent }, ref) {
+// ...
+```
+
+Now that we have a reference to the beginning and end content, we can use the
+`useEffect` hook to setup calculations when the Nav component mounts. In our
+nav.js file:
+
+```js
+import React, { useEffect, useRef } from 'react'
+// ...
+
+export default React.forwardRef(function Nav(
+  { sections, beginningContent, endContent },
+  ref
+) {
+  // Setup a reference to the div we're going to animate
+  const scalerRef = useRef(null)
+
+  // This effect will only fire once after a component mounts, and before it unmounts.
+  useEffect(() => {
+    const {
+      top: topOfBeginning,
+    } = beginningContent.current.getBoundingClientRect()
+    const {
+      top: topOfEnd,
+      bottom: bottomOfEnd,
+    } = endContent.current.getBoundingClientRect()
+
+    // We will be using totalHeight to calculate how much content is left oto scroll
+    const totalHeight = bottomOfEnd - topOfBeginning
+
+    // Setup our scroll event
+    const scrollEvent = () => {
+      const percentage = (
+        (window.scrollY + window.innerHeight) /
+        totalHeight
+      ).toFixed(2)
+      // transform our <li className="scaler" />
+      scalerRef.current.style.transform = `scaleY(${percentage})`
+    }
+
+    window.addEventListener('scroll', scrollEvent)
+
+    // Cleanup before unmount
+    return () => window.removeEventListener('scroll', scrollEvent)
+  }, [])
+
+  return (
+    <Aside ref={ref}>
+      <Items>
+        {sections.map(section => (
+          <>
+            <Item key={section.id}>
+              <NavLink to="#">{section.header}</NavLink>
+            </Item>
+            <li ref={scalerRef} className="scaler" aria-hidden="" />
+          </>
+        ))}
+      </Items>
+    </Aside>
+  )
+})
+```
+
+Now when we scroll the page, we should see our scaler element transforming like
+this:
+
+# insert 4 here
