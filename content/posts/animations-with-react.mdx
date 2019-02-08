@@ -1,12 +1,12 @@
 ---
-date: '2019-02-04'
-title: 'Tracking User Scrolling With React Hooks'
+date: '2019-02-07'
+title: 'Animations With React'
 short_name: 'React'
 scope: 'Experiment'
 seo_description: 'Web Animations, React Animations, User Interface Design,'
 ---
 
-React makes building UIs really fun 🤗
+React makes building UIs really fun 😄
 
 I've been experimenting with the new
 [Hooks](https://reactjs.org/docs/hooks-reference.html) feature for some now
@@ -17,25 +17,22 @@ I've recently create a landing page which has a fixed navigation that shows a
 progress bar for how much content is left to read as well as a highlight for
 each 'active' section.
 
+The fill demo is available to play with live
+[here](https://codesandbox.io/s/o599joo75z).
+
 In this post I will attempt to explain and cover how to efficiently create a
 navigation like above.
 
-### What we will make
-
 ### What we will cover
 
-1. Create the layout (we will use [emotion](https://emotion.sh/))
-2. Turn the
-   [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
-   API into a reusable hook
-3. Use our hook to trigger state updates
-4. Animating our scroll bar
+1. Setting up the markup
+2. Create a hook to track an when element intersections with the viewport or
+   another element
+3. Use the hook to trigger animations updates to the UI
 
-Cool, let's get started.
+Let's get started!
 
----
-
-### Create the layout
+### Setting up the markup
 
 We're going to need a few `<sections />` that distinguish the start and end to
 each. We'll give each section a unique color and heading:
@@ -44,7 +41,8 @@ In demo.js:
 
 ```js
 import React from 'react'
-import styled from '@emotion/styled'
+import { styled } from '@emotion/styled'
+import Nav from './nav'
 
 export default function Demo() {
   const sections = [
@@ -56,36 +54,49 @@ export default function Demo() {
   ]
 
   return (
-    <>
+    <Container>
+      <Nav sections={sections} />
+      <Section ref={bannerRef} data-section-id="banner">
+        <Heading>Banner</Heading>
+      </Section>
       {sections.map(section => (
-        <Section key={section.id} data-section-id={section.id}>
+        <Section
+          key={section.id}
+          // data-section-id will be a data attribute we
+          data-section-id={section.id}
+        >
           <Heading>{section.header}</Heading>
         </Section>
       ))}
-    </>
+    </Container>
   )
 }
 
 // styles
 const Container = styled.div`
-  section {
-    background: #fff;
+  section:first-of-type {
+    background: #25283c;
+    color: #fdffdf;
   }
   section:nth-of-type(2) {
-    background: #eee;
-    color: #484848;
+    background: #fff6e2;
+    color: #000;
   }
   section:nth-of-type(3) {
-    background: #aaa;
-    color: #fbfbfb;
+    background: #200623;
+    color: #fff;
   }
   section:nth-of-type(4) {
-    background: #484848;
-    color: #fff;
+    background: #ffda83;
+    color: #042996;
   }
   section:nth-of-type(5) {
-    background: #000;
+    background: #00674a;
     color: #fff;
+  }
+  section:nth-of-type(6) {
+    background: #fff;
+    color: #000;
   }
 `
 
@@ -101,19 +112,15 @@ const Heading = styled.h1`
 `
 ```
 
-You should see this:
+We're using [emotion](https://emotion.sh) to style our components.
 
-# Show 1 here
-
-Next, in a separate file, nav.js, let's add a fixed navigation to the left-hand
-side of the page:
+Next, lets create our sticky navigation in a separate file, `nav.js`:
 
 ```js
 import React from 'react'
 import styled from '@emotion/styled'
-import { Link } from '@reach/router'
 
-export default function Nav({ sections }) {
+export default function Nav() {
   return (
     <Aside>
       <Items>
@@ -122,7 +129,7 @@ export default function Nav({ sections }) {
             <Item key={section.id}>
               <NavLink to="#">{section.header}</NavLink>
             </Item>
-            <li className="scaler" aria-hidden="true" />
+            <li className="scaler" aria-hidden="" />
           </>
         ))}
       </Items>
@@ -134,7 +141,8 @@ export default function Nav({ sections }) {
 const Aside = styled.aside`
   position: sticky;
   top: 50%;
-  transform: translateY(-50%);
+  opacity: 1;
+  transition: opacity 0.25s ease-out;
   mix-blend-mode: difference;
   padding-left: 25px;
 `
@@ -151,7 +159,7 @@ const Items = styled.ul`
 
   &::before {
     content: '';
-    background: rgba(78, 78, 78, 0.8);
+    background: rgba(212, 212, 212, 0.4);
     position: absolute;
     top: -50%;
     bottom: -50%;
@@ -166,14 +174,15 @@ const Items = styled.ul`
     width: 1px;
     transform-origin: 0 0;
     transform: scaleY(0);
-    transition: transform 0.1s cubic-bezier(0.6, 0.07, 0.29, 0.96);
+    transition: transform 0.25s ease-out;
   }
 `
 
 const Item = styled.li``
 
-const NavLink = styled(Link)`
+const NavLink = styled.a`
   color: #fff;
+  font-weight: 600;
   text-decoration: none;
   padding: 8px 15px;
   font-size: 12px;
@@ -182,34 +191,11 @@ const NavLink = styled(Link)`
 `
 ```
 
-Okay, we have a few things going on here.
+With these styles, we should see this now:
 
-First, we create a sticky `aside` element to wrap our entire navigation. The
-reason we use `position: sticky` here rather than `position: absolute` is
-because later when we use the IntersectionObserver API, it (correct me if I'm
-wrong), doesn't worked on fixed elements — because fixed elements are relative
-to the viewport and therefore have no way of "communicating" with elements they
-appear to be crossing over.
+# Insert video 1 here
 
-We created a pseudo element on our `ul` to be the base for our scrolling
-animation, and we added an `li` element with the same properties as the actual
-element we will be animating. Note that we are using an actual element to
-animate and not using another pseudo element because we can not manipulate
-pseudo elements through plain javascript as they are part of the
-[shadow dom](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
-
-On a side note, `mix-blend-mode` is really neat, especially if we have
-alternating dark and light backgrounds. What it will do is inverse the color of
-our text based on the background color.
-
-We should have this now:
-
-# Show 2 here
-
-### Turn the IntersectionObserver API into a reusable hook
-
-Okay, before we dive into writing our hook, lets go over what and why we are
-using the IntersectionObserver API.
+### Using IntersectionObserver to track when elements intersect with the viewport or another element
 
 Usually when we want to track elements' positions on the screen, we need to do
 something like
@@ -238,8 +224,11 @@ or with a top-level document's viewport."
 ([reference](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)).
 What this means for us is a very efficient way to track a user's current
 position on the screen, without us to have to set up individual listeners. We
-provide a callback to the API which will only trigger when the element has
-entered or left the viewport.
+provide a callback and a few options to the API, and it will call our callback
+only when the element has entered or left the boundary we provide.
+
+This boundary defaults to the document viewport, but can be other elements as we
+will see later.
 
 Here's a basic implementation of the API:
 
@@ -272,18 +261,18 @@ export default function useIntersectionObserver({
   refs,
   callback,
   options = {
-    rootMargin: '-200px',
+    rootMargin: '0px',
     root: null,
-    threshold: 1.0,
+    threshold: [0.9, 1],
   },
 }) {
   // Setup our api here
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
-      entries.forEach({isIntersecting, target }=> {
+      entries.forEach(entry => {
         callback({
-          isIntersecting,
-          target,
+          isIntersecting: entry.isIntersecting,
+          target: entry.target,
           observer,
         })
       })
@@ -299,161 +288,181 @@ export default function useIntersectionObserver({
 }
 ```
 
-Of course we can add more specific things with this — but we'll keep it simple.
+What's happening here is we're creating a reusable component that sets up and
+cleans up a new observer without us actually having to instantiate a new
+IntersectionObserver every time we want to use one.
 
-What's happening here is we're creating a reusable hook, where we pass an object
-parameter with three properties, `refs`, `callback`, and `options`. `refs` is an
-array of refs, and `callback` is the callback we want to trigger when our
-observer intersects with something. We will pass an object to our callback
-function with an `isIntersecting` boolean property, the target element that was
+We pass an object parameter with three properties, `refs`, `options`, and
+`callback`.
+
+`refs` is an array of refs that we'll use to reference actual DOM nodes,
+`options` is an object of
+[options](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#Creating_an_intersection_observer)
+that we pass along to the observer, and `callback` is the callback we want to
+trigger when our observer intersects with something. Our callback will be called
+with an `isIntersecting` boolean property, the `target` element that was
 intersected, as well as the `observer` itself. This way, we create an
 [inversion of control](https://en.wikipedia.org/wiki/Inversion_of_control) to
-allow the user of our hook to disconnect the observer whenever they see fit!
-Lastly, `options` are the
-[options](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#Creating_an_intersection_observer)
-given from the IntersectionObserver API.
+allow the user of our hook to disconnect the observer (observer.disconnect())
+whenever they see fit!
+
+\*A `ref` is a method of accessing a DOM node within a render function
+([docs](https://reactjs.org/docs/refs-and-the-dom.html)). Our
+IntersectionObserver hook is going to take these refs and asynchronously track
+the position of the DOM nodes that they reference.
 
 Okay, let's integrate this hook into our demo.
 
-### Use our new hook to trigger animations
+### Toggling the sticky menu's visibility
 
-The way I thought about how to implement this was:
+As we see in the demo, the sticky menu only appears when the top banner is out
+of view.
 
-1. Set our sticky nav as the `root` of the IntersectionObserver (observer)
-2. Add refs to each `section` and pass them through to the observer
-3. When our observer calls our callback with the target element, we'll determine
-   what section we're on and update accordingly (more on how we will implement
-   updating the view later).
+To do this, we need to:
 
-Lets update our demo.js file to look like this:
+1. Create a ref to pass to the `<Banner />` component
+2. Use our useIntersectionObserver hook with the banner ref
+3. Use React's built in `useReducer` hook to manage our state
+4. In our useIntersectionObserver hook's callback, dispatch an action to change
+   the `isNavShowing` state of our `<Nav />` to `false` when the banner is in
+   view, and vice versa when the `<Banner />` is not.
+5. Pass the `isNavShowing` state down to our `<Nav />`
+
+In demo.js:
 
 ```js
-import React, { useRef } from 'react'
-import styled from '@emotion/styled'
+// ...
 
-import Nav from './nav'
-import useIntersectionObserver from './use-intersection-observer'
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'SHOW_NAV':
+      return {
+        ...state,
+        isNavShowing: true,
+      }
+    case 'HIDE_NAV': {
+      return {
+        ...state,
+        isNavShowing: false,
+      }
+    }
+    default:
+      return state
+  }
+}
+
+const initialState = {
+  isNavShowing: false,
+}
+
+// ...
 
 export default function Demo() {
-  const navRef = useRef(null)
-  const homeRef = useRef(null)
-  const aboutRef = useRef(null)
-  const productsRef = useRef(null)
-  const pricingRef = useRef(null)
-  const jobsRef = useRef(null)
+  // ...
 
-  const sections = [
-    { id: 'home', header: 'Home', ref: homeRef },
-    { id: 'about', header: 'About', ref: aboutRef },
-    { id: 'products', header: 'Products', ref: productsRef },
-    { id: 'pricing', header: 'Pricing', ref: pricingRef },
-    { id: 'jobs', header: 'Jobs', ref: jobsRef },
-  ]
+  const [state, dispatch] = useReducer(reducer, initialState)
 
+  // An IntersectionObserver hook for showing the <Nav /> when
+  // the <Banner /> leaves the view.
   useIntersectionObserver({
-    refs: [],
+    refs: [bannerRef],
     callback: ({ isIntersecting }) => {
-      //
+      if (isIntersecting) {
+        dispatch({ type: 'HIDE_NAV' })
+      } else {
+        dispatch({ type: 'SHOW_NAV' })
+      }
     },
     options: {
-      root: navRef.current,
+      // a threshold of 0 will trigger our IntersectionObserver at the
+      // base of the element – a threshold of 1 would trigger at the top.
+      threshold: [0],
     },
   })
 
   return (
     <Container>
-      <Nav sections={sections} ref={navRef} />
-      {sections.map(section => (
-        <Section
-          key={section.id}
-          background={section.background}
-          data-section-id={section.id}
-          ref={section.ref}
-        >
-          <Heading color={section.fontColor}>{section.header}</Heading>
-        </Section>
-      ))}
+      <Nav sections={sections} isShowing={state.isNavShowing} />
+      // ...
     </Container>
   )
 }
-
-// styles
-// ...
 ```
 
-Here we create a `ref` for each `section`. What this will do is allow us to
-access a reference to the specific dom node that we attach the ref to.
-
-We are also passing the `navRef` down to the `<Nav />` component. Because we're
-passing refs down to a child component, we need to wrap the child component in
-`React.forwardRef()`.
-
-So, in our nav.js file:
-
-```js
-import React from 'react'
-import styled from '@emotion/styled'
-import { Link } from '@reach/router'
-
-export default React.forwardRef(function Nav({ sections }, ref) {
-  return (
-    <Aside ref={ref}>
-      <Items>
-        {sections.map(section => (
-          <>
-            <Item key={section.id}>
-              <NavLink to="#">{section.header}</NavLink>
-            </Item>
-            <li className="scaler" aria-hidden="true" />
-          </>
-        ))}
-      </Items>
-    </Aside>
-  )
-})
-```
-
-\*If our `<Section />` components weren't just styled components, we would have
-to wrap them with `React.forwardRef()` as well.
-
-Okay, now let's pass these refs down to our hook. Update our hook like so:
-
-```js
-//...
-
-useIntersectionObserver({
-  refs: [homeRef, aboutRef, productsRef, pricingRef, jobsRef],
-  callback: ({ isIntersecting }) => {
-    console.log('hi')
-  },
-  options: {
-    root: navRef.current,
-  },
-})
-
-// ...
-```
-
-If you look at your console, it should print out hi 5 times, meaning the
-IntersectionObserver API is stracking our 5 dom elements and things are going
-well! 😁
-
-Now every time an element is in view or has left, our hook will trigger our
-callback. Let's write the logic for our callback. Let's replace that console.log
-from our demo.js file and replace it:
+In nav.js, we'll need to take the `isShowing` prop and toggle a few styles
+depending on its value:
 
 ```js
 // ...
 
+const Aside = styled.aside`
+  position: sticky;
+  top: 50%;
+  opacity: ${props => (props.isShowing ? 1 : 0)};
+  transition: opacity 0.25s ease-out;
+  mix-blend-mode: difference;
+  padding-left: 25px;
+`
+
+// ...
+```
+
+Now, we'll see our `<Nav />` hide and showing like so:
+
+# Show view 3 here
+
+### Keeping track of the currently focused section
+
+As we scroll past each individual section, we want to have the sticky navbar
+update the color of the current section that we're on, like so:
+
+# Insert video 2 here
+
+In order to create this, just like with the `<Banner />` earlier, we need to
+create `refs` to pass along to each `section`. They will be the reference for
+our IntersectionObserver to keep track of.:
+
+In our demo.js file:
+
+```js
+import React, { useReducer, useRef } from 'react'
+
+// These refs will be passed to their respective <section /> components in order for us to keep
+// a reference of the DOM elements and their position.
+const navRef = useRef(null)
+const bannerRef = useRef(null)
+const homeRef = useRef(null)
+const aboutRef = useRef(null)
+const productsRef = useRef(null)
+const pricingRef = useRef(null)
+const jobsRef = useRef(null)
+
+// We'll update our sections array to include each section's ref
+const sections = [
+  { id: 'home', header: 'Home', ref: homeRef },
+  { id: 'about', header: 'About', ref: aboutRef },
+  { id: 'products', header: 'Products', ref: productsRef },
+  { id: 'pricing', header: 'Pricing', ref: pricingRef },
+  { id: 'jobs', header: 'Jobs', ref: jobsRef },
+]
+
+// ...
+
+// An IntersectionObserver hook for updating which navigation
+// list item is currently in focus, based on which DOM element
+// is currently in the viewport.
+let currentSection, previousSection
 useIntersectionObserver({
   refs: [homeRef, aboutRef, productsRef, pricingRef, jobsRef],
   callback: ({ isIntersecting, target }) => {
-    console.log('isIntersecting', isIntersecting, target)
     const sectionData = target.getAttribute('data-section-id')
     if (isIntersecting) {
-      //dispatchScrollingNav({
-      //  type: sectionData
-      //});
+      dispatch({
+        type: 'TOGGLE_SECTION',
+        payload: {
+          sectionId: sectionData,
+        },
+      })
 
       previousSection = currentSection
       currentSection = sectionData
@@ -461,111 +470,115 @@ useIntersectionObserver({
       if (currentSection === sectionData && previousSection) {
         currentSection = previousSection
 
-        //dispatchScrollingNav({
-        //  type: previous
-        //});
+        dispatch({
+          type: 'TOGGLE_SECTION',
+          payload: {
+            sectionId: previousSection,
+          },
+        })
       }
     }
-
-    console.log('current', currentSection, 'previous', previousSection)
   },
   options: {
     root: navRef.current,
+    threshold: [0.5],
   },
 })
 
+return (
+  <Container>
+    <Nav sections={sections} />
+    <Section>
+      <Heading>Banner</Heading>
+    </Section>
+    {sections.map(section => (
+      <Section key={section.id} data-section-id={section.id} ref={section.ref}>
+        <Heading>{section.header}</Heading>
+      </Section>
+    ))}
+  </Container>
+)
+
 // ...
 ```
 
-### Animate a progress bar on scroll
+Let's look at the hook logic we have –
 
-Let's animate our `<li className="scaler" />` now. This will scale
-proportionally to the amount of content we have left to scroll on the screen.
+When the IntersectionObserver triggers, it'll call our callback function which
+will in turn:
 
-In our demo.js file, we'll pass `refs` to mark the **beginningContent** and the
-**endContent** to set a boundary to allow our `<Nav />` to calculate the scaling
-amount.
+1. Check which element was intersected and save it in a variable `sectionData`.
+   This is done through using javascript's
+   Element.getAttribute('data-section-id'), which we explicitly passed to each
+   `<Section />`
+2. If it is intersecting (entering), we'll dispatch an update to the reducer we
+   created earlier, passing in the `currentSection`
+3. If it is _not_ intersecting, we'll do a check to see if the user actually
+   scrolled to the previous section, and dispatch an update to update the
+   `currentSection` back to the `previousSection`.
+
+There's definitely a better way to do this, send me a message if you think of
+one!
+
+Let's update our reducer function and add a new case
 
 ```js
 // ...
-<Nav
-  sections={sections}
-  ref={navRef}
-  beginningContent={homeRef}
-  endContent={jobsRef}
-/>
+
+  case "TOGGLE_SECTION":
+    return {
+      ...state,
+      currentlyFocusedSection: action.payload.sectionId
+    };
+
 // ...
 ```
 
-and in our nav.js file we'll pass the two new props down:
+and pass the state to our state down to our nav.
 
 ```js
-export default React.forwardRef(function Nav({ sections, beginningContent, endContent }, ref) {
+// ...
+<Nav currentSection={state.currentlyFocusedSection} />
 // ...
 ```
 
-Now that we have a reference to the beginning and end content, we can use the
-`useEffect` hook to setup calculations when the Nav component mounts. In our
-nav.js file:
+In our nav.js file, we'll update the styles to reflect the `currentSection`:
 
 ```js
-import React, { useEffect, useRef } from 'react'
+// ...
+return (
+  // ...
+  <Item key={section.id} isActive={section.id === currentSection}>
+    <NavLink to="#" tabIndex={isShowing ? 0 : -1}>
+      {section.header}
+    </NavLink>
+  </Item>
+  // ...
+)
+
 // ...
 
-export default React.forwardRef(function Nav(
-  { sections, beginningContent, endContent },
-  ref
-) {
-  // Setup a reference to the div we're going to animate
-  const scalerRef = useRef(null)
-
-  // This effect will only fire once after a component mounts, and before it unmounts.
-  useEffect(() => {
-    const {
-      top: topOfBeginning,
-    } = beginningContent.current.getBoundingClientRect()
-    const {
-      top: topOfEnd,
-      bottom: bottomOfEnd,
-    } = endContent.current.getBoundingClientRect()
-
-    // We will be using totalHeight to calculate how much content is left oto scroll
-    const totalHeight = bottomOfEnd - topOfBeginning
-
-    // Setup our scroll event
-    const scrollEvent = () => {
-      const percentage = (
-        (window.scrollY + window.innerHeight) /
-        totalHeight
-      ).toFixed(2)
-      // transform our <li className="scaler" />
-      scalerRef.current.style.transform = `scaleY(${percentage})`
-    }
-
-    window.addEventListener('scroll', scrollEvent)
-
-    // Cleanup before unmount
-    return () => window.removeEventListener('scroll', scrollEvent)
-  }, [])
-
-  return (
-    <Aside ref={ref}>
-      <Items>
-        {sections.map(section => (
-          <>
-            <Item key={section.id}>
-              <NavLink to="#">{section.header}</NavLink>
-            </Item>
-            <li ref={scalerRef} className="scaler" aria-hidden="" />
-          </>
-        ))}
-      </Items>
-    </Aside>
-  )
-})
+const Item = styled.li`
+  > a {
+    color: ${props => (props.isActive ? '#fff' : 'rgba(78, 78, 78, 0.5)')};
+  }
+`
 ```
 
-Now when we scroll the page, we should see our scaler element transforming like
-this:
+We're almost done! Here's how things should be looking:
 
-# insert 4 here
+# Insert video 4 here
+
+### Animating a scaling progress bar
+
+The last thing we need to do is animate the progress bar on the sticky nav.
+
+To do this, we will not be using the IntersectionObserver hook, but a `scroll`
+event listener.
+
+The basic idea is:
+
+1. Create a function calculates how much content is left to scroll.
+2. Set the style of the `<li className='scaler' />` based on that percentage.
+3. Trigger a `scroll` event when the `<Nav />` is showing
+4. Remove the `scroll` event when the `<Nav />` is hidden
