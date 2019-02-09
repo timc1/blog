@@ -79,7 +79,7 @@ const IndexPage = ({ data }: FrontmatterProps) => {
 
 export const query = graphql`
   query PostsQuery {
-    allMdx {
+    allMdx(sort: { fields: [fields___date], order: DESC }) {
       edges {
         node {
           frontmatter {
