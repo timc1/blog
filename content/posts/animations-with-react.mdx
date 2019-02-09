@@ -6,10 +6,15 @@ scope: 'Experiment'
 seo_description: 'Web Animations, React Animations, User Interface Design,'
 ---
 
-React makes building UIs really fun 😄
+import Image from 'components/posts/image.tsx'
+import video1 from 'images/1.gif'
+import video2 from 'images/2.gif'
+import video3 from 'images/3.gif'
+import video4 from 'images/4.gif'
+import video5 from 'images/5.gif'
 
-I've been experimenting with the new
-[Hooks](https://reactjs.org/docs/hooks-reference.html) feature for some now
+React makes building UIs really fun 😄 I've been experimenting with the new
+[Hooks](https://reactjs.org/docs/hooks-reference.html) feature for some time now
 ([hi](https://github.com/timc1)) and recently found a neat way to handle
 animations that depend on user interaction & scrolling.
 
@@ -17,7 +22,7 @@ I've recently create a landing page which has a fixed navigation that shows a
 progress bar for how much content is left to read as well as a highlight for
 each 'active' section.
 
-The fill demo is available to play with live
+The full demo is available to play with live
 [here](https://codesandbox.io/s/o599joo75z).
 
 In this post I will attempt to explain and cover how to efficiently create a
@@ -26,7 +31,7 @@ navigation like above.
 ### What we will cover
 
 1. Setting up the markup
-2. Create a hook to track an when element intersections with the viewport or
+2. Create a hook to track when an element intersections with the viewport or
    another element
 3. Use the hook to trigger animations updates to the UI
 
@@ -35,7 +40,9 @@ Let's get started!
 ### Setting up the markup
 
 We're going to need a few `<sections />` that distinguish the start and end to
-each. We'll give each section a unique color and heading:
+each. We'll give each section a unique color and heading.
+
+We're using [emotion](https://emotion.sh) to style our components.
 
 In demo.js:
 
@@ -112,8 +119,6 @@ const Heading = styled.h1`
 `
 ```
 
-We're using [emotion](https://emotion.sh) to style our components.
-
 Next, lets create our sticky navigation in a separate file, `nav.js`:
 
 ```js
@@ -125,13 +130,11 @@ export default function Nav() {
     <Aside>
       <Items>
         {sections.map(section => (
-          <>
-            <Item key={section.id}>
-              <NavLink to="#">{section.header}</NavLink>
-            </Item>
-            <li className="scaler" aria-hidden="" />
-          </>
+          <Item key={section.id}>
+            <NavLink to="#">{section.header}</NavLink>
+          </Item>
         ))}
+        <li className="scaler" aria-hidden="true" />
       </Items>
     </Aside>
   )
@@ -193,7 +196,7 @@ const NavLink = styled.a`
 
 With these styles, we should see this now:
 
-# Insert video 1 here
+<Image src={video1} alt="Scrolling a page with a fixed nav bar" />
 
 ### Using IntersectionObserver to track when elements intersect with the viewport or another element
 
@@ -409,14 +412,14 @@ const Aside = styled.aside`
 
 Now, we'll see our `<Nav />` hide and showing like so:
 
-# Show view 3 here
+<Image src={video3} alt="" />
 
 ### Keeping track of the currently focused section
 
 As we scroll past each individual section, we want to have the sticky navbar
 update the color of the current section that we're on, like so:
 
-# Insert video 2 here
+<Image src={video2} alt="" />
 
 In order to create this, just like with the `<Banner />` earlier, we need to
 create `refs` to pass along to each `section`. They will be the reference for
@@ -480,6 +483,10 @@ useIntersectionObserver({
     }
   },
   options: {
+    // *** Notice we pass navRef.current to the IntersectionObserver API options
+    //     which effectively sets our <Nav /> component as the root of intersection.
+    //     The refs passed to IntersectionObserver will trigger when they intersect
+    //     with this root.
     root: navRef.current,
     threshold: [0.5],
   },
@@ -487,7 +494,7 @@ useIntersectionObserver({
 
 return (
   <Container>
-    <Nav sections={sections} />
+    <Nav sections={sections} ref={navRef} />
     <Section>
       <Heading>Banner</Heading>
     </Section>
@@ -500,6 +507,27 @@ return (
 )
 
 // ...
+```
+
+In our nav.js file, we need to take the `navRef` and
+[forward the ref](https://reactjs.org/docs/forwarding-refs.html) to
+`<Nav ref={navRef} />`
+
+```js
+// ...
+
+export default React.forwardRef(function Nav(
+  { sections, beginningContent, endContent, isShowing, currentSection },
+  ref
+) {
+  // ...
+
+  return (
+    <Aside ref={ref} isShowing={isShowing}>
+      // ...
+    </Aside>
+  )
+})
 ```
 
 Let's look at the hook logic we have –
@@ -567,18 +595,113 @@ const Item = styled.li`
 
 We're almost done! Here's how things should be looking:
 
-# Insert video 4 here
+<Image src={video4} alt="" />
 
 ### Animating a scaling progress bar
 
 The last thing we need to do is animate the progress bar on the sticky nav.
 
-To do this, we will not be using the IntersectionObserver hook, but a `scroll`
-event listener.
+To do this, we will not be using the IntersectionObserver hook, but just a
+`scroll` event listener.
 
 The basic idea is:
 
-1. Create a function calculates how much content is left to scroll.
-2. Set the style of the `<li className='scaler' />` based on that percentage.
+1. Calculate the `totalHeight` between the top of the element that we want to
+   begin the scrolling and the bottom of the end of the element that we want to
+   end the scrolling.
+2. Create a `scrollEvent` that calculates how much content is left to scroll and
+   set the style `<li className="scaler" />`
 3. Trigger a `scroll` event when the `<Nav />` is showing
 4. Remove the `scroll` event when the `<Nav />` is hidden
+
+In order to calculate the `totalHeight`, we need to know which elements are the
+start and end of the scrolling content.
+
+To do this, let's pass our `homeRef` and `jobsRef` from demo.js down to our
+`<Nav />`:
+
+```js
+<Nav
+  ref={navRef}
+  sections={sections}
+  beginningContent={homeRef}
+  endContent={jobsRef}
+  isShowing={state.isNavShowing}
+  currentSection={state.currentlyFocusedSection}
+/>
+```
+
+and in our nav.js file:
+
+```js
+export default React.forwardRef(function Nav(
+  { sections, beginningContent, endContent, isShowing, currentSection },
+  ref
+) {
+ // ...
+}
+
+// ...
+```
+
+We're almost done!
+
+Create a `scalerRef` in our `<Nav />` component and pass it to our
+`<li className="scaler" />` in order to reference it (because we're going to be
+manipulating its `style` property dynamically.
+
+Then, we'll add an effect which triggers only on mount, unmount, and each time
+`<Nav />`'s `isShowing` prop changes:
+
+```js
+// ...
+const scalerRef = useRef(null)
+useEffect(
+  () => {
+    const {
+      top: topOfBeginning,
+      bottom: bottomOfTop,
+    } = beginningContent.current.getBoundingClientRect()
+    const { bottom: bottomOfEnd } = endContent.current.getBoundingClientRect()
+
+    // We will be using totalHeight to calculate how much content is left to scroll
+    const totalHeight = bottomOfEnd - topOfBeginning
+
+    // Setup our scroll event
+    const scrollEvent = () => {
+      if (topOfBeginning <= window.scrollY) {
+        const percentage = (window.scrollY / totalHeight).toFixed(2)
+        scalerRef.current.style.transform = `scaleY(${percentage})`
+      } else {
+        scalerRef.current.style.transform = `scaleY(0)`
+      }
+    }
+
+    if (isShowing) {
+      window.addEventListener('scroll', scrollEvent)
+    } else {
+      window.removeEventListener('scroll', scrollEvent)
+      // Reset scroller to 0
+      scalerRef.current.style.transform = `scaleY(0)`
+    }
+
+    // Cleanup before unmount
+    return () => window.removeEventListener('scroll', scrollEvent)
+  },
+  [isShowing]
+)
+
+return (
+  // ...
+)
+```
+
+<Image src={video5} alt="" />
+
+And there we have it! This was quite fun to build :)
+
+Wrapping our heads around Hooks and this way of building React apps may be
+confusing at first, but after working with Hooks for a bit, you'll realize how
+powerful they can be to building awesome UIs.
+
+Shoot me an email if you need any help ☺️
