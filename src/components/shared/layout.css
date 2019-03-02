@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Akkurat';
   font-display: auto;
-  src: url('/fonts/akkurat-light.ttf');
+  src: url('../../assets/fonts/akkurat-light.woff') format('woff');
   font-weight: 100 300;
   font-style: normal;
 }
@@ -9,7 +9,7 @@
 @font-face {
   font-family: 'Akkurat';
   font-display: auto;
-  src: url('/fonts/akkurat-regular.ttf');
+  src: url('../../assets/fonts/akkurat-regular.woff') format('woff');
   font-weight: 400 500;
   font-style: normal;
 }
@@ -17,7 +17,7 @@
 @font-face {
   font-family: 'Akkurat';
   font-display: auto;
-  src: url('/fonts/akkurat-bold.ttf');
+  src: url('../../assets/fonts/akkurat-bold.woff') format('woff');
   font-weight: 600 900;
   font-style: normal;
 }
@@ -25,7 +25,8 @@
 @font-face {
   font-family: 'Px-Grotesk';
   font-display: auto;
-  src: url('/fonts/Px-Grotesk-Light.ttf');
+  src: url('../../assets/fonts/Px-Grotesk-Light.woff'),
+    url('../../assets/fonts/Px-Grotesk-Light.woff2');
   font-weight: 100 300;
   font-style: normal;
 }
@@ -33,7 +34,8 @@
 @font-face {
   font-family: 'Px-Grotesk';
   font-display: auto;
-  src: url('/fonts/Px-Grotesk-Regular.ttf');
+  src: url('../../assets/fonts/Px-Grotesk-Regular.woff'),
+    url('../../assets/fonts/Px-Grotesk-Regular.woff2');
   font-weight: 400 500;
   font-style: normal;
 }
@@ -41,13 +43,14 @@
 @font-face {
   font-family: 'Px-Grotesk';
   font-display: auto;
-  src: url('/fonts/Px-Grotesk-Bold.ttf');
+  src: url('../../assets/fonts/Px-Grotesk-Bold.woff') format('woff'),
+    url('../../assets/fonts/Px-Grotesk-Bold.woff2') format('woff2');
   font-weight: 600 900;
   font-style: normal;
 }
 
 :root {
-  --black: #292E31;
+  --black: #292e31;
   --white: #fff;
   --gray: #262c2f;
   --lightgray: #f7fafc;
